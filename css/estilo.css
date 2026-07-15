@@ -2338,3 +2338,14 @@ body {
     background-repeat: no-repeat;
 
 }  
+
+        html, body {
+    min-height: 100%;
+}
+
+body {
+    background-image: url("img/cockpit.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
