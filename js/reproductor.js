@@ -1,330 +1,218 @@
-/*
-HANGAR PLAY RADIO ONLINE
-Sistema de control de cabina
-reproductor.js
-*/
+/* =========================================
+   HANGAR PLAY RADIO
+   SISTEMA DE CABINA + STREAMING ZENO
+========================================= */
 
 
-// ELEMENTOS PRINCIPALES
+document.addEventListener("DOMContentLoaded", () => {
 
-const player = document.getElementById("radioPlayer");
 
-const playButton = document.getElementById("playButton");
+    const loader = document.getElementById("loader");
 
-const stopButton = document.getElementById("stopButton");
+    const playButton = document.getElementById("playButton");
 
-const volumeSlider = document.getElementById("volumeSlider");
+    const radioPlayer = document.getElementById("radioPlayer");
 
-const powerButton = document.getElementById("powerButton");
+    const status = document.getElementById("status");
 
-const liveIndicator = document.getElementById("liveIndicator");
-
-const systemMessage = document.getElementById("systemMessage");
-
-const needleOne = document.getElementById("needleOne");
-
-const needleTwo = document.getElementById("needleTwo");
+    const systemMessage = document.querySelector(".radio-status");
 
 
 
-let systemActive = false;
+    /*
+       STREAMING OFICIAL ZENO
+    */
+
+
+    const streamURL = "https://stream.zeno.fm/1fv4rwglthgtv";
 
 
 
-// VOLUMEN INICIAL
+    if (radioPlayer) {
 
-player.volume = 0.7;
-
-
-
-// ENCENDIDO DE CABINA
-
-
-powerButton.addEventListener("click", function(){
-
-
-    systemActive = !systemActive;
-
-
-
-    if(systemActive){
-
-
-        powerButton.innerHTML = "SISTEMA ACTIVO";
-
-
-        liveIndicator.classList.remove("offline");
-
-        liveIndicator.classList.add("online");
-
-
-        liveIndicator.innerHTML = "EN VIVO";
-
-
-        systemMessage.innerHTML =
-        "SISTEMAS ONLINE - TRANSMISIÓN PREPARADA";
-
-
-    }else{
-
-
-        powerButton.innerHTML = "A BORDO";
-
-
-        liveIndicator.classList.remove("online");
-
-        liveIndicator.classList.add("offline");
-
-
-        liveIndicator.innerHTML = "OFFLINE";
-
-
-        systemMessage.innerHTML =
-        "SISTEMA EN ESPERA";
-
+        radioPlayer.src = streamURL;
 
     }
 
 
-});
 
 
+    /*
+       APAGADO DE PANTALLA DE INICIO
+    */
 
 
-// BOTÓN PLAY
+    setTimeout(() => {
 
 
-playButton.addEventListener("click", function(){
+        if (loader) {
 
 
-    if(systemActive){
+            loader.style.opacity = "0";
 
 
-        player.play();
+            setTimeout(() => {
 
 
-        systemMessage.innerHTML =
-        "RECEPCIÓN DE SEÑAL ACTIVA";
+                loader.style.display = "none";
 
 
-    }else{
-
-
-        systemMessage.innerHTML =
-        "ACTIVE EL SISTEMA A BORDO";
-
-
-    }
-
-
-});
-
-
-
-
-// BOTÓN STOP
-
-
-stopButton.addEventListener("click", function(){
-
-
-    player.pause();
-
-
-    systemMessage.innerHTML =
-    "TRANSMISIÓN EN PAUSA";
-
-
-});
-
-
-
-
-// CONTROL DE VOLUMEN
-
-
-volumeSlider.addEventListener("input", function(){
-
-
-    player.volume = this.value / 100;
-
-
-});
-//////////////////////////////////////////////////
-// INSTRUMENTOS DE CABINA
-//////////////////////////////////////////////////
-
-
-function moveInstruments(){
-
-
-    if(systemActive){
-
-
-        let audioMovement =
-        Math.floor(Math.random() * 70) - 35;
-
-
-        let signalMovement =
-        Math.floor(Math.random() * 90) - 45;
-
-
-
-        needleOne.style.transform =
-        "rotate(" + audioMovement + "deg)";
-
-
-        needleTwo.style.transform =
-        "rotate(" + signalMovement + "deg)";
-
-
-    }
-
-
-}
-
-
-
-setInterval(moveInstruments,800);
-
-
-
-
-
-//////////////////////////////////////////////////
-// ESTADO DEL REPRODUCTOR
-//////////////////////////////////////////////////
-
-
-player.addEventListener("play",function(){
-
-
-    if(systemActive){
-
-
-        liveIndicator.innerHTML =
-        "TRANSMITIENDO";
-
-
-        systemMessage.innerHTML =
-        "HANGAR PLAY RADIO ONLINE - AL AIRE";
-
-
-    }
-
-
-});
-
-
-
-player.addEventListener("pause",function(){
-
-
-    if(systemActive){
-
-
-        liveIndicator.innerHTML =
-        "EN ESPERA";
-
-
-        systemMessage.innerHTML =
-        "SEÑAL DETENIDA";
-
-
-    }
-
-
-});
-
-
-
-
-
-//////////////////////////////////////////////////
-// PROTECCIÓN DE CARGA
-//////////////////////////////////////////////////
-
-
-window.addEventListener("load",function(){
-
-
-    systemMessage.innerHTML =
-    "CABINA LISTA - ESPERANDO AUTORIZACIÓN";
-
-
-});
-//////////////////////////////////////////////////
-// SECUENCIA DE INICIO DE CABINA
-//////////////////////////////////////////////////
-
-
-function cabinStartup(){
-
-
-    systemMessage.innerHTML =
-    "INICIALIZANDO SISTEMAS DE HANGAR PLAY...";
-
-
-    setTimeout(function(){
-
-
-        systemMessage.innerHTML =
-        "SISTEMA DE AUDIO DISPONIBLE";
-
-
-    },2000);
-
-
-
-    setTimeout(function(){
-
-
-        systemMessage.innerHTML =
-        "LISTO PARA TRANSMISIÓN";
-
-
-    },4000);
-
-
-
-}
-
-
-
-//////////////////////////////////////////////////
-// INICIO AUTOMÁTICO DE INTERFAZ
-//////////////////////////////////////////////////
-
-
-cabinStartup();
-
-
-
-
-
-//////////////////////////////////////////////////
-// CONTROL DE TECLADO
-//////////////////////////////////////////////////
-
-
-document.addEventListener("keydown",function(event){
-
-
-    if(event.code === "Space"){
-
-
-        if(systemActive){
-
-
-            player.paused ?
-            player.play() :
-            player.pause();
+            }, 800);
 
 
         }
 
 
+    }, 3000);
+
+
+
+
+
+
+    /*
+       BOTÓN ESCUCHAR
+    */
+
+
+    if (playButton && radioPlayer) {
+
+
+        playButton.addEventListener("click", () => {
+
+
+
+            if (radioPlayer.paused) {
+
+
+
+                radioPlayer.play();
+
+
+
+                playButton.innerHTML =
+                "⏸ DETENER TRANSMISIÓN";
+
+
+
+                if (status) {
+
+                    status.innerHTML =
+                    "ONLINE";
+
+                }
+
+
+
+                if (systemMessage) {
+
+                    systemMessage.innerHTML =
+                    "TRANSMITIENDO EN VIVO";
+
+                }
+
+
+
+            } else {
+
+
+
+                radioPlayer.pause();
+
+
+
+                playButton.innerHTML =
+                "▶ ESCUCHAR EN VIVO";
+
+
+
+                if (status) {
+
+                    status.innerHTML =
+                    "READY";
+
+                }
+
+
+
+                if (systemMessage) {
+
+                    systemMessage.innerHTML =
+                    "SISTEMA EN ESPERA";
+
+                }
+
+
+            }
+
+
+
+        });
+
+
+
     }
+
+
+
+
+
+    /*
+       ESTADOS DEL AUDIO
+    */
+
+
+    if (radioPlayer) {
+
+
+
+        radioPlayer.addEventListener(
+            "playing",
+            () => {
+
+
+                if (status) {
+
+                    status.innerHTML =
+                    "ONLINE";
+
+                }
+
+
+            }
+        );
+
+
+
+
+        radioPlayer.addEventListener(
+            "error",
+            () => {
+
+
+                if (status) {
+
+                    status.innerHTML =
+                    "SIN SEÑAL";
+
+                }
+
+
+                if (systemMessage) {
+
+                    systemMessage.innerHTML =
+                    "ERROR DE TRANSMISIÓN";
+
+                }
+
+
+            }
+        );
+
+
+
+    }
+
 
 
 });
