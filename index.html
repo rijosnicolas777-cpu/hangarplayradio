@@ -1,133 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-...        <!-- SISTEMAS DE CABINA -->
 
-        <section class="flight-systems">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <div class="system-panel">
+    <title>Hangar Play Radio | A Bordo</title>
 
-                <div class="system-light">
-                    <span></span>
-                    <p>POWER</p>
-                </div>
+    <meta name="description" content="Hangar Play Radio. Donde la aviación y la música comparten la misma frecuencia.">
 
-                <div class="system-light">
-                    <span></span>
-                    <p>AUDIO</p>
-                </div>
+    <link rel="stylesheet" href="css/estilo.css">
 
-                <div class="system-light">
-                    <span></span>
-                    <p>ONLINE</p>
-                </div>
-
-            </div>
+</head>
 
 
-            <!-- INDICADORES DE VUELO -->
-
-            <div class="flight-instruments">
+<body>
 
 
-                <div class="instrument-card">
+<!-- PANTALLA DE ARRANQUE -->
 
-                    <h3>ALT</h3>
+<div id="loader">
 
-                    <div class="digital-display">
-                        00000
-                    </div>
+    <div class="loader-content">
 
-                </div>
+        <h1>HANGAR PLAY RADIO</h1>
 
+        <p>Inicializando sistema de vuelo...</p>
 
+        <div class="loading-bar">
+            <span></span>
+        </div>
 
-                <div class="instrument-card">
-
-                    <h3>FREQ</h3>
-
-                    <div class="digital-display">
-                        101.5
-                    </div>
-
-                </div>
-
-
-
-                <div class="instrument-card">
-
-                    <h3>STATUS</h3>
-
-                    <div class="digital-display online-text">
-                        READY
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- PANEL DE MENSAJE -->
-
-        <section class="mission-panel">
-
-            <div class="mission-screen">
-
-                <p id="systemMessage">
-                    SISTEMA EN ESPERA
-                </p>
-
-                <p>
-                    HANGAR PLAY RADIO ONLINE
-                </p>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- SECCIÓN INFORMATIVA -->
-
-        <section class="radio-info">
-
-            <h2>
-                A BORDO
-            </h2>
-
-            <p>
-                Una experiencia donde la aviación y la música se encuentran.
-            </p>
-
-            <p>
-                Preparando sistemas de transmisión...
-            </p>
-
-        </section>        <!-- PIE DE CABINA -->
-
-        <footer class="footer-panel">
-
-            <p>
-                Hangar Play Radio Online
-            </p>
-
-            <p>
-                Nos conecta la misma pasión
-            </p>
-
-            <p class="creator">
-                Página web creada por Nicolás Rijos
-            </p>
-
-        </footer>
-
+        <p>
+            Conectando transmisión...
+        </p>
 
     </div>
 
@@ -135,27 +42,260 @@
 
 
 
+<!-- CABINA PRINCIPAL -->
+
+<main class="cockpit">
+
+
+    <div class="background-layer"></div>
+
+
+
+    <!-- CABECERA -->
+
+    <header class="hero">
+
+
+        <p class="subtitle">
+            RADIO ONLINE
+        </p>
+
+
+        <h1>
+            HANGAR PLAY RADIO
+        </h1>
+
+
+        <h2>
+            A BORDO
+        </h2>
+
+
+        <p class="description">
+
+            Donde la aviación y la música
+            comparten la misma frecuencia.
+
+        </p>
+
+
+        <button id="playButton">
+
+            ▶ ESCUCHAR EN VIVO
+
+        </button>
+
+
+    </header>
+
+            <!-- PANEL DE INSTRUMENTOS -->
+
+    <aside class="flight-panel">
+
+        <div class="instrument">
+
+            <span>
+                POWER
+            </span>
+
+            <strong>
+                ONLINE
+            </strong>
+
+        </div>
+
+
+        <div class="instrument">
+
+            <span>
+                AUDIO
+            </span>
+
+            <strong>
+                LIVE
+            </strong>
+
+        </div>
+
+
+        <div class="instrument">
+
+            <span>
+                STREAM
+            </span>
+
+            <strong>
+                ZENO
+            </strong>
+
+        </div>
+
+
+        <div class="instrument">
+
+            <span>
+                STATUS
+            </span>
+
+            <strong id="status">
+
+                READY
+
+            </strong>
+
+        </div>
+
+
+    </aside>
+
+
+
+
+    <!-- REPRODUCTOR -->
+
+    <section class="player-section">
+
+
+        <div class="player-box">
+
+
+            <h3>
+                A BORDO
+            </h3>
+
+
+            <p>
+                Hangar Play Radio Online
+            </p>
+
+
+            <button id="playButton">
+
+                ▶ PLAY
+
+            </button>
+
+
+            <div class="radio-status">
+
+                SISTEMA EN ESPERA
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+            <!-- SECCIÓN INFORMATIVA -->
+
+    <section class="about">
+
+
+        <div class="about-content">
+
+
+            <h2>
+
+                Bienvenido a bordo
+
+            </h2>
+
+
+            <p>
+
+                Hangar Play Radio nace de una pasión
+                por la aviación y por la música.
+
+                Una experiencia donde los sonidos,
+                los recuerdos y la emoción de volar
+                se encuentran en una misma frecuencia.
+
+            </p>
+
+
+        </div>
+
+
+    </section>
+
+
+
+
+    <!-- ACCESO AL LEGADO -->
+
+
+    <section class="legacy-access">
+
+
+        <a href="legado.html">
+
+            EL ORIGEN
+            DE UN LEGADO
+
+        </a>
+
+
+    </section>
+
+
+
+
+</main>
+
+
+
+
+
+<!-- PIE DE PÁGINA -->
+
+
+<footer class="footer">
+
+
+    <h3>
+
+        HANGAR PLAY RADIO
+
+    </h3>
+
+
+    <p>
+
+        Donde la aviación y la música
+        comparten la misma frecuencia.
+
+    </p>
+
+
+    <small>
+
+        Página desarrollada por Nicolás Rijos
+
+    </small>
+
+
+</footer>
+
+
+
+
+<!-- REPRODUCTOR DE AUDIO -->
+
+
+<audio id="radioPlayer">
+
+</audio>
+
+
+
+
+
 <script src="js/reproductor.js"></script>
+
 
 
 </body>
 
 </html>
-/* CABINA REAL HANGAR PLAY */
-
-.fly-system {
-
-    background:
-    linear-gradient(
-    rgba(0,0,0,0.45),
-    rgba(0,0,0,0.75)
-    ),
-    url("../img/cockpit.jpg");
-
-    background-size: cover;
-
-    background-position: center;
-
-    background-repeat: no-repeat;
-
-}
