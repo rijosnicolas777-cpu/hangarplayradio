@@ -2315,36 +2315,19 @@ body {
 
 
 }
-/* CABINA REAL HANGAR PLAY */
+
 
 body {
 
-    background-image:
-    linear-gradient(
-    rgba(0,0,0,0.55),
-    rgba(0,0,0,0.85)
-    ),
-    url("../img/cockpit.jpg");
-
-    background-size: cover;
-
-    background-position: center;
-
-    background-attachment: fixed;
-
-}
-
-
-.cabina {
-
-    position: relative;
+    
+  .fly-system {
 
     min-height: 100vh;
 
-    background:
+    background-image:
     linear-gradient(
     rgba(0,0,0,0.35),
-    rgba(0,0,0,0.65)
+    rgba(0,0,0,0.70)
     ),
     url("../img/cockpit.jpg");
 
@@ -2352,4 +2335,6 @@ body {
 
     background-position: center;
 
-}
+    background-repeat: no-repeat;
+
+}  
