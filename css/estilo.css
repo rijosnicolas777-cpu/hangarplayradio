@@ -1704,6 +1704,46 @@ body {
             2,
             5,
             8,
+            0.18
+        );
+
+    backdrop-filter:
+        blur(2px);
+
+    -webkit-backdrop-filter:
+        blur(2px);
+
+    border-top:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.06
+        );
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.06
+        );
+
+}
+
+    width:
+        100%;
+
+    padding:
+        80px 20px;
+
+    background:
+        rgba(
+            2,
+            5,
+            8,
             0.92
         );
 
