@@ -1,84 +1,101 @@
 /* =========================================
-   HANGAR PLAY RADIO v2.0
-   SISTEMA VISUAL DE CABINA AERONÁUTICA
+   HANGAR PLAY RADIO
+   SISTEMA DE CABINA AERONÁUTICA v3.0
 ========================================= */
 
 
-/* RESET GENERAL */
+/* =========================================
+   RESET GENERAL
+========================================= */
 
 * {
-
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
 }
 
 
 html {
-
     scroll-behavior: smooth;
-
 }
 
 
 body {
-
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background: #05070a;
     color: #ffffff;
     overflow-x: hidden;
-
 }
 
 
+/* =========================================
+   VARIABLES
+========================================= */
 
 :root {
 
     --negro: #05070a;
-    --panel: rgba(8, 14, 22, 0.82);
+
     --verde: #00ff88;
+
+    --verde-suave: rgba(0, 255, 136, 0.25);
+
     --ambar: #ffb300;
+
     --azul: #00aaff;
+
     --blanco: #ffffff;
 
-}
+    --panel:
+        rgba(4, 10, 16, 0.88);
 
+}
 
 
 /* =========================================
    PANTALLA DE ARRANQUE
 ========================================= */
 
-
 #loader {
 
     position: fixed;
+
     inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
 
     background: #020305;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     z-index: 9999;
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
 
 }
 
 
 .loader-content {
 
-    text-align: center;
+    width: min(90%, 420px);
 
-    font-family: 'Orbitron', sans-serif;
+    text-align: center;
 
 }
 
 
 .loader-content h1 {
 
-    font-size: 2rem;
+    font-size: clamp(
+        1.3rem,
+        5vw,
+        2rem
+    );
+
     letter-spacing: 4px;
 
     color: var(--blanco);
@@ -88,68 +105,70 @@ body {
 
 .loader-content p {
 
-    margin-top: 20px;
+    margin-top: 18px;
 
     color: #b8c7d9;
+
+    font-size: 0.9rem;
 
 }
 
 
-
 .loading-bar {
 
-    width: 280px;
-    height: 8px;
+    width: min(280px, 80%);
+
+    height: 7px;
 
     margin: 25px auto;
 
     background: #111820;
 
-    border-radius: 10px;
+    border-radius: 20px;
 
     overflow: hidden;
 
 }
 
 
-
 .loading-bar span {
 
     display: block;
 
-    height: 100%;
+    width: 0%;
 
-    width: 100%;
+    height: 100%;
 
     background: var(--verde);
 
-    animation: loading 2s ease-in-out;
+    box-shadow:
+        0 0 15px
+        rgba(0, 255, 136, 0.8);
+
+    animation:
+        loading 2.5s
+        ease-in-out
+        forwards;
 
 }
-
 
 
 @keyframes loading {
 
     from {
-
         width: 0%;
-
     }
 
-
     to {
-
         width: 100%;
-
     }
 
 }
 
+
 /* =========================================
    CABINA PRINCIPAL
 ========================================= */
-
 
 .cockpit {
 
@@ -161,17 +180,22 @@ body {
 
     display: flex;
 
+    flex-direction: column;
+
     justify-content: center;
 
     align-items: center;
+
+    padding: 50px 20px;
 
     overflow: hidden;
 
 }
 
 
-
-/* IMAGEN DE CABINA */
+/* =========================================
+   FONDO DE CABINA
+========================================= */
 
 .background-layer {
 
@@ -180,12 +204,13 @@ body {
     inset: 0;
 
     background-image:
-    linear-gradient(
-        rgba(0,0,0,0.55),
-        rgba(0,0,0,0.75)
-    ),
-    url("../img/cockpit.jpg");
 
+        linear-gradient(
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.65)
+        ),
+
+        url("../img/cockpit.jpg");
 
     background-size: cover;
 
@@ -193,13 +218,14 @@ body {
 
     background-repeat: no-repeat;
 
-    z-index: -1;
+    z-index: 0;
 
 }
 
 
-
-/* CAPA DE PROFUNDIDAD */
+/* =========================================
+   PROFUNDIDAD Y OSCURECIMIENTO
+========================================= */
 
 .cockpit::after {
 
@@ -210,296 +236,747 @@ body {
     inset: 0;
 
     background:
-    radial-gradient(
-        circle at center,
-        transparent 20%,
-        rgba(0,0,0,0.65) 100%
-    );
+
+        radial-gradient(
+            circle at center,
+            transparent 15%,
+            rgba(0, 0, 0, 0.65) 100%
+        );
 
     pointer-events: none;
+
+    z-index: 1;
 
 }
 
 
-
-
 /* =========================================
-   CABECERA PRINCIPAL
+   CONSOLA PRINCIPAL
 ========================================= */
 
-
-.hero {
+.radio-console {
 
     position: relative;
 
     z-index: 2;
 
+    width: min(
+        100%,
+        850px
+    );
+
+    padding:
+
+        clamp(25px, 5vw, 50px)
+
+        clamp(20px, 5vw, 55px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
     text-align: center;
 
-    max-width: 700px;
+    background:
 
-    padding: 30px;
+        linear-gradient(
+            145deg,
+            rgba(3, 9, 15, 0.82),
+            rgba(5, 12, 20, 0.62)
+        );
+
+    border:
+
+        1px solid
+        rgba(0, 255, 136, 0.35);
+
+    border-radius: 20px;
+
+    box-shadow:
+
+        0 0 35px
+        rgba(0, 0, 0, 0.65),
+
+        inset 0 0 35px
+        rgba(0, 255, 136, 0.04);
+
+    backdrop-filter:
+        blur(4px);
 
 }
 
 
+/* =========================================
+   IDENTIDAD DE LA ESTACIÓN
+========================================= */
 
-.subtitle {
+.station-brand {
 
-    font-family: 'Orbitron', sans-serif;
+    width: 100%;
+
+    margin-bottom: 25px;
+
+}
+
+
+.station-kicker {
+
+    display: block;
 
     color: var(--verde);
 
-    letter-spacing: 5px;
+    font-size: 0.75rem;
 
-    font-size: 0.9rem;
+    font-weight: bold;
+
+    letter-spacing: 5px;
 
 }
 
 
+.station-brand h1 {
 
-.hero h1 {
+    margin-top: 8px;
 
-    margin-top: 20px;
-
-    font-family: 'Orbitron', sans-serif;
-
-    font-size: clamp(2rem, 5vw, 4rem);
+    font-size:
+        clamp(
+            2rem,
+            6vw,
+            4rem
+        );
 
     letter-spacing: 5px;
 
     text-shadow:
-    0 0 15px rgba(255,255,255,0.4);
+
+        0 0 15px
+        rgba(255, 255, 255, 0.35);
 
 }
 
 
+.station-brand p {
 
-.hero h2 {
+    max-width: 600px;
 
-    margin-top: 15px;
+    margin:
 
-    color: var(--ambar);
-
-    font-family: 'Orbitron', sans-serif;
-
-    letter-spacing: 8px;
-
-    font-size: 2rem;
-
-}
-
-
-
-.description {
-
-    margin-top: 25px;
-
-    font-size: 1.1rem;
+        18px auto 0;
 
     color: #d7e1ea;
 
     line-height: 1.6;
 
-}
-
-/* =========================================
-   BOTÓN PRINCIPAL DE ESCUCHA
-========================================= */
-
-
-#playButton {
-
-    margin-top: 35px;
-
-    padding: 16px 40px;
-
-    border-radius: 8px;
-
-    border: 1px solid var(--verde);
-
-    background:
-    rgba(0,255,136,0.08);
-
-    color: var(--blanco);
-
-    font-family: 'Orbitron', sans-serif;
-
-    font-size: 1rem;
-
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    transition: all 0.3s ease;
-
-    box-shadow:
-    0 0 15px rgba(0,255,136,0.25);
+    font-size:
+        clamp(
+            0.9rem,
+            2vw,
+            1.05rem
+        );
 
 }
-
-
-
-#playButton:hover {
-
-    background: var(--verde);
-
-    color: #000;
-
-    box-shadow:
-    0 0 30px rgba(0,255,136,0.7);
-
-    transform: translateY(-3px);
-
-}
-
-
-
 
 
 /* =========================================
-   PANEL DE INSTRUMENTOS DE VUELO
+   CABINA DE INSTRUMENTOS
 ========================================= */
 
-
-.flight-panel {
-
-    position: absolute;
-
-    right: 40px;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    width: 240px;
-
-    padding: 25px;
-
-    background:
-    var(--panel);
-
-    border:
-
-    1px solid rgba(255,255,255,0.15);
-
-    border-radius: 12px;
-
-    backdrop-filter: blur(10px);
-
-    z-index: 3;
-
-}
-
-
-
-.instrument {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 15px 0;
-
-    border-bottom:
-
-    1px solid rgba(255,255,255,0.08);
-
-    font-family: 'Orbitron', sans-serif;
-
-}
-
-
-
-.instrument:last-child {
-
-    border-bottom: none;
-
-}
-
-
-
-.instrument span {
-
-    color: #b8c7d9;
-
-    font-size: 0.8rem;
-
-    letter-spacing: 2px;
-
-}
-
-
-
-.instrument strong {
-
-    color: var(--ambar);
-
-    font-size: 0.85rem;
-
-}
-
-
-
-.instrument strong.green {
-
-    color: var(--verde);
-
-    animation: pulse 2s infinite;
-
-}
-
-
-
-
-
-@keyframes pulse {
-
-    0% {
-
-        opacity: 1;
-
-        text-shadow:
-        0 0 5px var(--verde);
-
-    }
-
-
-    50% {
-
-        opacity: 0.6;
-
-        text-shadow:
-        0 0 20px var(--verde);
-
-    }
-
-
-    100% {
-
-        opacity: 1;
-
-        text-shadow:
-        0 0 5px var(--verde);
-
-    }
-
-}
-
-/* =========================================
-   REPRODUCTOR A BORDO
-========================================= */
-
-
-.player-section {
+.instrument-cockpit {
 
     position: relative;
 
-    z-index: 3;
+    width: 100%;
 
-    margin-top: 40px;
+    max-width: 700px;
+
+    min-height: 310px;
+
+    padding: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+
+        rgba(
+            2,
+            7,
+            12,
+            0.82
+        );
+
+    border:
+
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+
+    border-radius: 15px;
+
+    box-shadow:
+
+        inset 0 0 30px
+        rgba(
+            0,
+            0,
+            0,
+            0.8
+        );
+
+}
+
+
+/* =========================================
+   RADAR
+========================================= */
+
+.radar-display {
+
+    position: absolute;
+
+    top: 25px;
+
+    left: 25px;
+
+    width: 120px;
+
+    height: 120px;
+
+    border:
+
+        2px solid
+        rgba(
+            0,
+            255,
+            136,
+            0.55
+        );
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(
+                0,
+                255,
+                136,
+                0.08
+            ),
+            rgba(
+                0,
+                20,
+                15,
+                0.5
+            )
+        );
+
+    box-shadow:
+
+        0 0 20px
+        rgba(
+            0,
+            255,
+            136,
+            0.18
+        );
+
+}
+
+
+/* =========================================
+   CUADRÍCULA DEL RADAR
+========================================= */
+
+.radar-grid {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+            transparent 49%,
+            rgba(
+                0,
+                255,
+                136,
+                0.3
+            ) 50%,
+            transparent 51%
+        ),
+
+        linear-gradient(
+            90deg,
+            transparent 49%,
+            rgba(
+                0,
+                255,
+                136,
+                0.3
+            ) 50%,
+            transparent 51%
+        );
+
+}
+
+
+.radar-display::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 20px;
+
+    border:
+
+        1px solid
+        rgba(
+            0,
+            255,
+            136,
+            0.35
+        );
+
+    border-radius: 50%;
+
+}
+
+
+.radar-display::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 40px;
+
+    border:
+
+        1px solid
+        rgba(
+            0,
+            255,
+            136,
+            0.3
+        );
+
+    border-radius: 50%;
+
+}
+
+
+/* =========================================
+   BARRIDO DEL RADAR
+========================================= */
+
+.radar-sweep {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 50%;
+
+    height: 2px;
+
+    transform-origin: left center;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--verde),
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 8px
+        var(--verde);
+
+    animation:
+
+        radarSweep
+        3s
+        linear
+        infinite;
+
+}
+
+
+@keyframes radarSweep {
+
+    from {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================
+   CENTRO DEL RADAR
+========================================= */
+
+.radar-center {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 6px;
+
+    height: 6px;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    background:
+
+        var(--verde);
+
+    border-radius: 50%;
+
+    box-shadow:
+
+        0 0 10px
+        var(--verde);
+
+}
+
+
+/* =========================================
+   PUNTOS DEL RADAR
+========================================= */
+
+.radar-blip {
+
+    position: absolute;
+
+    width: 5px;
+
+    height: 5px;
+
+    background:
+        var(--verde);
+
+    border-radius: 50%;
+
+    box-shadow:
+
+        0 0 8px
+        var(--verde);
+
+    animation:
+
+        radarBlip
+        2s
+        infinite
+        alternate;
+
+}
+
+
+.blip-one {
+
+    top: 30%;
+
+    left: 65%;
+
+}
+
+
+.blip-two {
+
+    top: 65%;
+
+    left: 30%;
+
+    animation-delay:
+        0.8s;
+
+}
+
+
+.blip-three {
+
+    top: 42%;
+
+    left: 75%;
+
+    animation-delay:
+        1.4s;
+
+}
+
+
+@keyframes radarBlip {
+
+    from {
+
+        opacity: 0.2;
+
+        transform:
+            scale(0.7);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1.4);
+
+    }
+
+}
+
+
+/* =========================================
+   INDICADORES DE CABINA
+========================================= */
+
+.cockpit-indicators {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 25px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.indicator {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 0.7rem;
+
+    letter-spacing: 2px;
+
+    color: #b8c7d9;
+
+}
+
+
+.indicator-light {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        var(--verde);
+
+    box-shadow:
+
+        0 0 10px
+        var(--verde);
+
+    animation:
+
+        indicatorPulse
+        2s
+        infinite;
+
+}
+
+
+.audio-light {
+
+    animation-delay:
+        0.4s;
+
+}
+
+
+.stream-light {
+
+    animation-delay:
+        0.8s;
+
+}
+
+
+@keyframes indicatorPulse {
+
+    0%,
+    100% {
+
+        opacity: 0.4;
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* =========================================
+   VÚMETROS
+========================================= */
+
+.vu-section {
+
+    width: min(
+        100%,
+        430px
+    );
+
+    display: flex;
+
+    gap: 25px;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+.vu-channel {
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.vu-label {
+
+    color: var(--ambar);
+
+    font-weight: bold;
+
+    font-size: 0.75rem;
+
+}
+
+
+.vu-meter {
+
+    flex: 1;
+
+    height: 18px;
+
+    padding: 2px;
+
+    background:
+        #101820;
+
+    border:
+
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+
+    border-radius: 4px;
+
+    overflow: hidden;
+
+}
+
+
+.vu-bar {
+
+    width: 5%;
+
+    height: 100%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--verde),
+            var(--ambar)
+        );
+
+    border-radius: 2px;
+
+    box-shadow:
+
+        0 0 10px
+        rgba(
+            0,
+            255,
+            136,
+            0.55
+        );
+
+    transition:
+
+        width 0.08s
+        linear;
+
+}
+
+/* =========================================
+   CONTROLES DEL REPRODUCTOR
+========================================= */
+
+.player-controls {
+
+    width: 100%;
+
+    margin-top: 35px;
 
     display: flex;
 
@@ -508,357 +985,766 @@ body {
 }
 
 
+.play-button {
 
-.player-box {
+    display: flex;
 
-    width: 320px;
+    align-items: center;
 
-    padding: 25px;
+    justify-content: center;
 
-    background:
+    gap: 12px;
 
-    rgba(5,10,18,0.85);
+    min-width: 260px;
+
+    padding: 16px 30px;
 
     border:
 
-    1px solid rgba(0,255,136,0.25);
+        1px solid
+        var(--verde);
 
-    border-radius: 15px;
-
-    text-align: center;
-
-    backdrop-filter: blur(8px);
-
-}
-
-
-
-.player-box h3 {
-
-    font-family: 'Orbitron', sans-serif;
-
-    letter-spacing: 4px;
-
-    color: var(--ambar);
-
-}
-
-
-
-.player-box p {
-
-    margin: 15px 0;
-
-    color: #cfd8e3;
-
-}
-
-
-
-.radio-status {
-
-    margin-top: 20px;
-
-    font-family: 'Orbitron', sans-serif;
-
-    font-size: 0.8rem;
-
-    color: var(--verde);
-
-}
-
-
-
-
-
-/* =========================================
-   SECCIÓN INFORMATIVA
-========================================= */
-
-
-.about {
+    border-radius: 8px;
 
     background:
 
-    #05070a;
+        rgba(
+            0,
+            255,
+            136,
+            0.08
+        );
 
-    padding: 70px 20px;
+    color: var(--blanco);
 
-    text-align: center;
+    font-size: 0.9rem;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition:
+
+        background 0.3s ease,
+
+        color 0.3s ease,
+
+        transform 0.3s ease,
+
+        box-shadow 0.3s ease;
+
+    box-shadow:
+
+        0 0 15px
+        rgba(
+            0,
+            255,
+            136,
+            0.2
+        );
 
 }
 
+
+.play-button:hover {
+
+    background:
+
+        var(--verde);
+
+    color:
+
+        #000000;
+
+    transform:
+
+        translateY(-2px);
+
+    box-shadow:
+
+        0 0 25px
+        rgba(
+            0,
+            255,
+            136,
+            0.6
+        );
+
+}
+
+
+.play-button.playing {
+
+    background:
+
+        rgba(
+            255,
+            179,
+            0,
+            0.12
+        );
+
+    border-color:
+
+        var(--ambar);
+
+}
+
+
+.play-icon {
+
+    font-size: 1rem;
+
+}
+
+
+/* =========================================
+   ESTADO DE TRANSMISIÓN
+========================================= */
+
+.radio-status {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    color:
+
+        var(--verde);
+
+    font-size: 0.75rem;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+}
+
+
+.status-light {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+
+        var(--ambar);
+
+    box-shadow:
+
+        0 0 8px
+        var(--ambar);
+
+}
+
+
+.status-light.online {
+
+    background:
+
+        var(--verde);
+
+    box-shadow:
+
+        0 0 12px
+        var(--verde);
+
+    animation:
+
+        statusPulse
+        1.5s
+        infinite;
+
+}
+
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+
+        opacity: 0.5;
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* =========================================
+   MENSAJE DE CABINA
+========================================= */
+
+.system-message {
+
+    margin-top: 25px;
+
+    text-align: center;
+
+    color:
+
+        #b8c7d9;
+
+}
+
+
+.system-message span {
+
+    display: block;
+
+    color:
+
+        var(--ambar);
+
+    font-size: 0.75rem;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+}
+
+
+.system-message p {
+
+    margin-top: 8px;
+
+    color:
+
+        #9eacbb;
+
+    font-size: 0.8rem;
+
+}
+
+
+/* =========================================
+   PRESENTACIÓN
+========================================= */
+
+.about {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    padding:
+
+        70px 20px;
+
+    text-align: center;
+
+    background:
+
+        #05070a;
+
+}
 
 
 .about-content {
 
-    max-width: 850px;
+    width: min(
+        100%,
+        850px
+    );
 
-    margin: auto;
+    margin: 0 auto;
 
 }
-
 
 
 .about h2 {
 
-    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 25px;
 
-    color: var(--ambar);
+    color:
+
+        var(--ambar);
+
+    font-size:
+
+        clamp(
+            1.4rem,
+            4vw,
+            2rem
+        );
 
     letter-spacing: 3px;
 
-    margin-bottom: 25px;
-
 }
-
 
 
 .about p {
 
-    color: #d5dee8;
+    color:
+
+        #d5dee8;
 
     line-height: 1.8;
 
-    font-size: 1.1rem;
+    font-size:
+
+        clamp(
+            0.95rem,
+            2vw,
+            1.1rem
+        );
 
 }
-
-
-
 
 
 /* =========================================
    ACCESO AL LEGADO
 ========================================= */
 
-
 .legacy-access {
 
-    padding: 50px 20px;
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    padding:
+
+        50px 20px;
 
     text-align: center;
 
     background:
 
-    #070b12;
+        #070b12;
 
 }
-
 
 
 .legacy-access a {
 
-    display: inline-block;
+    display: inline-flex;
 
-    padding: 18px 35px;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding:
+
+        18px 35px;
 
     border:
 
-    1px solid var(--ambar);
-
-    color: var(--ambar);
-
-    text-decoration: none;
-
-    font-family: 'Orbitron', sans-serif;
-
-    letter-spacing: 3px;
+        1px solid
+        var(--ambar);
 
     border-radius: 8px;
 
-    transition: 0.3s;
+    color:
+
+        var(--ambar);
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+
+    letter-spacing: 3px;
+
+    transition:
+
+        background 0.3s ease,
+
+        color 0.3s ease,
+
+        transform 0.3s ease;
 
 }
-
 
 
 .legacy-access a:hover {
 
-    background: var(--ambar);
+    background:
 
-    color: #000;
+        var(--ambar);
+
+    color:
+
+        #000000;
+
+    transform:
+
+        translateY(-2px);
 
 }
 
 
+.legacy-access strong {
 
+    font-size: 1rem;
+
+}
 
 
 /* =========================================
-   FOOTER
+   PIE DE CABINA
 ========================================= */
 
+.cockpit-footer {
 
-.footer {
+    position: relative;
 
-    background: #020305;
+    z-index: 2;
 
-    padding: 35px 20px;
+    width: 100%;
+
+    padding:
+
+        25px 20px;
 
     text-align: center;
+
+    background:
+
+        rgba(
+            2,
+            3,
+            5,
+            0.8
+        );
+
+    border-top:
+
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
 
 }
 
 
+.cockpit-footer p {
 
-.footer h3 {
+    color:
 
-    font-family: 'Orbitron', sans-serif;
+        #ffffff;
+
+    font-size: 0.8rem;
+
+    font-weight: bold;
 
     letter-spacing: 3px;
 
 }
 
 
+.cockpit-footer span {
 
-.footer p {
+    display: block;
 
-    color: #b9c5d3;
+    margin-top: 8px;
 
-    margin: 15px 0;
+    color:
+
+        #788696;
+
+    font-size: 0.75rem;
 
 }
 
+
+/* =========================================
+   PIE DE PÁGINA
+========================================= */
+
+.footer {
+
+    position: relative;
+
+    z-index: 2;
+
+    padding:
+
+        35px 20px;
+
+    text-align: center;
+
+    background:
+
+        #020305;
+
+}
+
+
+.footer h3 {
+
+    letter-spacing: 3px;
+
+    font-size: 0.9rem;
+
+}
+
+
+.footer p {
+
+    margin:
+
+        15px 0;
+
+    color:
+
+        #b9c5d3;
+
+    font-size: 0.85rem;
+
+}
 
 
 .footer small {
 
-    color: #788696;
+    color:
 
-}    
+        #788696;
 
- /* =========================================
-   ADAPTACIÓN RESPONSIVE
-========================================= */
-
-
-@media (max-width: 900px) {
-
-
-    .flight-panel {
-
-        position: relative;
-
-        right: auto;
-
-        top: auto;
-
-        transform: none;
-
-        width: 90%;
-
-        margin: 30px auto;
-
-    }
-
-
-
-    .cockpit {
-
-        flex-direction: column;
-
-        padding-bottom: 50px;
-
-    }
-
-
-
-    .hero {
-
-        padding: 20px;
-
-    }
-
-
-
-    .hero h1 {
-
-        font-size: 2rem;
-
-    }
-
-
-
-    .hero h2 {
-
-        font-size: 1.5rem;
-
-    }
-
-
-
-    .description {
-
-        font-size: 1rem;
-
-    }
-
+    font-size: 0.75rem;
 
 }
 
 
+/* =========================================
+   ADAPTACIÓN TABLET
+========================================= */
 
+@media (max-width: 900px) {
 
-@media (max-width: 600px) {
+    .cockpit {
 
+        padding:
 
-    .loader-content h1 {
-
-        font-size: 1.3rem;
-
-        letter-spacing: 2px;
-
-    }
-
-
-
-    .loading-bar {
-
-        width: 220px;
+            35px 15px;
 
     }
 
 
-
-    #playButton {
+    .radio-console {
 
         width: 100%;
 
-        padding: 15px;
+        padding:
+
+            35px 25px;
 
     }
 
 
+    .instrument-cockpit {
 
-    .player-box {
+        min-height: 330px;
 
-        width: 90%;
+    }
+
+
+    .radar-display {
+
+        width: 105px;
+
+        height: 105px;
+
+        top: 20px;
+
+        left: 20px;
 
     }
 
 
+    .station-brand h1 {
 
-    .instrument {
-
-        font-size: 0.75rem;
+        letter-spacing: 3px;
 
     }
 
+}
+
+
+/* =========================================
+   ADAPTACIÓN MÓVIL
+========================================= */
+
+@media (max-width: 600px) {
+
+    .cockpit {
+
+        min-height: 100vh;
+
+        padding:
+
+            20px 10px;
+
+    }
+
+
+    .radio-console {
+
+        padding:
+
+            25px 15px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .station-kicker {
+
+        font-size: 0.65rem;
+
+        letter-spacing: 3px;
+
+    }
+
+
+    .station-brand h1 {
+
+        font-size: 2rem;
+
+        letter-spacing: 3px;
+
+    }
+
+
+    .station-brand p {
+
+        font-size: 0.85rem;
+
+    }
+
+
+    .instrument-cockpit {
+
+        min-height: 360px;
+
+        padding:
+
+            25px 15px;
+
+    }
+
+
+    .radar-display {
+
+        position: relative;
+
+        top: auto;
+
+        left: auto;
+
+        width: 100px;
+
+        height: 100px;
+
+        margin-bottom: 25px;
+
+    }
+
+
+    .cockpit-indicators {
+
+        gap: 12px;
+
+        margin-bottom: 25px;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .indicator {
+
+        font-size: 0.6rem;
+
+        letter-spacing: 1px;
+
+    }
+
+
+    .vu-section {
+
+        width: 100%;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+    }
+
+
+    .vu-channel {
+
+        width: 100%;
+
+    }
+
+
+    .play-button {
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
+
+    .about {
+
+        padding:
+
+            55px 20px;
+
+    }
+
+
+    .legacy-access {
+
+        padding:
+
+            40px 20px;
+
+    }
 
 
     .legacy-access a {
 
         width: 90%;
 
-        font-size: 0.8rem;
+        max-width: 320px;
 
     }
 
+}
 
 
-}  
-
+/* =========================================
+   FIN DEL CSS
+========================================= */
 
 
 
