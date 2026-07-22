@@ -1,818 +1,402 @@
 /* =========================================
    HANGAR PLAY RADIO
-   REPRODUCTOR A BORDO v3.0
-   STREAMING ZENO + CABINA + VÚMETROS
+   REPRODUCTOR A BORDO
 ========================================= */
 
+document.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+    /* =====================================
+       ELEMENTOS DEL REPRODUCTOR
+    ====================================== */
 
+    const radioPlayer =
+        document.getElementById("radioPlayer");
 
-        /* =====================================
-           ELEMENTOS PRINCIPALES
-        ====================================== */
+    const playButton =
+        document.getElementById("playButton");
 
+    const status =
+        document.getElementById("status");
 
-        const loader =
-            document.getElementById(
-                "loader"
-            );
+    const systemMessage =
+        document.querySelector(".radio-status");
 
+    const loader =
+        document.getElementById("loader");
 
-        const radioPlayer =
-            document.getElementById(
-                "radioPlayer"
-            );
 
+    /* =====================================
+       ELEMENTOS VISUALES
+    ====================================== */
 
-        const playButton =
-            document.getElementById(
-                "playButton"
-            );
+    const vuLeft =
+        document.getElementById("vuLeft");
 
+    const vuRight =
+        document.getElementById("vuRight");
 
-        const playIcon =
-            document.querySelector(
-                ".play-icon"
-            );
+    const radarSweep =
+        document.querySelector(".radar-sweep");
 
+    const powerLight =
+        document.querySelector(".power-light");
 
-        const playText =
-            document.querySelector(
-                ".play-text"
-            );
 
+    /* =====================================
+       TRANSMISIÓN
+    ====================================== */
 
-        const status =
-            document.getElementById(
-                "status"
-            );
+    const streamURL =
+        "https://stream.zeno.fm/1fv4rwglthgtv";
 
 
-        const statusLight =
-            document.getElementById(
-                "statusLight"
-            );
+    /* =====================================
+       CONFIGURACIÓN DEL AUDIO
+    ====================================== */
 
+    if (radioPlayer) {
 
-        const systemMessage =
-            document.querySelector(
-                ".system-message p"
-            );
+        radioPlayer.src =
+            streamURL;
 
-
-        const vuLeft =
-            document.getElementById(
-                "vuLeft"
-            );
-
-
-        const vuRight =
-            document.getElementById(
-                "vuRight"
-            );
-
-
-        /* =====================================
-           STREAMING OFICIAL ZENO
-        ====================================== */
-
-
-        const streamURL =
-            "https://stream.zeno.fm/1fv4rwglthgtv";
-
-
-        if (
-            radioPlayer
-        ) {
-
-            radioPlayer.src =
-                streamURL;
-
-        }
-
-
-        /* =====================================
-           VARIABLES DE AUDIO
-        ====================================== */
-
-
-        let audioContext =
-            null;
-
-
-        let analyser =
-            null;
-
-
-        let sourceNode =
-            null;
-
-
-        let animationFrame =
-            null;
-
-
-        let audioInitialized =
-            false;
-
-
-        /* =====================================
-           PANTALLA DE ARRANQUE
-        ====================================== */
-
-
-        window.setTimeout(
-            () => {
-
-
-                if (
-                    loader
-                ) {
-
-                    loader.style.opacity =
-                        "0";
-
-                    loader.style.visibility =
-                        "hidden";
-
-                    loader.style.pointerEvents =
-                        "none";
-
-                }
-
-
-            },
-            3000
-        );
-
-
-        /* =====================================
-           CREAR SISTEMA DE ANÁLISIS DE AUDIO
-        ====================================== */
-
-
-        function initializeAudioAnalysis() {
-
-
-            if (
-                audioInitialized
-            ) {
-
-                return;
-
-            }
-
-
-            if (
-                !radioPlayer
-            ) {
-
-                return;
-
-            }
-
-
-            try {
-
-
-                const AudioContext =
-                    window.AudioContext ||
-                    window.webkitAudioContext;
-
-
-                if (
-                    !AudioContext
-                ) {
-
-                    console.log(
-                        "AudioContext no disponible."
-                    );
-
-                    return;
-
-                }
-
-
-                audioContext =
-                    new AudioContext();
-
-
-                analyser =
-                    audioContext.createAnalyser();
-
-
-                analyser.fftSize =
-                    256;
-
-
-                analyser.smoothingTimeConstant =
-                    0.75;
-
-
-                /*
-                   IMPORTANTE:
-
-                   El navegador puede bloquear
-                   el análisis de un streaming
-                   externo si el servidor no
-                   permite CORS.
-
-                   Intentamos conectar el
-                   reproductor al analizador.
-                */
-
-
-                sourceNode =
-                    audioContext.createMediaElementSource(
-                        radioPlayer
-                    );
-
-
-                sourceNode.connect(
-                    analyser
-                );
-
-
-                analyser.connect(
-                    audioContext.destination
-                );
-
-
-                audioInitialized =
-                    true;
-
-
-                startVUMeters();
-
-
-            } catch (
-                error
-            ) {
-
-
-                console.log(
-                    "No fue posible analizar el audio:",
-                    error
-                );
-
-
-                /*
-                   Si el navegador bloquea
-                   el análisis del streaming,
-                   mantenemos una animación
-                   visual de respaldo.
-                */
-
-
-                startFallbackVUMeters();
-
-
-            }
-
-        }
-
-
-        /* =====================================
-           VÚMETROS REALES
-        ====================================== */
-
-
-        function startVUMeters() {
-
-
-            if (
-                !analyser
-            ) {
-
-                return;
-
-            }
-
-
-            const dataArray =
-                new Uint8Array(
-                    analyser.frequencyBinCount
-                );
-
-
-            function animate() {
-
-
-                analyser.getByteFrequencyData(
-                    dataArray
-                );
-
-
-                let total =
-                    0;
-
-
-                for (
-                    let i = 0;
-                    i < dataArray.length;
-                    i++
-                ) {
-
-
-                    total +=
-                        dataArray[i];
-
-
-                }
-
-
-                const average =
-                    total /
-                    dataArray.length;
-
-
-                const level =
-                    Math.max(
-                        5,
-                        Math.min(
-                            100,
-                            average *
-                            1.5
-                        )
-                    );
-
-
-                const variation =
-                    Math.random() *
-                    12;
-
-
-                if (
-                    vuLeft
-                ) {
-
-                    vuLeft.style.width =
-                        Math.min(
-                            100,
-                            level +
-                            variation
-                        ) +
-                        "%";
-
-                }
-
-
-                if (
-                    vuRight
-                ) {
-
-                    vuRight.style.width =
-                        Math.min(
-                            100,
-                            level +
-                            variation *
-                            0.8
-                        ) +
-                        "%";
-
-                }
-
-
-                animationFrame =
-                    requestAnimationFrame(
-                        animate
-                    );
-
-
-            }
-
-
-            animate();
-
-
-        }
-
-
-        /* =====================================
-           ANIMACIÓN DE RESPALDO
-        ====================================== */
-
-
-        function startFallbackVUMeters() {
-
-
-            function animateFallback() {
-
-
-                const leftLevel =
-                    15 +
-                    Math.random() *
-                    70;
-
-
-                const rightLevel =
-                    15 +
-                    Math.random() *
-                    70;
-
-
-                if (
-                    vuLeft
-                ) {
-
-                    vuLeft.style.width =
-                        leftLevel +
-                        "%";
-
-                }
-
-
-                if (
-                    vuRight
-                ) {
-
-                    vuRight.style.width =
-                        rightLevel +
-                        "%";
-
-                }
-
-
-                animationFrame =
-                    requestAnimationFrame(
-                        () => {
-
-                            setTimeout(
-                                animateFallback,
-                                120
-                            );
-
-                        }
-                    );
-
-
-            }
-
-
-            animateFallback();
-
-
-        }
-
-
-        /* =====================================
-           ACTUALIZAR ESTADO VISUAL
-        ====================================== */
-
-
-        function setOnlineState() {
-
-
-            if (
-                status
-            ) {
-
-                status.textContent =
-                    "TRANSMISIÓN ONLINE";
-
-            }
-
-
-            if (
-                statusLight
-            ) {
-
-                statusLight.classList.add(
-                    "online"
-                );
-
-            }
-
-
-            if (
-                systemMessage
-            ) {
-
-                systemMessage.textContent =
-                    "TRANSMITIENDO EN VIVO";
-
-            }
-
-
-        }
-
-
-        /* =====================================
-           ACTUALIZAR ESTADO DE ESPERA
-        ====================================== */
-
-
-        function setStandbyState() {
-
-
-            if (
-                status
-            ) {
-
-                status.textContent =
-                    "SISTEMA EN ESPERA";
-
-            }
-
-
-            if (
-                statusLight
-            ) {
-
-                statusLight.classList.remove(
-                    "online"
-                );
-
-            }
-
-
-            if (
-                systemMessage
-            ) {
-
-                systemMessage.textContent =
-                    "Listos para despegar";
-
-            }
-
-
-            if (
-                vuLeft
-            ) {
-
-                vuLeft.style.width =
-                    "5%";
-
-            }
-
-
-            if (
-                vuRight
-            ) {
-
-                vuRight.style.width =
-                    "5%";
-
-            }
-
-
-        }
-
-
-        /* =====================================
-           BOTÓN PRINCIPAL
-        ====================================== */
-
-
-        if (
-            playButton &&
-            radioPlayer
-        ) {
-
-
-            playButton.addEventListener(
-                "click",
-                async () => {
-
-
-                    if (
-                        radioPlayer.paused
-                    ) {
-
-
-                        try {
-
-
-                            /*
-                               Inicializamos el
-                               análisis de audio
-                               después de la
-                               interacción del
-                               usuario.
-                            */
-
-
-                            initializeAudioAnalysis();
-
-
-                            if (
-                                audioContext &&
-                                audioContext.state ===
-                                "suspended"
-                            ) {
-
-                                await audioContext.resume();
-
-                            }
-
-
-                            await radioPlayer.play();
-
-
-                            playButton.classList.add(
-                                "playing"
-                            );
-
-
-                            if (
-                                playIcon
-                            ) {
-
-                                playIcon.textContent =
-                                    "⏸";
-
-                            }
-
-
-                            if (
-                                playText
-                            ) {
-
-                                playText.textContent =
-                                    "DETENER TRANSMISIÓN";
-
-                            }
-
-
-                            setOnlineState();
-
-
-                        } catch (
-                            error
-                        ) {
-
-
-                            console.error(
-                                "Error al iniciar la transmisión:",
-                                error
-                            );
-
-
-                            if (
-                                status
-                            ) {
-
-                                status.textContent =
-                                    "ERROR DE CONEXIÓN";
-
-                            }
-
-
-                            if (
-                                systemMessage
-                            ) {
-
-                                systemMessage.textContent =
-                                    "NO SE PUDO INICIAR LA TRANSMISIÓN";
-
-                            }
-
-
-                        }
-
-
-                    } else {
-
-
-                        radioPlayer.pause();
-
-
-                        playButton.classList.remove(
-                            "playing"
-                        );
-
-
-                        if (
-                            playIcon
-                        ) {
-
-                            playIcon.textContent =
-                                "▶";
-
-                        }
-
-
-                        if (
-                            playText
-                        ) {
-
-                            playText.textContent =
-                                "ESCUCHAR EN VIVO";
-
-                        }
-
-
-                        setStandbyState();
-
-
-                    }
-
-
-                }
-            );
-
-
-        }
-
-
-        /* =====================================
-           EVENTO: TRANSMISIÓN INICIADA
-        ====================================== */
-
-
-        if (
-            radioPlayer
-        ) {
-
-
-            radioPlayer.addEventListener(
-                "playing",
-                () => {
-
-
-                    setOnlineState();
-
-
-                }
-            );
-
-
-            /* =================================
-               EVENTO: PAUSA
-            ================================= */
-
-
-            radioPlayer.addEventListener(
-                "pause",
-                () => {
-
-
-                    if (
-                        radioPlayer.currentTime >
-                        0
-                    ) {
-
-                        setStandbyState();
-
-                    }
-
-
-                }
-            );
-
-
-            /* =================================
-               EVENTO: ERROR
-            ================================= */
-
-
-            radioPlayer.addEventListener(
-                "error",
-                () => {
-
-
-                    if (
-                        status
-                    ) {
-
-                        status.textContent =
-                            "SIN SEÑAL";
-
-                    }
-
-
-                    if (
-                        statusLight
-                    ) {
-
-                        statusLight.classList.remove(
-                            "online"
-                        );
-
-                    }
-
-
-                    if (
-                        systemMessage
-                    ) {
-
-                        systemMessage.textContent =
-                            "ERROR DE TRANSMISIÓN";
-
-                    }
-
-
-                }
-            );
-
-
-        }
-
+        radioPlayer.preload =
+            "none";
 
     }
 
-);
+
+    /* =====================================
+       PANTALLA DE INICIO
+    ====================================== */
+
+    setTimeout(() => {
+
+        if (loader) {
+
+            loader.classList.add(
+                "loader-hidden"
+            );
+
+        }
+
+    }, 2500);
+
+
+    /* =====================================
+       ESTADO ONLINE
+    ====================================== */
+
+    function setOnlineState() {
+
+        if (status) {
+
+            status.textContent =
+                "ONLINE";
+
+            status.classList.add(
+                "online"
+            );
+
+        }
+
+
+        if (systemMessage) {
+
+            systemMessage.textContent =
+                "TRANSMITIENDO EN VIVO";
+
+        }
+
+
+        if (powerLight) {
+
+            powerLight.classList.add(
+                "active"
+            );
+
+        }
+
+
+        if (playButton) {
+
+            playButton.classList.add(
+                "playing"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================
+       ESTADO EN ESPERA
+    ====================================== */
+
+    function setStandbyState() {
+
+        if (status) {
+
+            status.textContent =
+                "READY";
+
+            status.classList.remove(
+                "online"
+            );
+
+        }
+
+
+        if (systemMessage) {
+
+            systemMessage.textContent =
+                "SISTEMA EN ESPERA";
+
+        }
+
+
+        if (powerLight) {
+
+            powerLight.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        if (playButton) {
+
+            playButton.classList.remove(
+                "playing"
+            );
+
+        }
+
+
+        if (vuLeft) {
+
+            vuLeft.style.height =
+                "8%";
+
+        }
+
+
+        if (vuRight) {
+
+            vuRight.style.height =
+                "8%";
+
+        }
+
+    }
+
+
+    /* =====================================
+       BOTÓN PRINCIPAL
+    ====================================== */
+
+    if (
+        playButton &&
+        radioPlayer
+    ) {
+
+        playButton.addEventListener(
+            "click",
+            async () => {
+
+                if (
+                    radioPlayer.paused
+                ) {
+
+                    try {
+
+                        await radioPlayer.play();
+
+                        setOnlineState();
+
+
+                        playButton.innerHTML =
+                            "<span>⏸</span> DETENER TRANSMISIÓN";
+
+
+                        startVisualMeters();
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Error de reproducción:",
+                            error
+                        );
+
+
+                        if (status) {
+
+                            status.textContent =
+                                "SIN SEÑAL";
+
+                        }
+
+
+                        if (systemMessage) {
+
+                            systemMessage.textContent =
+                                "NO SE PUDO INICIAR LA TRANSMISIÓN";
+
+                        }
+
+                    }
+
+                }
+
+                else {
+
+                    radioPlayer.pause();
+
+                    playButton.innerHTML =
+                        "<span>▶</span> ESCUCHAR EN VIVO";
+
+                    setStandbyState();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================
+       EVENTO: AUDIO REPRODUCIENDO
+    ====================================== */
+
+    if (radioPlayer) {
+
+        radioPlayer.addEventListener(
+            "playing",
+            () => {
+
+                setOnlineState();
+
+            }
+        );
+
+
+        /* =================================
+           EVENTO: AUDIO DETENIDO
+        ================================== */
+
+        radioPlayer.addEventListener(
+            "pause",
+            () => {
+
+                setStandbyState();
+
+            }
+        );
+
+
+        /* =================================
+           EVENTO: ERROR
+        ================================== */
+
+        radioPlayer.addEventListener(
+            "error",
+            () => {
+
+                if (status) {
+
+                    status.textContent =
+                        "SIN SEÑAL";
+
+                }
+
+
+                if (systemMessage) {
+
+                    systemMessage.textContent =
+                        "TRANSMISIÓN NO DISPONIBLE";
+
+                }
+
+
+                console.error(
+                    "No fue posible reproducir la transmisión."
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================
+       VÚMETROS VISUALES
+    ====================================== */
+
+    function startVisualMeters() {
+
+        if (
+            !vuLeft ||
+            !vuRight
+        ) {
+
+            return;
+
+        }
+
+
+        function animateMeters() {
+
+            if (
+                radioPlayer.paused
+            ) {
+
+                return;
+
+            }
+
+
+            const leftLevel =
+                20 +
+                Math.random() *
+                75;
+
+
+            const rightLevel =
+                20 +
+                Math.random() *
+                75;
+
+
+            vuLeft.style.height =
+                leftLevel +
+                "%";
+
+
+            vuRight.style.height =
+                rightLevel +
+                "%";
+
+
+            setTimeout(
+                animateMeters,
+                100
+            );
+
+        }
+
+
+        animateMeters();
+
+    }
+
+
+    /* =====================================
+       INICIAR ESTADO
+    ====================================== */
+
+    setStandbyState();
+
+
+});
 
