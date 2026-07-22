@@ -4,13 +4,25 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Hangar Play Radio | A Bordo</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <meta name="description" content="Hangar Play Radio. Donde la aviación y la música comparten la misma frecuencia.">
+    <title>
+        Hangar Play Radio | A Bordo
+    </title>
 
-    <link rel="stylesheet" href="css/estilo.css">
+    <meta
+        name="description"
+        content="Hangar Play Radio. Donde la aviación y la música comparten la misma frecuencia."
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/estilo.css"
+    >
 
 </head>
 
@@ -18,18 +30,27 @@
 <body>
 
 
-<!-- PANTALLA DE ARRANQUE -->
+<!-- =========================================
+     PANTALLA DE ARRANQUE
+========================================= -->
+
 
 <div id="loader">
 
     <div class="loader-content">
 
-        <h1>HANGAR PLAY RADIO</h1>
+        <h1>
+            HANGAR PLAY RADIO
+        </h1>
 
-        <p>Inicializando sistema de vuelo...</p>
+        <p>
+            Inicializando sistema de vuelo...
+        </p>
 
         <div class="loading-bar">
+
             <span></span>
+
         </div>
 
         <p>
@@ -41,154 +62,232 @@
 </div>
 
 
+<!-- =========================================
+     CABINA PRINCIPAL
+========================================= -->
 
-<!-- CABINA PRINCIPAL -->
 
 <main class="cockpit">
 
 
+    <!-- FONDO DE LA CABINA -->
+
     <div class="background-layer"></div>
 
 
+    <!-- CONTENEDOR PRINCIPAL DEL REPRODUCTOR -->
 
-    <!-- CABECERA -->
-
-    <header class="hero">
-
-
-        <p class="subtitle">
-            RADIO ONLINE
-        </p>
+    <section
+        class="radio-console"
+        aria-label="Reproductor Hangar Play Radio"
+    >
 
 
-        <h1>
-            HANGAR PLAY RADIO
-        </h1>
+        <!-- IDENTIFICACIÓN DE LA ESTACIÓN -->
 
+        <div class="station-brand">
 
-        <h2>
-            A BORDO
-        </h2>
-
-
-        <p class="description">
-
-            Donde la aviación y la música
-            comparten la misma frecuencia.
-
-        </p>
-
-
-        <button id="playButton">
-
-            ▶ ESCUCHAR EN VIVO
-
-        </button>
-
-
-    </header>
-
-            <!-- PANEL DE INSTRUMENTOS -->
-
-    <aside class="flight-panel">
-
-        <div class="instrument">
-
-            <span>
-                POWER
+            <span class="station-kicker">
+                HANGAR PLAY
             </span>
 
-            <strong>
-                ONLINE
-            </strong>
-
-        </div>
-
-
-        <div class="instrument">
-
-            <span>
-                AUDIO
-            </span>
-
-            <strong>
-                LIVE
-            </strong>
-
-        </div>
-
-
-        <div class="instrument">
-
-            <span>
-                STREAM
-            </span>
-
-            <strong>
-                ZENO
-            </strong>
-
-        </div>
-
-
-        <div class="instrument">
-
-            <span>
-                STATUS
-            </span>
-
-            <strong id="status">
-
-                READY
-
-            </strong>
-
-        </div>
-
-
-    </aside>
-
-
-
-
-    <!-- REPRODUCTOR -->
-
-    <section class="player-section">
-
-
-        <div class="player-box">
-
-
-            <h3>
-                A BORDO
-            </h3>
-
+            <h1>
+                RADIO
+            </h1>
 
             <p>
-                Hangar Play Radio Online
+                Donde la aviación y la música
+                comparten la misma frecuencia.
             </p>
 
+        </div>
 
-            <button id="playButton">
 
-                ▶ PLAY
+        <!-- =====================================
+             CABINA / INSTRUMENTOS
+        ====================================== -->
+
+
+        <div class="instrument-cockpit">
+
+
+            <!-- RADAR -->
+
+            <div
+                class="radar-display"
+                aria-label="Radar de cabina"
+            >
+
+                <div class="radar-grid"></div>
+
+                <div class="radar-sweep"></div>
+
+                <div class="radar-center"></div>
+
+                <div class="radar-blip blip-one"></div>
+
+                <div class="radar-blip blip-two"></div>
+
+                <div class="radar-blip blip-three"></div>
+
+            </div>
+
+
+            <!-- INDICADORES SUPERIORES -->
+
+            <div class="cockpit-indicators">
+
+
+                <div class="indicator">
+
+                    <span class="indicator-light"></span>
+
+                    <span>
+                        POWER
+                    </span>
+
+                </div>
+
+
+                <div class="indicator">
+
+                    <span
+                        class="indicator-light audio-light"
+                    ></span>
+
+                    <span>
+                        AUDIO
+                    </span>
+
+                </div>
+
+
+                <div class="indicator">
+
+                    <span
+                        class="indicator-light stream-light"
+                    ></span>
+
+                    <span>
+                        LIVE
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- VÚMETROS -->
+
+            <div class="vu-section">
+
+
+                <div class="vu-channel">
+
+                    <span class="vu-label">
+                        L
+                    </span>
+
+                    <div class="vu-meter">
+
+                        <div
+                            class="vu-bar"
+                            id="vuLeft"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="vu-channel">
+
+                    <span class="vu-label">
+                        R
+                    </span>
+
+                    <div class="vu-meter">
+
+                        <div
+                            class="vu-bar"
+                            id="vuRight"
+                        ></div>
+
+                    </div>
+
+                        <!-- =====================================
+             CONTROLES DEL REPRODUCTOR
+        ====================================== -->
+
+
+        <div class="player-controls">
+
+
+            <button
+                id="playButton"
+                class="play-button"
+                type="button"
+            >
+
+                <span class="play-icon">
+                    ▶
+                </span>
+
+                <span class="play-text">
+                    ESCUCHAR EN VIVO
+                </span>
 
             </button>
 
 
-            <div class="radio-status">
+        </div>
 
+
+        <!-- =====================================
+             ESTADO DE TRANSMISIÓN
+        ====================================== -->
+
+
+        <div class="radio-status">
+
+            <span
+                class="status-light"
+                id="statusLight"
+            ></span>
+
+            <span id="status">
                 SISTEMA EN ESPERA
+            </span>
 
-            </div>
+        </div>
 
+
+        <!-- =====================================
+             MENSAJE DE CABINA
+        ====================================== -->
+
+
+        <div class="system-message">
+
+            <span>
+                HANGAR PLAY RADIO
+            </span>
+
+            <p>
+                Listos para despegar
+            </p>
 
         </div>
 
 
     </section>
 
-            <!-- SECCIÓN INFORMATIVA -->
+
+    <!-- =========================================
+         PRESENTACIÓN
+    ========================================== -->
+
 
     <section class="about">
 
@@ -197,9 +296,7 @@
 
 
             <h2>
-
                 Bienvenido a bordo
-
             </h2>
 
 
@@ -221,9 +318,9 @@
     </section>
 
 
-
-
-    <!-- ACCESO AL LEGADO -->
+    <!-- =========================================
+         ACCESO AL LEGADO
+    ========================================== -->
 
 
     <section class="legacy-access">
@@ -231,8 +328,13 @@
 
         <a href="legado.html">
 
-            EL ORIGEN
-            DE UN LEGADO
+            <span>
+                EL ORIGEN
+            </span>
+
+            <strong>
+                DE UN LEGADO
+            </strong>
 
         </a>
 
@@ -240,62 +342,77 @@
     </section>
 
 
+    <!-- =========================================
+         PIE DE CABINA
+    ========================================== -->
+
+
+    <div class="cockpit-footer">
+
+        <p>
+            HANGAR PLAY RADIO
+        </p>
+
+        <span>
+            Donde la aviación y la música
+            comparten la misma frecuencia.
+        </span>
+
+    </div>
 
 
 </main>
 
 
-
-
-
-<!-- PIE DE PÁGINA -->
+<!-- =========================================
+     PIE DE PÁGINA
+========================================= -->
 
 
 <footer class="footer">
 
 
     <h3>
-
         HANGAR PLAY RADIO
-
     </h3>
 
 
     <p>
-
         Donde la aviación y la música
         comparten la misma frecuencia.
-
     </p>
 
 
     <small>
-
         Página desarrollada por Nicolás Rijos
-
     </small>
 
 
 </footer>
 
 
+<!-- =========================================
+     REPRODUCTOR DE AUDIO
+========================================= -->
 
 
-<!-- REPRODUCTOR DE AUDIO -->
+<audio
+    id="radioPlayer"
+    preload="none"
+></audio>
 
 
-<audio id="radioPlayer">
-
-</audio>
-
-
-
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
 
 
 <script src="js/reproductor.js"></script>
 
 
-
 </body>
 
 </html>
+
+            
+
