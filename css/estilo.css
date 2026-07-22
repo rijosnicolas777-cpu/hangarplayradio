@@ -1,30 +1,47 @@
 /* =========================================
    HANGAR PLAY RADIO
-   SISTEMA DE CABINA AERONÁUTICA v3.0
+   A BORDO — SISTEMA VISUAL DE CABINA
+   DISEÑO RESPONSIVE
 ========================================= */
 
 
 /* =========================================
-   RESET GENERAL
+   RESET
 ========================================= */
 
 * {
+
     margin: 0;
     padding: 0;
+
     box-sizing: border-box;
+
 }
 
 
 html {
+
     scroll-behavior: smooth;
+
 }
 
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #05070a;
+
+    width: 100%;
+    min-height: 100vh;
+
+    background: #020406;
+
     color: #ffffff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     overflow-x: hidden;
+
 }
 
 
@@ -34,20 +51,26 @@ body {
 
 :root {
 
-    --negro: #05070a;
+    --green:
+        #00ff88;
 
-    --verde: #00ff88;
+    --green-soft:
+        rgba(0, 255, 136, 0.35);
 
-    --verde-suave: rgba(0, 255, 136, 0.25);
+    --green-dark:
+        rgba(0, 255, 136, 0.08);
 
-    --ambar: #ffb300;
+    --amber:
+        #ffb52e;
 
-    --azul: #00aaff;
-
-    --blanco: #ffffff;
+    --blue:
+        #00aaff;
 
     --panel:
-        rgba(4, 10, 16, 0.88);
+        rgba(3, 8, 13, 0.42);
+
+    --glass:
+        rgba(5, 12, 20, 0.28);
 
 }
 
@@ -64,13 +87,16 @@ body {
 
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
 
-    background: #020305;
+    justify-content: center;
+
+    background:
+        #020406;
 
     z-index: 9999;
+
+    opacity: 1;
 
     transition:
         opacity 0.8s ease,
@@ -79,9 +105,23 @@ body {
 }
 
 
+#loader.loader-hidden {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+}
+
+
 .loader-content {
 
-    width: min(90%, 420px);
+    width: min(
+        90%,
+        420px
+    );
 
     text-align: center;
 
@@ -90,43 +130,57 @@ body {
 
 .loader-content h1 {
 
-    font-size: clamp(
-        1.3rem,
-        5vw,
-        2rem
-    );
+    font-size:
+        clamp(
+            1.4rem,
+            5vw,
+            2.4rem
+        );
 
-    letter-spacing: 4px;
+    letter-spacing:
+        4px;
 
-    color: var(--blanco);
+    margin-bottom:
+        20px;
 
 }
 
 
 .loader-content p {
 
-    margin-top: 18px;
+    color:
+        #9eacb9;
 
-    color: #b8c7d9;
+    font-size:
+        0.75rem;
 
-    font-size: 0.9rem;
+    letter-spacing:
+        2px;
 
 }
 
 
 .loading-bar {
 
-    width: min(280px, 80%);
+    width: 100%;
 
-    height: 7px;
+    height: 5px;
 
-    margin: 25px auto;
-
-    background: #111820;
-
-    border-radius: 20px;
+    margin:
+        25px 0;
 
     overflow: hidden;
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
 
 }
 
@@ -135,32 +189,38 @@ body {
 
     display: block;
 
-    width: 0%;
+    width: 100%;
 
     height: 100%;
 
-    background: var(--verde);
+    background:
+        var(--green);
 
     box-shadow:
         0 0 15px
-        rgba(0, 255, 136, 0.8);
+        var(--green);
 
     animation:
-        loading 2.5s
+        loadingAnimation
+        2.2s
         ease-in-out
         forwards;
 
 }
 
 
-@keyframes loading {
+@keyframes loadingAnimation {
 
     from {
+
         width: 0%;
+
     }
 
     to {
+
         width: 100%;
+
     }
 
 }
@@ -174,21 +234,21 @@ body {
 
     position: relative;
 
-    min-height: 100vh;
-
     width: 100%;
+
+    min-height: 100svh;
 
     display: flex;
 
     flex-direction: column;
 
-    justify-content: center;
-
     align-items: center;
 
-    padding: 50px 20px;
+    justify-content: flex-start;
 
     overflow: hidden;
+
+    isolation: isolate;
 
 }
 
@@ -199,240 +259,511 @@ body {
 
 .background-layer {
 
-    position: absolute;
+    position: fixed;
 
     inset: 0;
+
+    z-index: -5;
 
     background-image:
 
         linear-gradient(
-            rgba(0, 0, 0, 0.35),
-            rgba(0, 0, 0, 0.65)
+            rgba(
+                0,
+                0,
+                0,
+                0.12
+            ),
+            rgba(
+                0,
+                0,
+                0,
+                0.32
+            )
         ),
 
         url("../img/cockpit.jpg");
 
-    background-size: cover;
+    background-size:
+        cover;
 
-    background-position: center;
+    background-position:
+        center center;
 
-    background-repeat: no-repeat;
+    background-repeat:
+        no-repeat;
 
-    z-index: 0;
+    transform:
+        scale(1.04);
+
+    animation:
+        cockpitBreathing
+        14s
+        ease-in-out
+        infinite;
 
 }
 
 
 /* =========================================
-   PROFUNDIDAD Y OSCURECIMIENTO
+   MOVIMIENTO AMBIENTAL DE LA CABINA
 ========================================= */
 
-.cockpit::after {
+@keyframes cockpitBreathing {
 
-    content: "";
+    0% {
 
-    position: absolute;
+        transform:
+            scale(1.04)
+            translate3d(
+                0,
+                0,
+                0
+            );
+
+    }
+
+    50% {
+
+        transform:
+            scale(1.07)
+            translate3d(
+                -0.4%,
+                0.3%,
+                0
+            );
+
+    }
+
+    100% {
+
+        transform:
+            scale(1.04)
+            translate3d(
+                0,
+                0,
+                0
+            );
+
+    }
+
+}
+
+
+/* =========================================
+   ILUMINACIÓN AMBIENTAL
+========================================= */
+
+.cockpit-light {
+
+    position: fixed;
 
     inset: 0;
+
+    z-index: -3;
+
+    pointer-events: none;
 
     background:
 
         radial-gradient(
-            circle at center,
-            transparent 15%,
-            rgba(0, 0, 0, 0.65) 100%
+            circle at 50% 55%,
+            rgba(
+                0,
+                255,
+                136,
+                0.05
+            ),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(
+                0,
+                120,
+                255,
+                0.05
+            ),
+            transparent 50%
         );
 
-    pointer-events: none;
+    animation:
+        ambientLight
+        8s
+        ease-in-out
+        infinite;
 
-    z-index: 1;
+}
+
+
+@keyframes ambientLight {
+
+    0% {
+
+        opacity:
+            0.65;
+
+    }
+
+    50% {
+
+        opacity:
+            1;
+
+    }
+
+    100% {
+
+        opacity:
+            0.65;
+
+    }
 
 }
 
 
 /* =========================================
-   CONSOLA PRINCIPAL
+   OSCURECIMIENTO LATERAL
 ========================================= */
 
-.radio-console {
+.cockpit::before {
 
-    position: relative;
+    content:
+        "";
 
-    z-index: 2;
+    position:
+        fixed;
 
-    width: min(
-        100%,
-        850px
-    );
+    inset:
+        0;
+
+    z-index:
+        -2;
+
+    pointer-events:
+        none;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            transparent 35%,
+            rgba(
+                0,
+                0,
+                0,
+                0.55
+            ) 100%
+        );
+
+}
+
+
+/* =========================================
+   REPRODUCTOR PRINCIPAL
+========================================= */
+
+.player-section {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    min-height:
+        100svh;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
 
     padding:
+        30px 20px;
 
-        clamp(25px, 5vw, 50px)
+    z-index:
+        5;
 
-        clamp(20px, 5vw, 55px);
+}
 
-    display: flex;
 
-    flex-direction: column;
+/* =========================================
+   CAJA DEL REPRODUCTOR
+========================================= */
 
-    align-items: center;
+.player-box {
 
-    text-align: center;
+    position:
+        relative;
 
-    background:
-
-        linear-gradient(
-            145deg,
-            rgba(3, 9, 15, 0.82),
-            rgba(5, 12, 20, 0.62)
+    width:
+        min(
+            94vw,
+            560px
         );
+
+    padding:
+        28px;
 
     border:
-
         1px solid
-        rgba(0, 255, 136, 0.35);
-
-    border-radius: 20px;
-
-    box-shadow:
-
-        0 0 35px
-        rgba(0, 0, 0, 0.65),
-
-        inset 0 0 35px
-        rgba(0, 255, 136, 0.04);
-
-    backdrop-filter:
-        blur(4px);
-
-}
-
-
-/* =========================================
-   IDENTIDAD DE LA ESTACIÓN
-========================================= */
-
-.station-brand {
-
-    width: 100%;
-
-    margin-bottom: 25px;
-
-}
-
-
-.station-kicker {
-
-    display: block;
-
-    color: var(--verde);
-
-    font-size: 0.75rem;
-
-    font-weight: bold;
-
-    letter-spacing: 5px;
-
-}
-
-
-.station-brand h1 {
-
-    margin-top: 8px;
-
-    font-size:
-        clamp(
-            2rem,
-            6vw,
-            4rem
+        rgba(
+            0,
+            255,
+            136,
+            0.55
         );
 
-    letter-spacing: 5px;
-
-    text-shadow:
-
-        0 0 15px
-        rgba(255, 255, 255, 0.35);
-
-}
-
-
-.station-brand p {
-
-    max-width: 600px;
-
-    margin:
-
-        18px auto 0;
-
-    color: #d7e1ea;
-
-    line-height: 1.6;
-
-    font-size:
-        clamp(
-            0.9rem,
-            2vw,
-            1.05rem
-        );
-
-}
-
-
-/* =========================================
-   CABINA DE INSTRUMENTOS
-========================================= */
-
-.instrument-cockpit {
-
-    position: relative;
-
-    width: 100%;
-
-    max-width: 700px;
-
-    min-height: 310px;
-
-    padding: 30px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
+    border-radius:
+        20px;
 
     background:
-
         rgba(
             2,
-            7,
-            12,
-            0.82
+            8,
+            13,
+            0.20
         );
 
-    border:
-
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.12
+    backdrop-filter:
+        blur(
+            3px
         );
 
-    border-radius: 15px;
+    -webkit-backdrop-filter:
+        blur(
+            3px
+        );
 
     box-shadow:
+
+        0 0 25px
+        rgba(
+            0,
+            255,
+            136,
+            0.12
+        ),
 
         inset 0 0 30px
         rgba(
             0,
             0,
             0,
-            0.8
+            0.12
         );
+
+    overflow:
+        hidden;
+
+    transition:
+        background
+        0.6s
+        ease,
+
+        box-shadow
+        0.6s
+        ease;
+
+}
+
+
+/* =========================================
+   EFECTO DE LUZ DEL REPRODUCTOR
+========================================= */
+
+.player-box::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        -100%;
+
+    left:
+        -50%;
+
+    width:
+        200%;
+
+    height:
+        300%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(
+                0,
+                255,
+                136,
+                0.05
+            ),
+            transparent 55%
+        );
+
+    pointer-events:
+        none;
+
+    animation:
+        panelGlow
+        10s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes panelGlow {
+
+    0% {
+
+        transform:
+            translate(
+                -5%,
+                -5%
+            );
+
+    }
+
+    50% {
+
+        transform:
+            translate(
+                5%,
+                5%
+            );
+
+    }
+
+    100% {
+
+        transform:
+            translate(
+                -5%,
+                -5%
+            );
+
+    }
+
+}
+
+
+/* =========================================
+   CABECERA DEL REPRODUCTOR
+========================================= */
+
+.player-header {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    text-align:
+        center;
+
+    margin-bottom:
+        25px;
+
+}
+
+
+.player-label {
+
+    font-size:
+        0.7rem;
+
+    letter-spacing:
+        4px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.75
+        );
+
+}
+
+
+.player-title {
+
+    margin-top:
+        8px;
+
+    font-size:
+        clamp(
+            1.8rem,
+            7vw,
+            3rem
+        );
+
+    letter-spacing:
+        8px;
+
+    color:
+        var(--amber);
+
+    text-shadow:
+
+        0 0 10px
+        rgba(
+            255,
+            181,
+            46,
+            0.4
+        );
+
+}
+
+
+/* =========================================
+   PANEL DE INSTRUMENTOS
+========================================= */
+
+.instrument-panel {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        28px;
+
+    margin:
+        20px 0 25px;
 
 }
 
@@ -441,31 +772,48 @@ body {
    RADAR
 ========================================= */
 
-.radar-display {
+.radar-container {
 
-    position: absolute;
+    display:
+        flex;
 
-    top: 25px;
+    flex-direction:
+        column;
 
-    left: 25px;
+    align-items:
+        center;
 
-    width: 120px;
+    gap:
+        8px;
 
-    height: 120px;
+}
+
+
+.radar {
+
+    position:
+        relative;
+
+    width:
+        130px;
+
+    height:
+        130px;
 
     border:
-
-        2px solid
+        1px solid
         rgba(
             0,
             255,
             136,
-            0.55
+            0.65
         );
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
     background:
 
@@ -481,8 +829,596 @@ body {
                 0,
                 20,
                 15,
-                0.5
+                0.20
             )
+        );
+
+    box-shadow:
+
+        0 0 15px
+        rgba(
+            0,
+            255,
+            136,
+            0.15
+        );
+
+}
+
+
+/* CÍRCULOS DEL RADAR */
+
+.radar::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        12%;
+
+    border:
+        1px solid
+        rgba(
+            0,
+            255,
+            136,
+            0.25
+        );
+
+    border-radius:
+        50%;
+
+}
+
+
+.radar::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        25%;
+
+    border:
+        1px solid
+        rgba(
+            0,
+            255,
+            136,
+            0.2
+        );
+
+    border-radius:
+        50%;
+
+}
+
+
+/* CRUZ DEL RADAR */
+
+.radar-grid {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent 49.5%,
+            rgba(
+                0,
+                255,
+                136,
+                0.25
+            ) 50%,
+            transparent 50.5%
+        ),
+
+        linear-gradient(
+            0deg,
+            transparent 49.5%,
+            rgba(
+                0,
+                255,
+                136,
+                0.25
+            ) 50%,
+            transparent 50.5%
+        );
+
+}
+
+
+/* BARRIDO */
+
+.radar-sweep {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    width:
+        50%;
+
+    height:
+        2px;
+
+    transform-origin:
+        left center;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green),
+            transparent
+        );
+
+    box-shadow:
+        0 0 8px
+        var(--green);
+
+    animation:
+        radarRotation
+        3s
+        linear
+        infinite;
+
+}
+
+
+@keyframes radarRotation {
+
+    from {
+
+        transform:
+            rotate(
+                0deg
+            );
+
+    }
+
+    to {
+
+        transform:
+            rotate(
+                360deg
+            );
+
+    }
+
+}
+
+
+/* PUNTO CENTRAL */
+
+.radar-center {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border-radius:
+        50%;
+
+    background:
+        var(--green);
+
+    box-shadow:
+
+        0 0 10px
+        var(--green);
+
+}
+
+
+/* =========================================
+   VÚMETROS
+========================================= */
+
+.vu-container {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+}
+
+
+.vu-meter {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+}
+
+
+.vu-meter > span {
+
+    width:
+        15px;
+
+    color:
+        var(--green);
+
+    font-size:
+        0.75rem;
+
+    font-weight:
+        bold;
+
+}
+
+
+.vu-track {
+
+    width:
+        160px;
+
+    height:
+        12px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.15
+        );
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.4
+        );
+
+}
+
+
+.vu-level {
+
+    width:
+        100%;
+
+    height:
+        8%;
+
+    border-radius:
+        10px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--green),
+            #baff00,
+            var(--amber),
+            #ff3b30
+        );
+
+    box-shadow:
+
+        0 0 8px
+        rgba(
+            0,
+            255,
+            136,
+            0.5
+        );
+
+    transition:
+        height
+        0.1s
+        ease;
+
+}
+
+
+/* =========================================
+   ETIQUETAS
+========================================= */
+
+.instrument-label {
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.55
+        );
+
+    font-size:
+        0.6rem;
+
+    letter-spacing:
+        3px;
+
+}
+
+
+/* =========================================
+   ESTADO DEL SISTEMA
+========================================= */
+
+.system-status {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        12px 15px;
+
+    margin:
+        15px 0;
+
+    border-top:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+}
+
+
+.status-indicator {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    font-size:
+        0.65rem;
+
+    letter-spacing:
+        2px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.6
+        );
+
+}
+
+
+.power-light {
+
+    width:
+        9px;
+
+    height:
+        9px;
+
+    border-radius:
+        50%;
+
+    background:
+        #555;
+
+    transition:
+        0.4s;
+
+}
+
+
+.power-light.active {
+
+    background:
+        var(--green);
+
+    box-shadow:
+
+        0 0 8px
+        var(--green),
+
+        0 0 18px
+        var(--green);
+
+    animation:
+        powerPulse
+        2s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes powerPulse {
+
+    0%,
+    100% {
+
+        opacity:
+            1;
+
+    }
+
+    50% {
+
+        opacity:
+            0.55;
+
+    }
+
+}
+
+
+#status {
+
+    color:
+        var(--amber);
+
+    font-size:
+        0.75rem;
+
+    letter-spacing:
+        2px;
+
+}
+
+
+#status.online {
+
+    color:
+        var(--green);
+
+    text-shadow:
+        0 0 8px
+        var(--green);
+
+}
+
+
+/* =========================================
+   BOTÓN PRINCIPAL
+========================================= */
+
+#playButton {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        100%;
+
+    padding:
+        16px 20px;
+
+    border:
+        1px solid
+        var(--green);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(
+            0,
+            255,
+            136,
+            0.07
+        );
+
+    color:
+        #ffffff;
+
+    font-size:
+        0.85rem;
+
+    font-weight:
+        bold;
+
+    letter-spacing:
+        2px;
+
+    cursor:
+        pointer;
+
+    transition:
+        all
+        0.3s
+        ease;
+
+}
+
+
+#playButton:hover {
+
+    background:
+        rgba(
+            0,
+            255,
+            136,
+            0.2
         );
 
     box-shadow:
@@ -492,802 +1428,105 @@ body {
             0,
             255,
             136,
-            0.18
-        );
-
-}
-
-
-/* =========================================
-   CUADRÍCULA DEL RADAR
-========================================= */
-
-.radar-grid {
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-
-        linear-gradient(
-            transparent 49%,
-            rgba(
-                0,
-                255,
-                136,
-                0.3
-            ) 50%,
-            transparent 51%
-        ),
-
-        linear-gradient(
-            90deg,
-            transparent 49%,
-            rgba(
-                0,
-                255,
-                136,
-                0.3
-            ) 50%,
-            transparent 51%
-        );
-
-}
-
-
-.radar-display::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 20px;
-
-    border:
-
-        1px solid
-        rgba(
-            0,
-            255,
-            136,
             0.35
         );
 
-    border-radius: 50%;
-
 }
 
 
-.radar-display::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 40px;
-
-    border:
-
-        1px solid
-        rgba(
-            0,
-            255,
-            136,
-            0.3
-        );
-
-    border-radius: 50%;
-
-}
-
-
-/* =========================================
-   BARRIDO DEL RADAR
-========================================= */
-
-.radar-sweep {
-
-    position: absolute;
-
-    top: 50%;
-
-    left: 50%;
-
-    width: 50%;
-
-    height: 2px;
-
-    transform-origin: left center;
+#playButton.playing {
 
     background:
-
-        linear-gradient(
-            90deg,
-            var(--verde),
-            transparent
-        );
-
-    box-shadow:
-
-        0 0 8px
-        var(--verde);
-
-    animation:
-
-        radarSweep
-        3s
-        linear
-        infinite;
-
-}
-
-
-@keyframes radarSweep {
-
-    from {
-
-        transform:
-            rotate(0deg);
-
-    }
-
-    to {
-
-        transform:
-            rotate(360deg);
-
-    }
-
-}
-
-
-/* =========================================
-   CENTRO DEL RADAR
-========================================= */
-
-.radar-center {
-
-    position: absolute;
-
-    top: 50%;
-
-    left: 50%;
-
-    width: 6px;
-
-    height: 6px;
-
-    transform:
-        translate(
-            -50%,
-            -50%
-        );
-
-    background:
-
-        var(--verde);
-
-    border-radius: 50%;
-
-    box-shadow:
-
-        0 0 10px
-        var(--verde);
-
-}
-
-
-/* =========================================
-   PUNTOS DEL RADAR
-========================================= */
-
-.radar-blip {
-
-    position: absolute;
-
-    width: 5px;
-
-    height: 5px;
-
-    background:
-        var(--verde);
-
-    border-radius: 50%;
-
-    box-shadow:
-
-        0 0 8px
-        var(--verde);
-
-    animation:
-
-        radarBlip
-        2s
-        infinite
-        alternate;
-
-}
-
-
-.blip-one {
-
-    top: 30%;
-
-    left: 65%;
-
-}
-
-
-.blip-two {
-
-    top: 65%;
-
-    left: 30%;
-
-    animation-delay:
-        0.8s;
-
-}
-
-
-.blip-three {
-
-    top: 42%;
-
-    left: 75%;
-
-    animation-delay:
-        1.4s;
-
-}
-
-
-@keyframes radarBlip {
-
-    from {
-
-        opacity: 0.2;
-
-        transform:
-            scale(0.7);
-
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform:
-            scale(1.4);
-
-    }
-
-}
-
-
-/* =========================================
-   INDICADORES DE CABINA
-========================================= */
-
-.cockpit-indicators {
-
-    width: 100%;
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 25px;
-
-    margin-bottom: 30px;
-
-}
-
-
-.indicator {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    font-size: 0.7rem;
-
-    letter-spacing: 2px;
-
-    color: #b8c7d9;
-
-}
-
-
-.indicator-light {
-
-    width: 8px;
-
-    height: 8px;
-
-    border-radius: 50%;
-
-    background:
-        var(--verde);
-
-    box-shadow:
-
-        0 0 10px
-        var(--verde);
-
-    animation:
-
-        indicatorPulse
-        2s
-        infinite;
-
-}
-
-
-.audio-light {
-
-    animation-delay:
-        0.4s;
-
-}
-
-
-.stream-light {
-
-    animation-delay:
-        0.8s;
-
-}
-
-
-@keyframes indicatorPulse {
-
-    0%,
-    100% {
-
-        opacity: 0.4;
-
-    }
-
-    50% {
-
-        opacity: 1;
-
-    }
-
-}
-
-
-/* =========================================
-   VÚMETROS
-========================================= */
-
-.vu-section {
-
-    width: min(
-        100%,
-        430px
-    );
-
-    display: flex;
-
-    gap: 25px;
-
-    justify-content: center;
-
-    align-items: center;
-
-}
-
-
-.vu-channel {
-
-    flex: 1;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-}
-
-
-.vu-label {
-
-    color: var(--ambar);
-
-    font-weight: bold;
-
-    font-size: 0.75rem;
-
-}
-
-
-.vu-meter {
-
-    flex: 1;
-
-    height: 18px;
-
-    padding: 2px;
-
-    background:
-        #101820;
-
-    border:
-
-        1px solid
         rgba(
             255,
-            255,
-            255,
-            0.12
-        );
-
-    border-radius: 4px;
-
-    overflow: hidden;
-
-}
-
-
-.vu-bar {
-
-    width: 5%;
-
-    height: 100%;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            var(--verde),
-            var(--ambar)
-        );
-
-    border-radius: 2px;
-
-    box-shadow:
-
-        0 0 10px
-        rgba(
-            0,
-            255,
-            136,
-            0.55
-        );
-
-    transition:
-
-        width 0.08s
-        linear;
-
-}
-
-/* =========================================
-   CONTROLES DEL REPRODUCTOR
-========================================= */
-
-.player-controls {
-
-    width: 100%;
-
-    margin-top: 35px;
-
-    display: flex;
-
-    justify-content: center;
-
-}
-
-
-.play-button {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 12px;
-
-    min-width: 260px;
-
-    padding: 16px 30px;
-
-    border:
-
-        1px solid
-        var(--verde);
-
-    border-radius: 8px;
-
-    background:
-
-        rgba(
-            0,
-            255,
-            136,
-            0.08
-        );
-
-    color: var(--blanco);
-
-    font-size: 0.9rem;
-
-    font-weight: bold;
-
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    transition:
-
-        background 0.3s ease,
-
-        color 0.3s ease,
-
-        transform 0.3s ease,
-
-        box-shadow 0.3s ease;
-
-    box-shadow:
-
-        0 0 15px
-        rgba(
-            0,
-            255,
-            136,
-            0.2
-        );
-
-}
-
-
-.play-button:hover {
-
-    background:
-
-        var(--verde);
-
-    color:
-
-        #000000;
-
-    transform:
-
-        translateY(-2px);
-
-    box-shadow:
-
-        0 0 25px
-        rgba(
-            0,
-            255,
-            136,
-            0.6
-        );
-
-}
-
-
-.play-button.playing {
-
-    background:
-
-        rgba(
-            255,
-            179,
-            0,
+            181,
+            46,
             0.12
         );
 
     border-color:
-
-        var(--ambar);
-
-}
-
-
-.play-icon {
-
-    font-size: 1rem;
+        var(--amber);
 
 }
 
 
 /* =========================================
-   ESTADO DE TRANSMISIÓN
+   ESTADO DE RADIO
 ========================================= */
 
 .radio-status {
 
-    display: flex;
+    position:
+        relative;
 
-    align-items: center;
+    z-index:
+        2;
 
-    justify-content: center;
+    margin-top:
+        15px;
 
-    gap: 10px;
-
-    margin-top: 20px;
+    text-align:
+        center;
 
     color:
+        var(--green);
 
-        var(--verde);
+    font-size:
+        0.65rem;
 
-    font-size: 0.75rem;
-
-    font-weight: bold;
-
-    letter-spacing: 2px;
-
-}
-
-
-.status-light {
-
-    width: 8px;
-
-    height: 8px;
-
-    border-radius: 50%;
-
-    background:
-
-        var(--ambar);
-
-    box-shadow:
-
-        0 0 8px
-        var(--ambar);
-
-}
-
-
-.status-light.online {
-
-    background:
-
-        var(--verde);
-
-    box-shadow:
-
-        0 0 12px
-        var(--verde);
-
-    animation:
-
-        statusPulse
-        1.5s
-        infinite;
-
-}
-
-
-@keyframes statusPulse {
-
-    0%,
-    100% {
-
-        opacity: 0.5;
-
-    }
-
-    50% {
-
-        opacity: 1;
-
-    }
+    letter-spacing:
+        2px;
 
 }
 
 
 /* =========================================
-   MENSAJE DE CABINA
-========================================= */
-
-.system-message {
-
-    margin-top: 25px;
-
-    text-align: center;
-
-    color:
-
-        #b8c7d9;
-
-}
-
-
-.system-message span {
-
-    display: block;
-
-    color:
-
-        var(--ambar);
-
-    font-size: 0.75rem;
-
-    font-weight: bold;
-
-    letter-spacing: 3px;
-
-}
-
-
-.system-message p {
-
-    margin-top: 8px;
-
-    color:
-
-        #9eacbb;
-
-    font-size: 0.8rem;
-
-}
-
-
-/* =========================================
-   PRESENTACIÓN
+   SECCIÓN INFORMACIÓN
 ========================================= */
 
 .about {
 
-    position: relative;
-
-    z-index: 2;
-
-    width: 100%;
+    width:
+        100%;
 
     padding:
-
-        70px 20px;
-
-    text-align: center;
+        80px 20px;
 
     background:
-
-        #05070a;
+        rgba(
+            2,
+            5,
+            8,
+            0.92
+        );
 
 }
 
 
 .about-content {
 
-    width: min(
-        100%,
-        850px
-    );
+    max-width:
+        800px;
 
-    margin: 0 auto;
+    margin:
+        auto;
+
+    text-align:
+        center;
 
 }
 
 
 .about h2 {
 
-    margin-bottom: 25px;
+    margin-bottom:
+        25px;
 
     color:
+        var(--amber);
 
-        var(--ambar);
-
-    font-size:
-
-        clamp(
-            1.4rem,
-            4vw,
-            2rem
-        );
-
-    letter-spacing: 3px;
+    letter-spacing:
+        3px;
 
 }
 
@@ -1295,85 +1534,67 @@ body {
 .about p {
 
     color:
+        #cbd5df;
 
-        #d5dee8;
-
-    line-height: 1.8;
+    line-height:
+        1.8;
 
     font-size:
-
-        clamp(
-            0.95rem,
-            2vw,
-            1.1rem
-        );
+        1rem;
 
 }
 
 
 /* =========================================
-   ACCESO AL LEGADO
+   LEGADO
 ========================================= */
 
 .legacy-access {
 
-    position: relative;
-
-    z-index: 2;
-
-    width: 100%;
+    width:
+        100%;
 
     padding:
+        60px 20px;
 
-        50px 20px;
-
-    text-align: center;
+    text-align:
+        center;
 
     background:
-
-        #070b12;
+        #030609;
 
 }
 
 
 .legacy-access a {
 
-    display: inline-flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 6px;
+    display:
+        inline-block;
 
     padding:
-
-        18px 35px;
+        16px 30px;
 
     border:
-
         1px solid
-        var(--ambar);
+        var(--amber);
 
-    border-radius: 8px;
+    border-radius:
+        8px;
 
     color:
+        var(--amber);
 
-        var(--ambar);
+    text-decoration:
+        none;
 
-    text-decoration: none;
+    font-size:
+        0.8rem;
 
-    font-size: 0.85rem;
-
-    letter-spacing: 3px;
+    letter-spacing:
+        3px;
 
     transition:
-
-        background 0.3s ease,
-
-        color 0.3s ease,
-
-        transform 0.3s ease;
+        0.3s;
 
 }
 
@@ -1381,93 +1602,10 @@ body {
 .legacy-access a:hover {
 
     background:
-
-        var(--ambar);
+        var(--amber);
 
     color:
-
         #000000;
-
-    transform:
-
-        translateY(-2px);
-
-}
-
-
-.legacy-access strong {
-
-    font-size: 1rem;
-
-}
-
-
-/* =========================================
-   PIE DE CABINA
-========================================= */
-
-.cockpit-footer {
-
-    position: relative;
-
-    z-index: 2;
-
-    width: 100%;
-
-    padding:
-
-        25px 20px;
-
-    text-align: center;
-
-    background:
-
-        rgba(
-            2,
-            3,
-            5,
-            0.8
-        );
-
-    border-top:
-
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.08
-        );
-
-}
-
-
-.cockpit-footer p {
-
-    color:
-
-        #ffffff;
-
-    font-size: 0.8rem;
-
-    font-weight: bold;
-
-    letter-spacing: 3px;
-
-}
-
-
-.cockpit-footer span {
-
-    display: block;
-
-    margin-top: 8px;
-
-    color:
-
-        #788696;
-
-    font-size: 0.75rem;
 
 }
 
@@ -1478,28 +1616,22 @@ body {
 
 .footer {
 
-    position: relative;
-
-    z-index: 2;
-
     padding:
-
         35px 20px;
 
-    text-align: center;
+    text-align:
+        center;
 
     background:
-
-        #020305;
+        #020406;
 
 }
 
 
 .footer h3 {
 
-    letter-spacing: 3px;
-
-    font-size: 0.9rem;
+    letter-spacing:
+        3px;
 
 }
 
@@ -1507,14 +1639,10 @@ body {
 .footer p {
 
     margin:
-
         15px 0;
 
     color:
-
-        #b9c5d3;
-
-    font-size: 0.85rem;
+        #9aa7b5;
 
 }
 
@@ -1522,63 +1650,61 @@ body {
 .footer small {
 
     color:
-
-        #788696;
-
-    font-size: 0.75rem;
+        #65717e;
 
 }
 
 
 /* =========================================
-   ADAPTACIÓN TABLET
+   TABLET
 ========================================= */
 
-@media (max-width: 900px) {
+@media (
+    max-width: 768px
+) {
 
-    .cockpit {
+    .player-section {
 
-        padding:
-
-            35px 15px;
-
-    }
-
-
-    .radio-console {
-
-        width: 100%;
+        min-height:
+            100svh;
 
         padding:
-
-            35px 25px;
-
-    }
-
-
-    .instrument-cockpit {
-
-        min-height: 330px;
+            20px 15px;
 
     }
 
 
-    .radar-display {
+    .player-box {
 
-        width: 105px;
-
-        height: 105px;
-
-        top: 20px;
-
-        left: 20px;
+        padding:
+            22px 18px;
 
     }
 
 
-    .station-brand h1 {
+    .instrument-panel {
 
-        letter-spacing: 3px;
+        gap:
+            18px;
+
+    }
+
+
+    .radar {
+
+        width:
+            110px;
+
+        height:
+            110px;
+
+    }
+
+
+    .vu-track {
+
+        width:
+            135px;
 
     }
 
@@ -1586,129 +1712,105 @@ body {
 
 
 /* =========================================
-   ADAPTACIÓN MÓVIL
+   CELULAR
 ========================================= */
 
-@media (max-width: 600px) {
+@media (
+    max-width: 560px
+) {
 
-    .cockpit {
-
-        min-height: 100vh;
-
-        padding:
-
-            20px 10px;
-
-    }
-
-
-    .radio-console {
+    .player-section {
 
         padding:
-
-            25px 15px;
-
-        border-radius: 14px;
+            15px 12px;
 
     }
 
 
-    .station-kicker {
+    .player-box {
 
-        font-size: 0.65rem;
-
-        letter-spacing: 3px;
-
-    }
-
-
-    .station-brand h1 {
-
-        font-size: 2rem;
-
-        letter-spacing: 3px;
-
-    }
-
-
-    .station-brand p {
-
-        font-size: 0.85rem;
-
-    }
-
-
-    .instrument-cockpit {
-
-        min-height: 360px;
+        width:
+            100%;
 
         padding:
+            20px 14px;
 
-            25px 15px;
-
-    }
-
-
-    .radar-display {
-
-        position: relative;
-
-        top: auto;
-
-        left: auto;
-
-        width: 100px;
-
-        height: 100px;
-
-        margin-bottom: 25px;
+        border-radius:
+            16px;
 
     }
 
 
-    .cockpit-indicators {
+    .player-label {
 
-        gap: 12px;
+        font-size:
+            0.6rem;
 
-        margin-bottom: 25px;
-
-        flex-wrap: wrap;
-
-    }
-
-
-    .indicator {
-
-        font-size: 0.6rem;
-
-        letter-spacing: 1px;
+        letter-spacing:
+            3px;
 
     }
 
 
-    .vu-section {
+    .player-title {
 
-        width: 100%;
+        font-size:
+            2rem;
 
-        flex-direction: column;
-
-        gap: 12px;
-
-    }
-
-
-    .vu-channel {
-
-        width: 100%;
+        letter-spacing:
+            6px;
 
     }
 
 
-    .play-button {
+    .instrument-panel {
 
-        width: 100%;
+        gap:
+            14px;
 
-        min-width: 0;
+    }
+
+
+    .radar {
+
+        width:
+            95px;
+
+        height:
+            95px;
+
+    }
+
+
+    .vu-track {
+
+        width:
+            115px;
+
+        height:
+            10px;
+
+    }
+
+
+    .instrument-label {
+
+        font-size:
+            0.5rem;
+
+        letter-spacing:
+            2px;
+
+    }
+
+
+    #playButton {
+
+        padding:
+            15px 10px;
+
+        font-size:
+            0.75rem;
 
     }
 
@@ -1716,8 +1818,7 @@ body {
     .about {
 
         padding:
-
-            55px 20px;
+            60px 20px;
 
     }
 
@@ -1725,17 +1826,7 @@ body {
     .legacy-access {
 
         padding:
-
-            40px 20px;
-
-    }
-
-
-    .legacy-access a {
-
-        width: 90%;
-
-        max-width: 320px;
+            50px 20px;
 
     }
 
@@ -1743,8 +1834,29 @@ body {
 
 
 /* =========================================
-   FIN DEL CSS
+   REDUCCIÓN DE MOVIMIENTO
 ========================================= */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+
+    }
+
+}
 
 
 
