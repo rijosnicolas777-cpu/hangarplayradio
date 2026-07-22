@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const status =
         document.getElementById("status");
-
+const cockpit = document.querySelector(".cockpit");
     const systemMessage =
         document.querySelector(".radio-status");
 
