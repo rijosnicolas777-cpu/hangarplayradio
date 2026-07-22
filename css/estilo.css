@@ -351,7 +351,7 @@ body {
 
 
 /* =========================================
-   ILUMINACIÓN AMBIENTAL
+   ILUMINACIÓN AMBIENTAL DE CABINA
 ========================================= */
 
 .cockpit-light {
@@ -364,45 +364,236 @@ body {
 
     pointer-events: none;
 
+    opacity: 0.75;
+
     background:
 
         radial-gradient(
-            circle at 50% 55%,
-            rgba(
-                0,
-                255,
-                136,
-                0.05
-            ),
-            transparent 35%
+            ellipse at 50% 75%,
+            rgba(0, 255, 136, 0.08),
+            transparent 32%
         ),
 
         radial-gradient(
-            circle at 50% 100%,
-            rgba(
-                0,
-                120,
-                255,
-                0.05
-            ),
-            transparent 50%
+            ellipse at 25% 65%,
+            rgba(0, 170, 255, 0.06),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            ellipse at 75% 65%,
+            rgba(255, 181, 46, 0.05),
+            transparent 25%
         );
 
     animation:
-        ambientLight
-        8s
+        cockpitAmbientLight
+        7s
+        ease-in-out
+        infinite;
+
+    transition:
+        opacity 1.5s ease,
+        filter 1.5s ease;
+
+}
+
+
+@keyframes cockpitAmbientLight {
+
+    0% {
+
+        opacity:
+            0.55;
+
+        filter:
+            brightness(0.9);
+
+    }
+
+    50% {
+
+        opacity:
+            0.95;
+
+        filter:
+            brightness(1.08);
+
+    }
+
+    100% {
+
+        opacity:
+            0.55;
+
+        filter:
+            brightness(0.9);
+
+    }
+
+}
+
+
+/* =========================================
+   CABINA ACTIVA
+========================================= */
+
+.cockpit.cockpit-active
+.cockpit-light {
+
+    opacity:
+        1;
+
+    animation:
+        cockpitLive
+        3.5s
         ease-in-out
         infinite;
 
 }
 
 
-@keyframes ambientLight {
+@keyframes cockpitLive {
 
     0% {
 
         opacity:
             0.65;
+
+        filter:
+            brightness(0.95);
+
+    }
+
+    25% {
+
+        opacity:
+            0.9;
+
+        filter:
+            brightness(1.04);
+
+    }
+
+    50% {
+
+        opacity:
+            1;
+
+        filter:
+            brightness(1.12);
+
+    }
+
+    75% {
+
+        opacity:
+            0.85;
+
+        filter:
+            brightness(1.02);
+
+    }
+
+    100% {
+
+        opacity:
+            0.65;
+
+        filter:
+            brightness(0.95);
+
+    }
+
+}
+
+
+/* =========================================
+   LUCES ACTIVAS DEL PANEL
+========================================= */
+
+.cockpit.cockpit-active
+.player-box {
+
+    box-shadow:
+
+        0 0 25px
+        rgba(
+            0,
+            255,
+            136,
+            0.18
+        ),
+
+        0 0 70px
+        rgba(
+            0,
+            255,
+            136,
+            0.06
+        ),
+
+        inset 0 0 30px
+        rgba(
+            0,
+            255,
+            136,
+            0.04
+        );
+
+}
+
+
+/* =========================================
+   PULSO AMBIENTAL
+========================================= */
+
+.cockpit.cockpit-active::after {
+
+    content:
+        "";
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        -1;
+
+    pointer-events:
+        none;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 60%,
+            rgba(
+                0,
+                255,
+                136,
+                0.04
+            ),
+
+            transparent 45%
+        );
+
+    animation:
+        cockpitPulse
+        4s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes cockpitPulse {
+
+    0% {
+
+        opacity:
+            0.2;
 
     }
 
@@ -416,9 +607,25 @@ body {
     100% {
 
         opacity:
-            0.65;
+            0.2;
 
     }
+
+}
+
+
+/* =========================================
+   ESTADO DE ESPERA
+========================================= */
+
+.cockpit.cockpit-idle
+.cockpit-light {
+
+    opacity:
+        0.5;
+
+    filter:
+        brightness(0.85);
 
 }
 
