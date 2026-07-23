@@ -1,159 +1,94 @@
-/* =========================================
-   HANGAR PLAY RADIO
-   EL ORIGEN DE UN LEGADO
-   ESTILOS PRINCIPALES
-========================================= */
-
-
-/* =========================================
-   CONFIGURACIÓN GENERAL
-========================================= */
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
 
-
 body {
     min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(40, 70, 90, 0.28),
-            transparent 45%
-        ),
-        linear-gradient(
-            180deg,
-            #05080b 0%,
-            #080d12 45%,
-            #030506 100%
-        );
-
-    color: #e8edf0;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    line-height: 1.7;
-
+    background: #050708;
+    color: #dce5e9;
+    font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
 }
 
 
 /* =========================================
-   ENCABEZADO
+   ENCABEZADO DEL LEGADO
 ========================================= */
 
 .legacy-header {
-
     position: relative;
-
     min-height: 75vh;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
+    padding: 100px 30px;
     text-align: center;
 
-    padding: 80px 25px;
-
-    background:
-
+    background-image:
         linear-gradient(
-            rgba(3, 7, 10, 0.70),
-            rgba(3, 7, 10, 0.92)
+            rgba(3, 7, 9, 0.35),
+            rgba(3, 7, 9, 0.45)
         ),
+        url("../img/Cockpit.jpg");
 
-        url("../img/Cockpit.jpg")
-        center center
-        / cover
-        no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-    border-bottom:
-
-        1px solid
-        rgba(180, 210, 225, 0.18);
-
+    overflow: hidden;
 }
 
 
-/* Luz atmosférica */
+/* Capa transparente de luz */
 
-.legacy-header::after {
-
-    content: "";
-
+.legacy-header-overlay {
     position: absolute;
-
     inset: 0;
 
     background:
-
         radial-gradient(
             circle at center,
             rgba(130, 180, 210, 0.12),
-            transparent 55%
+            transparent 60%
         );
 
     pointer-events: none;
-
 }
 
 
-/* =========================================
-   CONTENIDO DEL ENCABEZADO
-========================================= */
-
 .legacy-header-content {
-
     position: relative;
-
     z-index: 2;
-
     max-width: 900px;
 
     animation:
-
         legacyFadeIn
         1.8s
         ease
         both;
-
 }
 
 
 .legacy-kicker {
-
-    font-size: 0.85rem;
-
-    letter-spacing: 0.45em;
-
-    color: #9db7c5;
-
     margin-bottom: 20px;
 
-    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.45em;
 
+    color: #b5cbd5;
+
+    text-transform: uppercase;
 }
 
 
 .legacy-header h1 {
-
     font-size:
-
         clamp(
             2.5rem,
             7vw,
@@ -161,34 +96,27 @@ body {
         );
 
     line-height: 1.05;
-
     letter-spacing: 0.08em;
-
     font-weight: 700;
 
     color: #f2f5f6;
 
     text-shadow:
-
         0 0 20px
         rgba(170, 210, 230, 0.22),
 
         0 4px 30px
         rgba(0, 0, 0, 0.85);
-
 }
 
 
 .legacy-intro {
-
     margin-top: 25px;
 
     font-size: 1.15rem;
-
-    color: #bdcbd2;
+    color: #d0dce1;
 
     letter-spacing: 0.08em;
-
 }
 
 
@@ -197,18 +125,14 @@ body {
 ========================================= */
 
 .legacy-line {
-
     width: 100px;
-
     height: 2px;
 
     margin:
-
         28px
         auto;
 
     background:
-
         linear-gradient(
             90deg,
             transparent,
@@ -217,10 +141,8 @@ body {
         );
 
     box-shadow:
-
         0 0 12px
         rgba(180, 215, 230, 0.35);
-
 }
 
 
@@ -229,19 +151,15 @@ body {
 ========================================= */
 
 .legacy-main {
-
     width: 100%;
-
     max-width: 1200px;
 
     margin: 0 auto;
 
     padding:
-
         80px
         30px
         100px;
-
 }
 
 
@@ -250,32 +168,21 @@ body {
 ========================================= */
 
 .javier-hero {
-
     display: grid;
 
     grid-template-columns:
-
-        minmax(
-            0,
-            1.4fr
-        )
-
-        minmax(
-            280px,
-            0.6fr
-        );
+        minmax(0, 1.4fr)
+        minmax(280px, 0.6fr);
 
     gap: 50px;
 
     align-items: center;
 
     margin-bottom: 110px;
-
 }
 
 
 .javier-image-container {
-
     position: relative;
 
     overflow: hidden;
@@ -283,111 +190,78 @@ body {
     border-radius: 4px;
 
     box-shadow:
-
         0 25px 70px
         rgba(0, 0, 0, 0.65);
-
 }
 
 
 .javier-main-image {
-
     display: block;
 
     width: 100%;
-
     height: auto;
-
-    max-height: 700px;
 
     object-fit: cover;
 
-    filter:
-
-        saturate(0.88)
-        contrast(1.08)
-        brightness(0.86);
-
     transition:
-
-        transform 1.2s
-        ease,
-
-        filter 1.2s
+        transform
+        0.8s
         ease;
-
 }
 
 
 .javier-image-container:hover
 .javier-main-image {
-
-    transform: scale(1.025);
-
-    filter:
-
-        saturate(1)
-        contrast(1.05)
-        brightness(0.95);
-
+    transform: scale(1.03);
 }
 
 
-/* Brillo sutil */
-
 .image-glow {
-
     position: absolute;
 
     inset: 0;
 
     pointer-events: none;
 
-    background:
-
-        linear-gradient(
-            135deg,
-            rgba(160, 200, 220, 0.10),
-            transparent 35%,
-            transparent 70%,
-            rgba(0, 0, 0, 0.35)
-        );
-
+    box-shadow:
+        inset
+        0 0
+        80px
+        rgba(0, 0, 0, 0.35);
 }
 
 
-/* =========================================
-   TEXTO DE JAVIER
-========================================= */
-
 .javier-caption {
-
-    padding: 20px 10px;
-
+    padding:
+        20px
+        10px;
 }
 
 
 .javier-caption h2 {
+    margin-bottom: 20px;
 
     font-size: 2rem;
 
     letter-spacing: 0.18em;
 
-    margin-bottom: 20px;
-
-    color: #f0f3f4;
-
+    color: #e6eef1;
 }
 
 
 .javier-caption p {
+    max-width: 400px;
 
-    color: #aebdc5;
+    color: #aebbc1;
 
-    font-size: 1.05rem;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    max-width: 380px;
+    font-size: 1.15rem;
 
+    line-height: 1.8;
 }
 
 
@@ -396,158 +270,134 @@ body {
 ========================================= */
 
 .legacy-story {
-
     max-width: 850px;
 
     margin:
-
         0
         auto
-        120px;
+        110px;
 
-    text-align: center;
-
+    padding:
+        20px;
 }
 
 
 .story-content {
-
-    padding:
-
-        20px
-        10px;
-
+    text-align: center;
 }
 
 
 .story-label {
+    margin-bottom: 18px;
+
+    color: #8faeba;
 
     font-size: 0.75rem;
 
-    letter-spacing: 0.5em;
-
-    color: #8faebb;
+    letter-spacing: 0.35em;
 
     text-transform: uppercase;
-
-    margin-bottom: 18px;
-
 }
 
 
 .legacy-story h2 {
+    margin-bottom: 35px;
 
-    font-size:
-
-        clamp(
-            2rem,
-            4vw,
-            3.2rem
-        );
+    font-size: 2.3rem;
 
     font-weight: 500;
 
-    color: #edf2f4;
-
-    margin-bottom: 35px;
-
+    color: #e4ecef;
 }
 
 
 .legacy-story p:not(.story-label) {
-
-    color: #b4c0c6;
-
-    font-size: 1.05rem;
-
     margin-bottom: 25px;
 
+    color: #aebbc1;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.15rem;
+
+    line-height: 1.9;
 }
+}
+
+
 /* =========================================
    RECUERDOS DEL VUELO
 ========================================= */
 
 .memory-section {
-
     position: relative;
 
     margin:
-
         0
-        -30px
-        130px;
-
-    padding:
-
-        100px
-        30px
+        auto
         120px;
 
+    padding:
+        70px
+        40px;
+
+    border:
+        1px
+        solid
+        rgba(160, 190, 200, 0.15);
+
     background:
-
-        linear-gradient(
-            180deg,
-            #111820 0%,
-            #0a0f14 50%,
-            #070a0d 100%
-        );
-
-    border-top:
-
-        1px solid
-        rgba(170, 200, 215, 0.12);
-
-    border-bottom:
-
-        1px solid
-        rgba(170, 200, 215, 0.10);
+        rgba(12, 17, 20, 0.72);
 
     box-shadow:
+        0 30px
+        80px
+        rgba(0, 0, 0, 0.45);
 
-        inset 0 20px 60px
-        rgba(0, 0, 0, 0.35),
-
-        inset 0 -20px 60px
-        rgba(0, 0, 0, 0.40);
-
+    overflow: hidden;
 }
 
 
-/* =========================================
-   INTRODUCCIÓN DE LOS RECUERDOS
-========================================= */
+.memory-section::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(150, 190, 210, 0.08),
+            transparent 55%
+        );
+}
+
 
 .memory-intro {
+    position: relative;
 
-    max-width: 800px;
-
-    margin:
-
-        0
-        auto
-        70px;
+    z-index: 2;
 
     text-align: center;
 
+    margin-bottom: 55px;
 }
 
 
 .memory-intro h2 {
+    color: #e4ecef;
 
-    font-size:
-
-        clamp(
-            2rem,
-            5vw,
-            3.5rem
-        );
+    font-size: 2.2rem;
 
     font-weight: 500;
 
-    color: #edf2f4;
-
-    letter-spacing: 0.04em;
-
+    letter-spacing: 0.05em;
 }
 
 
@@ -556,289 +406,196 @@ body {
 ========================================= */
 
 .memory-table {
-
-    position: relative;
-
-    max-width: 1050px;
-
-    margin: 0 auto;
-
-    padding:
-
-        70px
-        40px
-        90px;
-
-    display: grid;
-
-    grid-template-columns:
-
-        repeat(
-            2,
-            minmax(
-                0,
-                1fr
-            )
-        );
-
-    gap: 70px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #171b1f,
-            #0b0e11
-        );
-
-    border-radius: 4px;
-
-    box-shadow:
-
-        0 35px 80px
-        rgba(0, 0, 0, 0.75),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.04);
-
-}
-
-
-/* Textura visual de la mesa */
-
-.memory-table::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: 0.18;
-
-    background:
-
-        repeating-linear-gradient(
-            0deg,
-            transparent 0px,
-            transparent 7px,
-            rgba(255,255,255,0.015) 8px
-        );
-
-}
-
-
-/* =========================================
-   FOTOGRAFÍAS
-========================================= */
-
-.memory-photo {
-
     position: relative;
 
     z-index: 2;
 
-}
+    display: grid;
 
-
-.photo-frame {
-
-    position: relative;
-
-    padding: 12px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #e5e5e2,
-            #a8aaab
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
         );
 
+    gap: 55px;
+}
+
+
+.memory-photo {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(5, 8, 10, 0.82);
+
+    border:
+        1px
+        solid
+        rgba(180, 205, 215, 0.12);
+
     box-shadow:
-
-        0 20px 40px
-        rgba(0, 0, 0, 0.65),
-
-        0 4px 12px
-        rgba(0, 0, 0, 0.45);
+        0 20px
+        50px
+        rgba(0, 0, 0, 0.55);
 
     transition:
+        transform
+        0.5s
+        ease,
 
-        transform 0.8s
-        cubic-bezier(
-            0.22,
-            1,
-            0.36,
-            1
-        ),
-
-        box-shadow 0.8s
+        box-shadow
+        0.5s
         ease;
-
 }
 
 
-/* Primera fotografía */
-
-.memory-photo-hangar
-.photo-frame {
-
+.memory-photo:hover {
     transform:
-
-        rotate(-2deg);
-
-}
-
-
-/* Segunda fotografía */
-
-.memory-photo-halcon
-.photo-frame {
-
-    transform:
-
-        rotate(2.5deg);
-
-}
-
-
-/* Movimiento sutil */
-
-.memory-photo:hover
-.photo-frame {
-
-    transform:
-
-        translateY(-8px)
-        rotate(0deg)
-        scale(1.025);
+        translateY(-6px);
 
     box-shadow:
+        0 28px
+        65px
+        rgba(0, 0, 0, 0.7);
+}
 
-        0 30px 55px
-        rgba(0, 0, 0, 0.75);
 
+/* =========================================
+   MARCO DE LAS FOTOGRAFÍAS
+========================================= */
+
+.photo-frame {
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    background:
+        #080b0d;
+
+    border:
+        8px
+        solid
+        rgba(35, 43, 47, 0.9);
+
+    box-shadow:
+        inset
+        0 0
+        25px
+        rgba(0, 0, 0, 0.7);
 }
 
 
 .photo-frame img {
-
     display: block;
 
     width: 100%;
 
-    height: 360px;
+    height: 420px;
 
     object-fit: cover;
 
-    filter:
-
-        saturate(0.85)
-        contrast(1.05)
-        brightness(0.88);
-
     transition:
+        transform
+        0.8s
+        ease,
 
-        filter 0.8s
+        filter
+        0.8s
         ease;
-
 }
 
 
 .memory-photo:hover
 .photo-frame img {
+    transform:
+        scale(1.04);
 
     filter:
-
-        saturate(1)
-        contrast(1.05)
-        brightness(0.96);
-
+        brightness(1.08);
 }
 
 
 /* =========================================
-   TEXTO EMOCIONAL
+   TEXTOS EMOCIONALES
 ========================================= */
 
 .memory-text {
+    width: 100%;
 
     padding:
-
-        30px
+        28px
         10px
         10px;
 
     text-align: center;
-
 }
 
 
 .memory-text p {
-
-    color: #c5d0d5;
+    color: #b9c7cd;
 
     font-family:
-
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: 1.15rem;
-
-    line-height: 1.9;
+    font-size: 1.1rem;
 
     font-style: italic;
 
-    text-shadow:
-
-        0 2px 8px
-        rgba(0, 0, 0, 0.65);
-
+    line-height: 1.8;
 }
 
 
 /* =========================================
-   SECCIÓN EL AVIADOR DEL METAL
+   EL AVIADOR DEL METAL
 ========================================= */
 
 .aviador-metal-section {
-
     position: relative;
 
     margin:
-
         0
         auto
         110px;
 
     padding:
-
-        120px
+        90px
         30px;
 
     text-align: center;
 
     background:
-
-        radial-gradient(
-            circle at center,
-            rgba(80, 110, 125, 0.10),
-            transparent 60%
+        linear-gradient(
+            180deg,
+            rgba(8, 11, 13, 0.15),
+            rgba(5, 7, 9, 0.55)
         );
 
+    border-top:
+        1px
+        solid
+        rgba(170, 200, 210, 0.12);
+
+    border-bottom:
+        1px
+        solid
+        rgba(170, 200, 210, 0.12);
 }
 
 
 .aviador-metal-content {
-
-    max-width: 850px;
+    max-width: 700px;
 
     margin: 0 auto;
-
 }
 
 
@@ -847,222 +604,228 @@ body {
 ========================================= */
 
 .metal-logo-container {
+    display: flex;
 
-    position: relative;
+    justify-content: center;
 
-    max-width: 650px;
+    align-items: center;
 
     margin:
+        35px
+        auto;
 
-        40px
-        auto
-        45px;
-
-    padding: 18px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #181c20,
-            #07090b
+    width:
+        min(
+            100%,
+            360px
         );
-
-    border:
-
-        1px solid
-        rgba(180, 205, 215, 0.18);
-
-    box-shadow:
-
-        0 30px 70px
-        rgba(0, 0, 0, 0.75);
-
-    overflow: hidden;
-
-}
-
-
-.metal-logo-container::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    background:
-
-        linear-gradient(
-            120deg,
-            transparent 30%,
-            rgba(255,255,255,0.08) 50%,
-            transparent 70%
-        );
-
-    transform:
-
-        translateX(-100%);
-
-    animation:
-
-        logoLightSweep
-        7s
-        ease-in-out
-        infinite;
-
 }
 
 
 .metal-logo {
-
-    position: relative;
-
-    z-index: 2;
-
     display: block;
 
     width: 100%;
 
     height: auto;
 
-    max-height: 420px;
-
     object-fit: contain;
 
     filter:
+        drop-shadow(
+            0
+            12px
+            25px
+            rgba(0, 0, 0, 0.65)
+        );
 
-        contrast(1.08)
-        brightness(0.92);
-
+    transition:
+        transform
+        0.6s
+        ease;
 }
 
 
-.aviador-metal-content h2 {
+.metal-logo:hover {
+    transform:
+        scale(1.04);
+}
 
-    font-size:
 
-        clamp(
-            1.8rem,
-            4vw,
-            3rem
-        );
+.aviador-metal-section h2 {
+    margin-top: 30px;
 
-    letter-spacing: 0.18em;
+    color: #e6eef1;
 
-    color: #edf2f4;
+    font-size: 2rem;
 
-    margin-bottom: 20px;
-
+    letter-spacing: 0.16em;
 }
 
 
 .metal-quote {
-
-    max-width: 750px;
-
-    margin:
-
-        35px
-        auto
-        55px;
-
-    color: #b8c6cc;
-
-    font-family:
-
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 1.25rem;
-
-    font-style: italic;
-
-    line-height: 1.9;
-
-}
-
-
-.eternal-flight {
-
-    margin-top: 50px;
-
-    font-size:
-
-        clamp(
-            1.4rem,
-            3vw,
-            2.4rem
-        );
-
-    letter-spacing: 0.18em;
-
-    line-height: 1.5;
-
-    color: #dce8ed;
-
-    text-shadow:
-
-        0 0 25px
-        rgba(150, 195, 215, 0.20);
-
-}
-
-
-/* =========================================
-   CIERRE
-========================================= */
-
-.legacy-closing {
-
-    max-width: 850px;
+    max-width: 650px;
 
     margin:
-
-        0
-        auto
-        80px;
-
-    padding:
-
-        50px
-        20px;
-
-    text-align: center;
-
-}
-
-
-.closing-content p {
+        30px
+        auto;
 
     color: #aebbc1;
 
     font-family:
-
         Georgia,
         "Times New Roman",
         serif;
 
-    font-size: 1.1rem;
+    font-size: 1.15rem;
 
-    margin-bottom: 12px;
-
+    line-height: 1.9;
 }
 
 
-.closing-final {
+.eternal-flight {
+    margin-top: 45px;
 
+    color: #dce9ee;
+
+    font-size: 1.25rem;
+
+    line-height: 1.8;
+
+    letter-spacing: 0.25em;
+
+    font-weight: 600;
+
+    text-shadow:
+        0
+        0
+        18px
+        rgba(170, 210, 225, 0.18);
+}
+/* =========================================
+   CIERRE DEL LEGADO
+========================================= */
+
+.legacy-closing {
+    padding:
+        90px
+        30px
+        70px;
+
+    text-align: center;
+}
+
+
+.closing-content {
+    max-width: 750px;
+
+    margin: 0 auto;
+}
+
+
+.closing-content p {
+    margin-bottom: 20px;
+
+    color: #aebbc1;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.2rem;
+
+    line-height: 1.8;
+}
+
+
+.closing-content
+.closing-final {
     margin-top: 35px;
 
-    color: #dce5e9 !important;
+    color: #dce8ec;
 
-    font-size: 1.35rem !important;
+    font-size: 1.35rem;
 
     font-style: italic;
+}
 
+
+/* =========================================
+   VOLVER A CABINA
+========================================= */
+
+.return-to-cockpit {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding:
+        30px
+        20px
+        90px;
+}
+
+
+.return-button {
+    display: inline-block;
+
+    padding:
+        15px
+        30px;
+
+    color: #dbe8ed;
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+
+    letter-spacing: 0.2em;
+
+    border:
+        1px
+        solid
+        rgba(180, 210, 220, 0.35);
+
+    background:
+        rgba(10, 15, 18, 0.55);
+
+    transition:
+        background
+        0.35s
+        ease,
+
+        border-color
+        0.35s
+        ease,
+
+        transform
+        0.35s
+        ease,
+
+        box-shadow
+        0.35s
+        ease;
+}
+
+
+.return-button:hover {
+    background:
+        rgba(120, 160, 175, 0.12);
+
+    border-color:
+        rgba(200, 225, 235, 0.65);
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0
+        8px
+        25px
+        rgba(0, 0, 0, 0.45);
 }
 
 
@@ -1071,64 +834,59 @@ body {
 ========================================= */
 
 .legacy-footer {
-
     padding:
-
-        60px
-        25px
+        55px
+        30px
         45px;
 
     text-align: center;
 
-    background:
-
-        #030405;
-
     border-top:
+        1px
+        solid
+        rgba(160, 190, 200, 0.12);
 
-        1px solid
-        rgba(180, 205, 215, 0.12);
-
+    background:
+        rgba(3, 5, 6, 0.75);
 }
 
 
 .legacy-footer h3 {
+    margin-bottom: 15px;
+
+    color: #dce8ec;
 
     font-size: 1rem;
 
-    letter-spacing: 0.35em;
-
-    color: #c7d4da;
-
-    margin-bottom: 15px;
-
+    letter-spacing: 0.3em;
 }
 
 
 .legacy-footer p {
+    margin-bottom: 25px;
 
-    color: #82919a;
+    color: #84969e;
 
-    font-size: 0.9rem;
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-    margin-bottom: 30px;
-
+    font-size: 0.95rem;
 }
 
 
 .legacy-footer small {
+    color: #65757c;
 
-    color: #69767d;
+    font-size: 0.75rem;
 
-    font-size: 0.8rem;
-
-    letter-spacing: 0.05em;
-
+    letter-spacing: 0.08em;
 }
 
 
 /* =========================================
-   ANIMACIONES
+   ANIMACIÓN DE ENTRADA
 ========================================= */
 
 @keyframes legacyFadeIn {
@@ -1138,7 +896,6 @@ body {
         opacity: 0;
 
         transform:
-
             translateY(25px);
 
     }
@@ -1148,7 +905,6 @@ body {
         opacity: 1;
 
         transform:
-
             translateY(0);
 
     }
@@ -1156,48 +912,21 @@ body {
 }
 
 
-@keyframes logoLightSweep {
-
-    0% {
-
-        transform:
-
-            translateX(-100%);
-
-    }
-
-    30% {
-
-        transform:
-
-            translateX(100%);
-
-    }
-
-    100% {
-
-        transform:
-
-            translateX(100%);
-
-    }
-
-}
 /* =========================================
-   TABLETS
+   ADAPTACIÓN PARA TABLETS
 ========================================= */
 
-@media (max-width: 900px) {
-
+@media (
+    max-width: 900px
+) {
 
     .legacy-header {
 
         min-height: 65vh;
 
         padding:
-
-            70px
-            20px;
+            80px
+            25px;
 
     }
 
@@ -1205,7 +934,6 @@ body {
     .legacy-main {
 
         padding:
-
             60px
             20px
             80px;
@@ -1216,7 +944,6 @@ body {
     .javier-hero {
 
         grid-template-columns:
-
             1fr;
 
         gap: 35px;
@@ -1228,36 +955,14 @@ body {
 
         text-align: center;
 
-        padding:
-
-            10px
-            20px
-            30px;
-
     }
 
 
     .javier-caption p {
 
         margin:
-
             0
             auto;
-
-    }
-
-
-    .memory-section {
-
-        margin-left: -20px;
-
-        margin-right: -20px;
-
-        padding:
-
-            80px
-            20px
-            100px;
 
     }
 
@@ -1265,37 +970,18 @@ body {
     .memory-table {
 
         grid-template-columns:
-
             1fr;
 
-        max-width: 650px;
+        gap: 45px;
 
-        gap: 80px;
+    }
+
+
+    .memory-section {
 
         padding:
-
             60px
-            35px
-            80px;
-
-    }
-
-
-    .photo-frame img {
-
-        height: auto;
-
-        max-height: 500px;
-
-    }
-
-
-    .aviador-metal-section {
-
-        padding:
-
-            90px
-            20px;
+            25px;
 
     }
 
@@ -1303,30 +989,22 @@ body {
 
 
 /* =========================================
-   TELÉFONOS
+   ADAPTACIÓN PARA CELULARES
 ========================================= */
 
-@media (max-width: 600px) {
-
-
-    body {
-
-        font-size: 15px;
-
-    }
-
+@media (
+    max-width: 600px
+) {
 
     .legacy-header {
 
         min-height: 70vh;
 
         padding:
-
-            60px
+            70px
             18px;
 
         background-position:
-
             center center;
 
     }
@@ -1335,12 +1013,10 @@ body {
     .legacy-kicker {
 
         font-size:
-
             0.65rem;
 
         letter-spacing:
-
-            0.30em;
+            0.25em;
 
     }
 
@@ -1348,15 +1024,13 @@ body {
     .legacy-header h1 {
 
         font-size:
-
             clamp(
-                2.2rem,
-                12vw,
+                2rem,
+                11vw,
                 3.5rem
             );
 
         letter-spacing:
-
             0.05em;
 
     }
@@ -1365,12 +1039,10 @@ body {
     .legacy-intro {
 
         font-size:
-
             0.95rem;
 
         line-height:
-
-            1.7;
+            1.6;
 
     }
 
@@ -1378,41 +1050,9 @@ body {
     .legacy-main {
 
         padding:
-
             45px
             15px
             60px;
-
-    }
-
-
-    .javier-hero {
-
-        margin-bottom:
-
-            80px;
-
-    }
-
-
-    .javier-image-container {
-
-        border-radius:
-
-            2px;
-
-    }
-
-
-    .javier-main-image {
-
-        min-height:
-
-            300px;
-
-        object-fit:
-
-            cover;
 
     }
 
@@ -1420,12 +1060,7 @@ body {
     .javier-caption h2 {
 
         font-size:
-
-            1.45rem;
-
-        letter-spacing:
-
-            0.12em;
+            1.5rem;
 
     }
 
@@ -1433,8 +1068,7 @@ body {
     .javier-caption p {
 
         font-size:
-
-            0.95rem;
+            1rem;
 
     }
 
@@ -1442,8 +1076,10 @@ body {
     .legacy-story {
 
         margin-bottom:
+            70px;
 
-            80px;
+        padding:
+            10px;
 
     }
 
@@ -1451,12 +1087,7 @@ body {
     .legacy-story h2 {
 
         font-size:
-
-            1.9rem;
-
-        line-height:
-
-            1.25;
+            1.8rem;
 
     }
 
@@ -1464,45 +1095,22 @@ body {
     .legacy-story p:not(.story-label) {
 
         font-size:
-
-            0.98rem;
+            1rem;
 
         line-height:
-
             1.8;
 
     }
 
 
-    /* ==============================
-       MESA DE RECUERDOS
-    ============================== */
-
-
     .memory-section {
 
-        margin-left:
-
-            -15px;
-
-        margin-right:
-
-            -15px;
-
-        padding:
-
-            65px
-            15px
+        margin-bottom:
             80px;
 
-    }
-
-
-    .memory-intro {
-
-        margin-bottom:
-
-            50px;
+        padding:
+            45px
+            15px;
 
     }
 
@@ -1510,40 +1118,15 @@ body {
     .memory-intro h2 {
 
         font-size:
-
-            1.9rem;
-
-        line-height:
-
-            1.3;
+            1.7rem;
 
     }
 
 
-    .memory-table {
+    .memory-photo {
 
         padding:
-
-            45px
-            18px
-            60px;
-
-        gap:
-
-            65px;
-
-        border-radius:
-
-            2px;
-
-    }
-
-
-    .photo-frame {
-
-        padding:
-
-            8px;
+            12px;
 
     }
 
@@ -1551,32 +1134,7 @@ body {
     .photo-frame img {
 
         height:
-
             300px;
-
-        object-fit:
-
-            cover;
-
-    }
-
-
-    .memory-photo-hangar
-    .photo-frame {
-
-        transform:
-
-            rotate(-1.5deg);
-
-    }
-
-
-    .memory-photo-halcon
-    .photo-frame {
-
-        transform:
-
-            rotate(1.5deg);
 
     }
 
@@ -1584,8 +1142,7 @@ body {
     .memory-text {
 
         padding:
-
-            25px
+            22px
             5px
             5px;
 
@@ -1595,59 +1152,27 @@ body {
     .memory-text p {
 
         font-size:
-
-            1.05rem;
-
-        line-height:
-
-            1.8;
+            1rem;
 
     }
-
-
-    /* ==============================
-       AVIADOR DEL METAL
-    ============================== */
 
 
     .aviador-metal-section {
 
         padding:
-
             70px
-            10px;
-
-        margin-bottom:
-
-            70px;
+            15px;
 
     }
 
 
-    .metal-logo-container {
-
-        margin:
-
-            30px
-            auto
-            35px;
-
-        padding:
-
-            10px;
-
-    }
-
-
-    .aviador-metal-content h2 {
+    .aviador-metal-section h2 {
 
         font-size:
-
-            1.5rem;
+            1.4rem;
 
         letter-spacing:
-
-            0.10em;
+            0.1em;
 
     }
 
@@ -1655,18 +1180,10 @@ body {
     .metal-quote {
 
         font-size:
-
-            1.05rem;
+            1rem;
 
         line-height:
-
             1.8;
-
-        margin:
-
-            25px
-            auto
-            40px;
 
     }
 
@@ -1674,31 +1191,20 @@ body {
     .eternal-flight {
 
         font-size:
-
-            1.25rem;
+            1rem;
 
         letter-spacing:
-
-            0.10em;
+            0.15em;
 
     }
-
-
-    /* ==============================
-       CIERRE
-    ============================== */
 
 
     .legacy-closing {
 
         padding:
-
-            35px
-            10px;
-
-        margin-bottom:
-
-            50px;
+            65px
+            20px
+            45px;
 
     }
 
@@ -1706,33 +1212,56 @@ body {
     .closing-content p {
 
         font-size:
-
             1rem;
 
     }
 
 
+    .closing-content
     .closing-final {
 
         font-size:
-
-            1.15rem
-            !important;
+            1.1rem;
 
     }
 
 
-    /* ==============================
-       FOOTER
-    ============================== */
+    .return-to-cockpit {
+
+        padding:
+            20px
+            15px
+            70px;
+
+    }
+
+
+    .return-button {
+
+        width:
+            100%;
+
+        max-width:
+            320px;
+
+        text-align:
+            center;
+
+        padding:
+            14px
+            15px;
+
+        font-size:
+            0.75rem;
+
+    }
 
 
     .legacy-footer {
 
         padding:
-
-            50px
-            18px
+            45px
+            20px
             35px;
 
     }
@@ -1741,124 +1270,9 @@ body {
     .legacy-footer h3 {
 
         font-size:
-
             0.85rem;
 
-        letter-spacing:
-
-            0.22em;
-
-    }
-
-
-    .legacy-footer p {
-
-        font-size:
-
-            0.82rem;
-
-        line-height:
-
-            1.7;
-
-    }
-
-
-    .legacy-footer small {
-
-        font-size:
-
-            0.72rem;
-
     }
 
 }
 
-
-/* =========================================
-   PANTALLAS MUY PEQUEÑAS
-========================================= */
-
-@media (max-width: 380px) {
-
-
-    .legacy-header h1 {
-
-        font-size:
-
-            2rem;
-
-    }
-
-
-    .memory-table {
-
-        padding-left:
-
-            12px;
-
-        padding-right:
-
-            12px;
-
-    }
-
-
-    .photo-frame img {
-
-        height:
-
-            250px;
-
-    }
-
-
-    .eternal-flight {
-
-        font-size:
-
-            1.1rem;
-
-    }
-
-}
-
-
-/* =========================================
-   ACCESIBILIDAD
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-
-    html {
-
-        scroll-behavior:
-
-            auto;
-
-    }
-
-
-    *,
-    *::before,
-    *::after {
-
-        animation-duration:
-
-            0.01ms
-            !important;
-
-        animation-iteration-count:
-
-            1
-            !important;
-
-        transition-duration:
-
-            0.01ms
-            !important;
-
-    }
-
-}
