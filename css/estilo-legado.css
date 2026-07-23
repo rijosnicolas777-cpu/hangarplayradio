@@ -1275,4 +1275,167 @@ body {
     }
 
 }
+/* =========================================
+   MEJORAS FINALES - EL ORIGEN DEL LEGADO
+========================================= */
 
+
+/* =========================================
+   FOTO PRINCIPAL DE JAVIER
+   TEXTO SOBRE LA IMAGEN
+========================================= */
+
+.javier-image-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.javier-main-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 650px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.javier-image-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.95) 0%,
+            rgba(0, 0, 0, 0.75) 35%,
+            rgba(0, 0, 0, 0.25) 65%,
+            rgba(0, 0, 0, 0.05) 100%
+        );
+    z-index: 1;
+}
+
+.javier-overlay-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 60px;
+    max-width: 900px;
+    color: #ffffff;
+}
+
+.javier-overlay-content h2 {
+    margin: 10px 0 20px;
+    font-size: clamp(2rem, 5vw, 4rem);
+    letter-spacing: 0.08em;
+}
+
+.javier-overlay-content p {
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.javier-intro-text {
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+
+/* =========================================
+   EL ORIGEN
+   TRANSPARENTE + BORDE ESTILO REPRODUCTOR
+========================================= */
+
+.legacy-story {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 14px;
+    box-shadow:
+        0 0 20px rgba(255, 255, 255, 0.06),
+        inset 0 0 20px rgba(255, 255, 255, 0.025);
+    margin: 40px auto;
+    max-width: 1100px;
+    overflow: hidden;
+}
+
+.legacy-story .story-content {
+    background: transparent !important;
+    padding: 60px;
+}
+
+.legacy-story p {
+    line-height: 1.9;
+}
+
+
+/* =========================================
+   EL AVIADOR DEL METAL
+   RECUADRO LUMINOSO COMPLETO
+========================================= */
+
+.aviador-metal-content {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 14px;
+    padding: 60px;
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.18),
+        0 0 25px rgba(255, 255, 255, 0.10),
+        inset 0 0 20px rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.20);
+}
+
+.aviador-metal-content::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.12),
+        0 0 35px rgba(255, 255, 255, 0.06);
+    pointer-events: none;
+}
+
+.metal-logo-container {
+    position: relative;
+    z-index: 1;
+}
+
+.metal-logo {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   ADAPTACIÓN PARA CELULAR
+========================================= */
+
+@media (max-width: 768px) {
+
+    .javier-main-image {
+        min-height: 750px;
+    }
+
+    .javier-overlay-content {
+        padding: 30px 24px;
+    }
+
+    .javier-overlay-content p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .legacy-story .story-content {
+        padding: 35px 24px;
+    }
+
+    .aviador-metal-content {
+        padding: 35px 24px;
+    }
+
+}
