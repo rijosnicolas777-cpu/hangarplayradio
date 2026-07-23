@@ -1,0 +1,1864 @@
+/* =========================================
+   HANGAR PLAY RADIO
+   EL ORIGEN DE UN LEGADO
+   ESTILOS PRINCIPALES
+========================================= */
+
+
+/* =========================================
+   CONFIGURACIÓN GENERAL
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(40, 70, 90, 0.28),
+            transparent 45%
+        ),
+        linear-gradient(
+            180deg,
+            #05080b 0%,
+            #080d12 45%,
+            #030506 100%
+        );
+
+    color: #e8edf0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.7;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   ENCABEZADO
+========================================= */
+
+.legacy-header {
+
+    position: relative;
+
+    min-height: 75vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 80px 25px;
+
+    background:
+
+        linear-gradient(
+            rgba(3, 7, 10, 0.70),
+            rgba(3, 7, 10, 0.92)
+        ),
+
+        url("../Imágenes/Cockpit.jpg")
+        center center
+        / cover
+        no-repeat;
+
+    border-bottom:
+
+        1px solid
+        rgba(180, 210, 225, 0.18);
+
+}
+
+
+/* Luz atmosférica */
+
+.legacy-header::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(130, 180, 210, 0.12),
+            transparent 55%
+        );
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================
+   CONTENIDO DEL ENCABEZADO
+========================================= */
+
+.legacy-header-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 900px;
+
+    animation:
+
+        legacyFadeIn
+        1.8s
+        ease
+        both;
+
+}
+
+
+.legacy-kicker {
+
+    font-size: 0.85rem;
+
+    letter-spacing: 0.45em;
+
+    color: #9db7c5;
+
+    margin-bottom: 20px;
+
+    text-transform: uppercase;
+
+}
+
+
+.legacy-header h1 {
+
+    font-size:
+
+        clamp(
+            2.5rem,
+            7vw,
+            6rem
+        );
+
+    line-height: 1.05;
+
+    letter-spacing: 0.08em;
+
+    font-weight: 700;
+
+    color: #f2f5f6;
+
+    text-shadow:
+
+        0 0 20px
+        rgba(170, 210, 230, 0.22),
+
+        0 4px 30px
+        rgba(0, 0, 0, 0.85);
+
+}
+
+
+.legacy-intro {
+
+    margin-top: 25px;
+
+    font-size: 1.15rem;
+
+    color: #bdcbd2;
+
+    letter-spacing: 0.08em;
+
+}
+
+
+/* =========================================
+   LÍNEA DECORATIVA
+========================================= */
+
+.legacy-line {
+
+    width: 100px;
+
+    height: 2px;
+
+    margin:
+
+        28px
+        auto;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #b9d3df,
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 12px
+        rgba(180, 215, 230, 0.35);
+
+}
+
+
+/* =========================================
+   CONTENIDO PRINCIPAL
+========================================= */
+
+.legacy-main {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding:
+
+        80px
+        30px
+        100px;
+
+}
+
+
+/* =========================================
+   FOTO PRINCIPAL DE JAVIER
+========================================= */
+
+.javier-hero {
+
+    display: grid;
+
+    grid-template-columns:
+
+        minmax(
+            0,
+            1.4fr
+        )
+
+        minmax(
+            280px,
+            0.6fr
+        );
+
+    gap: 50px;
+
+    align-items: center;
+
+    margin-bottom: 110px;
+
+}
+
+
+.javier-image-container {
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 4px;
+
+    box-shadow:
+
+        0 25px 70px
+        rgba(0, 0, 0, 0.65);
+
+}
+
+
+.javier-main-image {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-height: 700px;
+
+    object-fit: cover;
+
+    filter:
+
+        saturate(0.88)
+        contrast(1.08)
+        brightness(0.86);
+
+    transition:
+
+        transform 1.2s
+        ease,
+
+        filter 1.2s
+        ease;
+
+}
+
+
+.javier-image-container:hover
+.javier-main-image {
+
+    transform: scale(1.025);
+
+    filter:
+
+        saturate(1)
+        contrast(1.05)
+        brightness(0.95);
+
+}
+
+
+/* Brillo sutil */
+
+.image-glow {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(160, 200, 220, 0.10),
+            transparent 35%,
+            transparent 70%,
+            rgba(0, 0, 0, 0.35)
+        );
+
+}
+
+
+/* =========================================
+   TEXTO DE JAVIER
+========================================= */
+
+.javier-caption {
+
+    padding: 20px 10px;
+
+}
+
+
+.javier-caption h2 {
+
+    font-size: 2rem;
+
+    letter-spacing: 0.18em;
+
+    margin-bottom: 20px;
+
+    color: #f0f3f4;
+
+}
+
+
+.javier-caption p {
+
+    color: #aebdc5;
+
+    font-size: 1.05rem;
+
+    max-width: 380px;
+
+}
+
+
+/* =========================================
+   HISTORIA
+========================================= */
+
+.legacy-story {
+
+    max-width: 850px;
+
+    margin:
+
+        0
+        auto
+        120px;
+
+    text-align: center;
+
+}
+
+
+.story-content {
+
+    padding:
+
+        20px
+        10px;
+
+}
+
+
+.story-label {
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.5em;
+
+    color: #8faebb;
+
+    text-transform: uppercase;
+
+    margin-bottom: 18px;
+
+}
+
+
+.legacy-story h2 {
+
+    font-size:
+
+        clamp(
+            2rem,
+            4vw,
+            3.2rem
+        );
+
+    font-weight: 500;
+
+    color: #edf2f4;
+
+    margin-bottom: 35px;
+
+}
+
+
+.legacy-story p:not(.story-label) {
+
+    color: #b4c0c6;
+
+    font-size: 1.05rem;
+
+    margin-bottom: 25px;
+
+}
+/* =========================================
+   RECUERDOS DEL VUELO
+========================================= */
+
+.memory-section {
+
+    position: relative;
+
+    margin:
+
+        0
+        -30px
+        130px;
+
+    padding:
+
+        100px
+        30px
+        120px;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #111820 0%,
+            #0a0f14 50%,
+            #070a0d 100%
+        );
+
+    border-top:
+
+        1px solid
+        rgba(170, 200, 215, 0.12);
+
+    border-bottom:
+
+        1px solid
+        rgba(170, 200, 215, 0.10);
+
+    box-shadow:
+
+        inset 0 20px 60px
+        rgba(0, 0, 0, 0.35),
+
+        inset 0 -20px 60px
+        rgba(0, 0, 0, 0.40);
+
+}
+
+
+/* =========================================
+   INTRODUCCIÓN DE LOS RECUERDOS
+========================================= */
+
+.memory-intro {
+
+    max-width: 800px;
+
+    margin:
+
+        0
+        auto
+        70px;
+
+    text-align: center;
+
+}
+
+
+.memory-intro h2 {
+
+    font-size:
+
+        clamp(
+            2rem,
+            5vw,
+            3.5rem
+        );
+
+    font-weight: 500;
+
+    color: #edf2f4;
+
+    letter-spacing: 0.04em;
+
+}
+
+
+/* =========================================
+   MESA DE RECUERDOS
+========================================= */
+
+.memory-table {
+
+    position: relative;
+
+    max-width: 1050px;
+
+    margin: 0 auto;
+
+    padding:
+
+        70px
+        40px
+        90px;
+
+    display: grid;
+
+    grid-template-columns:
+
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap: 70px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #171b1f,
+            #0b0e11
+        );
+
+    border-radius: 4px;
+
+    box-shadow:
+
+        0 35px 80px
+        rgba(0, 0, 0, 0.75),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.04);
+
+}
+
+
+/* Textura visual de la mesa */
+
+.memory-table::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.18;
+
+    background:
+
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 7px,
+            rgba(255,255,255,0.015) 8px
+        );
+
+}
+
+
+/* =========================================
+   FOTOGRAFÍAS
+========================================= */
+
+.memory-photo {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.photo-frame {
+
+    position: relative;
+
+    padding: 12px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #e5e5e2,
+            #a8aaab
+        );
+
+    box-shadow:
+
+        0 20px 40px
+        rgba(0, 0, 0, 0.65),
+
+        0 4px 12px
+        rgba(0, 0, 0, 0.45);
+
+    transition:
+
+        transform 0.8s
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        ),
+
+        box-shadow 0.8s
+        ease;
+
+}
+
+
+/* Primera fotografía */
+
+.memory-photo-hangar
+.photo-frame {
+
+    transform:
+
+        rotate(-2deg);
+
+}
+
+
+/* Segunda fotografía */
+
+.memory-photo-halcon
+.photo-frame {
+
+    transform:
+
+        rotate(2.5deg);
+
+}
+
+
+/* Movimiento sutil */
+
+.memory-photo:hover
+.photo-frame {
+
+    transform:
+
+        translateY(-8px)
+        rotate(0deg)
+        scale(1.025);
+
+    box-shadow:
+
+        0 30px 55px
+        rgba(0, 0, 0, 0.75);
+
+}
+
+
+.photo-frame img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 360px;
+
+    object-fit: cover;
+
+    filter:
+
+        saturate(0.85)
+        contrast(1.05)
+        brightness(0.88);
+
+    transition:
+
+        filter 0.8s
+        ease;
+
+}
+
+
+.memory-photo:hover
+.photo-frame img {
+
+    filter:
+
+        saturate(1)
+        contrast(1.05)
+        brightness(0.96);
+
+}
+
+
+/* =========================================
+   TEXTO EMOCIONAL
+========================================= */
+
+.memory-text {
+
+    padding:
+
+        30px
+        10px
+        10px;
+
+    text-align: center;
+
+}
+
+
+.memory-text p {
+
+    color: #c5d0d5;
+
+    font-family:
+
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.15rem;
+
+    line-height: 1.9;
+
+    font-style: italic;
+
+    text-shadow:
+
+        0 2px 8px
+        rgba(0, 0, 0, 0.65);
+
+}
+
+
+/* =========================================
+   SECCIÓN EL AVIADOR DEL METAL
+========================================= */
+
+.aviador-metal-section {
+
+    position: relative;
+
+    margin:
+
+        0
+        auto
+        110px;
+
+    padding:
+
+        120px
+        30px;
+
+    text-align: center;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(80, 110, 125, 0.10),
+            transparent 60%
+        );
+
+}
+
+
+.aviador-metal-content {
+
+    max-width: 850px;
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================================
+   LOGO DEL AVIADOR DEL METAL
+========================================= */
+
+.metal-logo-container {
+
+    position: relative;
+
+    max-width: 650px;
+
+    margin:
+
+        40px
+        auto
+        45px;
+
+    padding: 18px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #181c20,
+            #07090b
+        );
+
+    border:
+
+        1px solid
+        rgba(180, 205, 215, 0.18);
+
+    box-shadow:
+
+        0 30px 70px
+        rgba(0, 0, 0, 0.75);
+
+    overflow: hidden;
+
+}
+
+
+.metal-logo-container::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            transparent 30%,
+            rgba(255,255,255,0.08) 50%,
+            transparent 70%
+        );
+
+    transform:
+
+        translateX(-100%);
+
+    animation:
+
+        logoLightSweep
+        7s
+        ease-in-out
+        infinite;
+
+}
+
+
+.metal-logo {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-height: 420px;
+
+    object-fit: contain;
+
+    filter:
+
+        contrast(1.08)
+        brightness(0.92);
+
+}
+
+
+.aviador-metal-content h2 {
+
+    font-size:
+
+        clamp(
+            1.8rem,
+            4vw,
+            3rem
+        );
+
+    letter-spacing: 0.18em;
+
+    color: #edf2f4;
+
+    margin-bottom: 20px;
+
+}
+
+
+.metal-quote {
+
+    max-width: 750px;
+
+    margin:
+
+        35px
+        auto
+        55px;
+
+    color: #b8c6cc;
+
+    font-family:
+
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.25rem;
+
+    font-style: italic;
+
+    line-height: 1.9;
+
+}
+
+
+.eternal-flight {
+
+    margin-top: 50px;
+
+    font-size:
+
+        clamp(
+            1.4rem,
+            3vw,
+            2.4rem
+        );
+
+    letter-spacing: 0.18em;
+
+    line-height: 1.5;
+
+    color: #dce8ed;
+
+    text-shadow:
+
+        0 0 25px
+        rgba(150, 195, 215, 0.20);
+
+}
+
+
+/* =========================================
+   CIERRE
+========================================= */
+
+.legacy-closing {
+
+    max-width: 850px;
+
+    margin:
+
+        0
+        auto
+        80px;
+
+    padding:
+
+        50px
+        20px;
+
+    text-align: center;
+
+}
+
+
+.closing-content p {
+
+    color: #aebbc1;
+
+    font-family:
+
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.1rem;
+
+    margin-bottom: 12px;
+
+}
+
+
+.closing-final {
+
+    margin-top: 35px;
+
+    color: #dce5e9 !important;
+
+    font-size: 1.35rem !important;
+
+    font-style: italic;
+
+}
+
+
+/* =========================================
+   PIE DE PÁGINA
+========================================= */
+
+.legacy-footer {
+
+    padding:
+
+        60px
+        25px
+        45px;
+
+    text-align: center;
+
+    background:
+
+        #030405;
+
+    border-top:
+
+        1px solid
+        rgba(180, 205, 215, 0.12);
+
+}
+
+
+.legacy-footer h3 {
+
+    font-size: 1rem;
+
+    letter-spacing: 0.35em;
+
+    color: #c7d4da;
+
+    margin-bottom: 15px;
+
+}
+
+
+.legacy-footer p {
+
+    color: #82919a;
+
+    font-size: 0.9rem;
+
+    margin-bottom: 30px;
+
+}
+
+
+.legacy-footer small {
+
+    color: #69767d;
+
+    font-size: 0.8rem;
+
+    letter-spacing: 0.05em;
+
+}
+
+
+/* =========================================
+   ANIMACIONES
+========================================= */
+
+@keyframes legacyFadeIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+
+            translateY(25px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+
+            translateY(0);
+
+    }
+
+}
+
+
+@keyframes logoLightSweep {
+
+    0% {
+
+        transform:
+
+            translateX(-100%);
+
+    }
+
+    30% {
+
+        transform:
+
+            translateX(100%);
+
+    }
+
+    100% {
+
+        transform:
+
+            translateX(100%);
+
+    }
+
+}
+/* =========================================
+   TABLETS
+========================================= */
+
+@media (max-width: 900px) {
+
+
+    .legacy-header {
+
+        min-height: 65vh;
+
+        padding:
+
+            70px
+            20px;
+
+    }
+
+
+    .legacy-main {
+
+        padding:
+
+            60px
+            20px
+            80px;
+
+    }
+
+
+    .javier-hero {
+
+        grid-template-columns:
+
+            1fr;
+
+        gap: 35px;
+
+    }
+
+
+    .javier-caption {
+
+        text-align: center;
+
+        padding:
+
+            10px
+            20px
+            30px;
+
+    }
+
+
+    .javier-caption p {
+
+        margin:
+
+            0
+            auto;
+
+    }
+
+
+    .memory-section {
+
+        margin-left: -20px;
+
+        margin-right: -20px;
+
+        padding:
+
+            80px
+            20px
+            100px;
+
+    }
+
+
+    .memory-table {
+
+        grid-template-columns:
+
+            1fr;
+
+        max-width: 650px;
+
+        gap: 80px;
+
+        padding:
+
+            60px
+            35px
+            80px;
+
+    }
+
+
+    .photo-frame img {
+
+        height: auto;
+
+        max-height: 500px;
+
+    }
+
+
+    .aviador-metal-section {
+
+        padding:
+
+            90px
+            20px;
+
+    }
+
+}
+
+
+/* =========================================
+   TELÉFONOS
+========================================= */
+
+@media (max-width: 600px) {
+
+
+    body {
+
+        font-size: 15px;
+
+    }
+
+
+    .legacy-header {
+
+        min-height: 70vh;
+
+        padding:
+
+            60px
+            18px;
+
+        background-position:
+
+            center center;
+
+    }
+
+
+    .legacy-kicker {
+
+        font-size:
+
+            0.65rem;
+
+        letter-spacing:
+
+            0.30em;
+
+    }
+
+
+    .legacy-header h1 {
+
+        font-size:
+
+            clamp(
+                2.2rem,
+                12vw,
+                3.5rem
+            );
+
+        letter-spacing:
+
+            0.05em;
+
+    }
+
+
+    .legacy-intro {
+
+        font-size:
+
+            0.95rem;
+
+        line-height:
+
+            1.7;
+
+    }
+
+
+    .legacy-main {
+
+        padding:
+
+            45px
+            15px
+            60px;
+
+    }
+
+
+    .javier-hero {
+
+        margin-bottom:
+
+            80px;
+
+    }
+
+
+    .javier-image-container {
+
+        border-radius:
+
+            2px;
+
+    }
+
+
+    .javier-main-image {
+
+        min-height:
+
+            300px;
+
+        object-fit:
+
+            cover;
+
+    }
+
+
+    .javier-caption h2 {
+
+        font-size:
+
+            1.45rem;
+
+        letter-spacing:
+
+            0.12em;
+
+    }
+
+
+    .javier-caption p {
+
+        font-size:
+
+            0.95rem;
+
+    }
+
+
+    .legacy-story {
+
+        margin-bottom:
+
+            80px;
+
+    }
+
+
+    .legacy-story h2 {
+
+        font-size:
+
+            1.9rem;
+
+        line-height:
+
+            1.25;
+
+    }
+
+
+    .legacy-story p:not(.story-label) {
+
+        font-size:
+
+            0.98rem;
+
+        line-height:
+
+            1.8;
+
+    }
+
+
+    /* ==============================
+       MESA DE RECUERDOS
+    ============================== */
+
+
+    .memory-section {
+
+        margin-left:
+
+            -15px;
+
+        margin-right:
+
+            -15px;
+
+        padding:
+
+            65px
+            15px
+            80px;
+
+    }
+
+
+    .memory-intro {
+
+        margin-bottom:
+
+            50px;
+
+    }
+
+
+    .memory-intro h2 {
+
+        font-size:
+
+            1.9rem;
+
+        line-height:
+
+            1.3;
+
+    }
+
+
+    .memory-table {
+
+        padding:
+
+            45px
+            18px
+            60px;
+
+        gap:
+
+            65px;
+
+        border-radius:
+
+            2px;
+
+    }
+
+
+    .photo-frame {
+
+        padding:
+
+            8px;
+
+    }
+
+
+    .photo-frame img {
+
+        height:
+
+            300px;
+
+        object-fit:
+
+            cover;
+
+    }
+
+
+    .memory-photo-hangar
+    .photo-frame {
+
+        transform:
+
+            rotate(-1.5deg);
+
+    }
+
+
+    .memory-photo-halcon
+    .photo-frame {
+
+        transform:
+
+            rotate(1.5deg);
+
+    }
+
+
+    .memory-text {
+
+        padding:
+
+            25px
+            5px
+            5px;
+
+    }
+
+
+    .memory-text p {
+
+        font-size:
+
+            1.05rem;
+
+        line-height:
+
+            1.8;
+
+    }
+
+
+    /* ==============================
+       AVIADOR DEL METAL
+    ============================== */
+
+
+    .aviador-metal-section {
+
+        padding:
+
+            70px
+            10px;
+
+        margin-bottom:
+
+            70px;
+
+    }
+
+
+    .metal-logo-container {
+
+        margin:
+
+            30px
+            auto
+            35px;
+
+        padding:
+
+            10px;
+
+    }
+
+
+    .aviador-metal-content h2 {
+
+        font-size:
+
+            1.5rem;
+
+        letter-spacing:
+
+            0.10em;
+
+    }
+
+
+    .metal-quote {
+
+        font-size:
+
+            1.05rem;
+
+        line-height:
+
+            1.8;
+
+        margin:
+
+            25px
+            auto
+            40px;
+
+    }
+
+
+    .eternal-flight {
+
+        font-size:
+
+            1.25rem;
+
+        letter-spacing:
+
+            0.10em;
+
+    }
+
+
+    /* ==============================
+       CIERRE
+    ============================== */
+
+
+    .legacy-closing {
+
+        padding:
+
+            35px
+            10px;
+
+        margin-bottom:
+
+            50px;
+
+    }
+
+
+    .closing-content p {
+
+        font-size:
+
+            1rem;
+
+    }
+
+
+    .closing-final {
+
+        font-size:
+
+            1.15rem
+            !important;
+
+    }
+
+
+    /* ==============================
+       FOOTER
+    ============================== */
+
+
+    .legacy-footer {
+
+        padding:
+
+            50px
+            18px
+            35px;
+
+    }
+
+
+    .legacy-footer h3 {
+
+        font-size:
+
+            0.85rem;
+
+        letter-spacing:
+
+            0.22em;
+
+    }
+
+
+    .legacy-footer p {
+
+        font-size:
+
+            0.82rem;
+
+        line-height:
+
+            1.7;
+
+    }
+
+
+    .legacy-footer small {
+
+        font-size:
+
+            0.72rem;
+
+    }
+
+}
+
+
+/* =========================================
+   PANTALLAS MUY PEQUEÑAS
+========================================= */
+
+@media (max-width: 380px) {
+
+
+    .legacy-header h1 {
+
+        font-size:
+
+            2rem;
+
+    }
+
+
+    .memory-table {
+
+        padding-left:
+
+            12px;
+
+        padding-right:
+
+            12px;
+
+    }
+
+
+    .photo-frame img {
+
+        height:
+
+            250px;
+
+    }
+
+
+    .eternal-flight {
+
+        font-size:
+
+            1.1rem;
+
+    }
+
+}
+
+
+/* =========================================
+   ACCESIBILIDAD
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+
+    html {
+
+        scroll-behavior:
+
+            auto;
+
+    }
+
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+
+            0.01ms
+            !important;
+
+        animation-iteration-count:
+
+            1
+            !important;
+
+        transition-duration:
+
+            0.01ms
+            !important;
+
+    }
+
+}
