@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>El Origen de un Legado | Hangar Play Radio</title>
+
+    <link rel="stylesheet" href="estilo.css">
+
+    <style>
+        /* =====================================================
+           EL ORIGEN DE UN LEGADO
+           Estructura independiente y ordenada
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+        }
+
+        /* =====================================================
+           ENCABEZADO
+        ===================================================== */
+
+        .legacy-page-header {
+            text-align: center;
+            padding: 70px 20px 45px;
+        }
+
+        .legacy-page-header h1 {
+            margin: 0;
+            font-size: clamp(2rem, 5vw, 4rem);
+        }
+
+        .legacy-page-header p {
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* =====================================================
+           FOTO DE JAVIER
+        ===================================================== */
+
+        .javier-hero {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 70px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .javier-image-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 18px;
+        }
+
+        .javier-image-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+        .javier-caption {
+            max-width: 850px;
+            margin: 25px auto 0;
+            padding: 0 20px;
+        }
+
+        .javier-caption h2 {
+            margin: 0 0 10px;
+        }
+
+        .javier-caption p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           HISTORIA COMPLETA DEL LEGADO
+        ===================================================== */
+
+        .legacy-story {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 70px 25px;
+        }
+
+        .legacy-story-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .legacy-story-header h2 {
+            margin: 0 0 15px;
+        }
+
+        .legacy-story-header h3 {
+            margin: 0;
+        }
+
+        .legacy-story-content {
+            line-height: 1.9;
+        }
+
+        .legacy-story-content p {
+            margin: 0 0 25px;
+        }
+
+        /* =====================================================
+           RECUERDOS DEL VUELO
+        ===================================================== */
+
+        .flight-memories {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 70px 20px;
+        }
+
+        .flight-memories-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .flight-memories-header h2 {
+            margin: 0;
+        }
+
+        .flight-memories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .flight-memory-card {
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .flight-memory-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+        .flight-memory-caption {
+            padding: 18px;
+            text-align: center;
+        }
+
+        /* =====================================================
+           EL AVIADOR DEL METAL
+        ===================================================== */
+
+        .aviador-metal {
+            width: 100%;
+            max-width: 1000px;
+            margin: 70px auto;
+            padding: 60px 30px;
+            text-align: center;
+            border-radius: 22px;
+        }
+
+        .aviador-metal-logo {
+            max-width: 420px;
+            width: 80%;
+            height: auto;
+            margin: 0 auto 35px;
+            display: block;
+        }
+
+        .aviador-metal p {
+            max-width: 750px;
+            margin: 0 auto 25px;
+            line-height: 1.8;
+        }
+
+        .aviador-metal-final {
+            margin-top: 40px;
+            font-weight: bold;
+        }
+
+        /* =====================================================
+           CIERRE DEL LEGADO
+        ===================================================== */
+
+        .legacy-closing {
+            width: 100%;
+            max-width: 900px;
+            margin: 70px auto;
+            padding: 60px 25px;
+            text-align: center;
+        }
+
+        .legacy-closing p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        /* =====================================================
+           VOLVER A CABINA
+        ===================================================== */
+
+        .back-to-cabin {
+            text-align: center;
+            padding: 50px 20px 80px;
+        }
+
+        .back-to-cabin a {
+            display: inline-block;
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 768px) {
+
+            .legacy-page-header {
+                padding: 45px 20px 30px;
+            }
+
+            .javier-hero {
+                padding: 0 12px;
+                margin-bottom: 45px;
+            }
+
+            .javier-image-container {
+                border-radius: 12px;
+            }
+
+            .legacy-story {
+                padding: 50px 20px;
+            }
+
+            .flight-memories {
+                padding: 50px 12px;
+            }
+
+            .flight-memories-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .aviador-metal {
+                margin: 50px 12px;
+                padding: 45px 20px;
+            }
+
+            .legacy-closing {
+                padding: 45px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         ENCABEZADO DEL LEGADO
+    ===================================================== -->
+
+    <header class="legacy-page-header">
+        <h1>El Origen de un Legado</h1>
+        <p>Una historia de aviación, música, amistad y pasión por volar.</p>
+    </header>
+
+
+    <!-- =====================================================
+         FOTO PRINCIPAL DE JAVIER
+         UNA SOLA VEZ
+    ===================================================== -->
+
+    <section class="javier-hero">
+
+        <div class="javier-image-container">
+
+            <img
+                src="IMAGEN_FOTO_PRINCIPAL_JAVIER"
+                alt="Javier Lista, aviador, apasionado de la música y amigo"
+            >
+
+        </div>
+
+        <div class="javier-caption">
+
+            <h2>Javier Lista</h2>
+
+            <p>
+                Un aviador, un apasionado de la música, un amigo y una inspiración.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         HISTORIA COMPLETA DEL LEGADO
+         ESTA ES LA ÚNICA HISTORIA DE LA PÁGINA
+    ===================================================== -->
+
+    <section class="legacy-story">
+
+        <div class="legacy-story-header">
+
+            <h2>Historia completa del legado</h2>
+
+            <h3>El Origen</h3>
+
+            <h3>Donde comienza el vuelo</h3>
+
+        </div>
+
+
+        <div class="legacy-story-content">
+
+            <p>
+                En 2019, Nicolás Rijos da vida a El Aviador del Metal,
+                asumiendo la conducción y producción de un proyecto creado
+                en memoria de su amigo Javier Lista.
+            </p>
+
+            <p>
+                Desde sus comienzos, el proyecto encontró en la música y en
+                la aviación una forma de expresar una historia, una amistad
+                y una pasión compartida.
+            </p>
+
+            <p>
+                Con el tiempo, El Aviador del Metal fue creciendo junto a una
+                audiencia que se sumó a este viaje y que hizo posible que aquel
+                primer proyecto alcanzara nuevos horizontes.
+            </p>
+
+            <p>
+                En el año 2023, Nicolás Rijos decide dar un nuevo paso y ampliar
+                aquella propuesta. Así nace Hangar Play Radio, tomando la dirección
+                y programación de un proyecto que comienza a expandirse y a encontrar
+                una identidad propia.
+            </p>
+
+            <p>
+                Con el paso del tiempo, aquella idea inicial se transforma en un
+                espacio donde la música, la aviación, la memoria y las historias
+                encuentran un mismo lugar.
+            </p>
+
+            <p>
+                Hangar Play Radio representa la evolución de aquel primer vuelo:
+                una nueva etapa construida sobre la experiencia, la pasión y el
+                recuerdo de quienes hicieron posible que esta historia comenzara.
+            </p>
+
+            <p>
+                El proyecto continúa creciendo y cada etapa suma una nueva página
+                a este legado. La historia sigue escribiéndose con cada transmisión,
+                cada canción y cada persona que decide acompañar este vuelo.
+            </p>
+
+            <p>
+                Esta es la historia de un vuelo que continuó, que encontró nuevos
+                horizontes y que, con el paso del tiempo, se convirtió en algo mucho
+                más grande que una simple idea.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECUERDOS DEL VUELO
+         LAS FOTOS SE MANTIENEN SEPARADAS DE LA HISTORIA
+    ===================================================== -->
+
+    <section class="flight-memories">
+
+        <div class="flight-memories-header">
+
+            <h2>Recuerdos del Vuelo</h2>
+
+        </div>
+
+
+        <div class="flight-memories-grid">
+
+            <div class="flight-memory-card">
+
+                <img
+                    src="IMAGEN_RECUERDO_1"
+                    alt="Recuerdo del vuelo"
+                >
+
+                <div class="flight-memory-caption">
+                    <p>Un recuerdo de este vuelo.</p>
+                </div>
+
+            </div>
+
+
+            <div class="flight-memory-card">
+
+                <img
+                    src="IMAGEN_RECUERDO_2"
+                    alt="Recuerdo del vuelo"
+                >
+
+                <div class="flight-memory-caption">
+                    <p>Momentos que permanecen en la memoria.</p>
+                </div>
+
+            </div>
+
+
+            <div class="flight-memory-card">
+
+                <img
+                    src="IMAGEN_RECUERDO_3"
+                    alt="Recuerdo del vuelo"
+                >
+
+                <div class="flight-memory-caption">
+                    <p>Historias que merecen ser recordadas.</p>
+                </div>
+
+            </div>
+
+
+            <div class="flight-memory-card">
+
+                <img
+                    src="IMAGEN_RECUERDO_4"
+                    alt="Recuerdo del vuelo"
+                >
+
+                <div class="flight-memory-caption">
+                    <p>El vuelo continúa.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         EL AVIADOR DEL METAL
+    ===================================================== -->
+
+    <section class="aviador-metal">
+
+        <img
+            class="aviador-metal-logo"
+            src="IMAGEN_LOGO_AVIADOR_DEL_METAL"
+            alt="El Aviador del Metal"
+        >
+
+        <p>
+            De la pasión por volar y el amor por el heavy metal nació una identidad.
+            Así comenzó el vuelo del Aviador del Metal.
+        </p>
+
+        <p class="aviador-metal-final">
+            Los aviadores vuelan eternamente.<br>
+            El vuelo continúa.<br>
+            La música sigue sonando.
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         CIERRE DEL LEGADO
+    ===================================================== -->
+
+    <section class="legacy-closing">
+
+        <p>
+            El legado permanece en cada historia, en cada recuerdo
+            y en cada nuevo horizonte.
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         VOLVER A CABINA
+    ===================================================== -->
+
+    <div class="back-to-cabin">
+
+        <a href="index.html">
+            Volver a Cabina
+        </a>
+
+    </div>
+
+
+</body>
+</html>
