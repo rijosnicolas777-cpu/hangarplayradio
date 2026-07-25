@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Hangar Play | El cielo</title>
+
+    <meta
+        name="description"
+        content="Hangar Play Radio — El cielo, el clima y la hora local."
+    >
+
+    <link
+        rel="stylesheet"
+        href="footer.css"
+    >
+</head>
+
+<body>
+
+    <main
+        id="hangar-footer"
+        class="hangar-footer weather-clear"
+    >
+
+        <!-- Fondo atmosférico -->
+        <div
+            class="weather-background"
+            aria-hidden="true"
+        ></div>
+
+        <!-- Capa de contraste -->
+        <div
+            class="weather-overlay"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- Contenido principal -->
+        <section class="weather-content">
+
+            <!-- Localidad -->
+            <div class="location-section">
+
+                <div class="location-label">
+                    <span class="location-icon">⌖</span>
+                    <span id="location-name">
+                        MONTEVIDEO, URUGUAY
+                    </span>
+                </div>
+
+                <button
+                    id="change-location"
+                    class="location-button"
+                    type="button"
+                >
+                    <span aria-hidden="true">⌕</span>
+                    Cambiar localidad
+                </button>
+
+            </div>
+
+
+            <!-- Información meteorológica -->
+            <div class="weather-section">
+
+                <div
+                    id="weather-icon"
+                    class="weather-icon"
+                    aria-hidden="true"
+                >
+                    ☀️
+                </div>
+
+                <div class="weather-data">
+
+                    <div
+                        id="weather-condition"
+                        class="weather-condition"
+                    >
+                        DESPEJADO
+                    </div>
+
+                    <div
+                        id="temperature"
+                        class="temperature"
+                    >
+                        -- °C
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Hora local -->
+            <div class="time-section">
+
+                <div class="time-label">
+                    LOCAL TIME
+                </div>
+
+                <div
+                    id="local-time"
+                    class="local-time"
+                >
+                    --:--
+                </div>
+
+                <div
+                    id="local-date"
+                    class="local-date"
+                >
+                    --
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Buscador de localidad -->
+        <section
+            id="location-search"
+            class="location-search hidden"
+            aria-hidden="true"
+        >
+
+            <div class="search-box">
+
+                <div class="search-header">
+
+                    <h2>
+                        Buscar localidad
+                    </h2>
+
+                    <button
+                        id="close-search"
+                        class="close-search"
+                        type="button"
+                        aria-label="Cerrar buscador"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <label
+                    for="location-input"
+                    class="search-label"
+                >
+                    Escribí una ciudad o localidad
+                </label>
+
+
+                <div class="search-input-wrapper">
+
+                    <span
+                        class="search-icon"
+                        aria-hidden="true"
+                    >
+                        ⌕
+                    </span>
+
+                    <input
+                        id="location-input"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="Ej.: Florida, Uruguay"
+                    >
+
+                </div>
+
+
+                <div
+                    id="location-results"
+                    class="location-results"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Redes y contacto -->
+        <footer class="contact-section">
+
+            <div class="social-links">
+
+                <a
+                    href="#"
+                    class="social-link"
+                    id="instagram-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                >
+                    Instagram
+                </a>
+
+                <a
+                    href="#"
+                    class="social-link"
+                    id="facebook-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                >
+                    Facebook
+                </a>
+
+                <a
+                    href="#"
+                    class="social-link"
+                    id="whatsapp-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="WhatsApp"
+                >
+                    WhatsApp
+                </a>
+
+            </div>
+
+
+            <a
+                href="mailto:hangarplayradio@gmail.com"
+                class="email-link"
+            >
+                hangarplayradio@gmail.com
+            </a>
+
+
+            <div class="footer-brand">
+                HANGAR PLAY
+            </div>
+
+            <div class="footer-slogan">
+                SURCANDO EL AIRE DE LOS TIEMPOS
+            </div>
+
+        </footer>
+
+    </main>
+
+
+    <script src="footer.js"></script>
+
+</body>
+</html>
