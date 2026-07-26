@@ -803,6 +803,7 @@ body {
 
 
 .weather-clear .weather-background {
+   background-image: url('../img/cielo-despejado.jpg');
     filter:
         brightness(1.05)
         saturate(1.05);
@@ -810,6 +811,7 @@ body {
 
 
 .weather-cloudy .weather-background {
+   background-image: url('../img/cielo-nublado.jpg');
     filter:
         brightness(0.82)
         saturate(0.75);
@@ -817,6 +819,7 @@ body {
 
 
 .weather-rain .weather-background {
+   background-image: url('../img/cielo-lluvia.jpg');
     filter:
         brightness(0.68)
         saturate(0.65);
@@ -824,6 +827,7 @@ body {
 
 
 .weather-storm .weather-background {
+   background-image: url('../img/cielo-tormenta.jpg');
     filter:
         brightness(0.48)
         saturate(0.55)
@@ -832,6 +836,7 @@ body {
 
 
 .weather-sunset .weather-background {
+   background-image: url('../img/cielo-atardecer.jpg');
     filter:
         brightness(0.88)
         saturate(1.18);
@@ -839,6 +844,7 @@ body {
 
 
 .weather-sunrise .weather-background {
+   background-image: url('../img/cielo-amanecer.jpg');
     filter:
         brightness(0.94)
         saturate(1.10);
@@ -846,6 +852,7 @@ body {
 
 
 .weather-night .weather-background {
+   background-image: url('../img/cielo-noche.jpg');
     filter:
         brightness(0.40)
         saturate(0.65);
