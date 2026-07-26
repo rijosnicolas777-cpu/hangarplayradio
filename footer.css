@@ -857,7 +857,9 @@ body {
         brightness(0.40)
         saturate(0.65);
 }
-
+.weather-clear .weather-background {
+    background-image: url('../img/cielo-despejado.jpg');
+}
 
 /* ---------------------------------------------------------
    15. RESPONSIVE — TABLET
