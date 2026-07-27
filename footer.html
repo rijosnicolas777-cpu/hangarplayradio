@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hangar Play Radio — Footer Clima</title>
+    <title>Hangar Play Radio — Footer Clima Avanzado</title>
     <style>
         /* =========================================================
         RESET ABSOLUTO PARA GOOGLE SITES
@@ -38,18 +38,17 @@
         }
 
         /* =========================================================
-        FONDO ATMOSFÉRICO CON LOOP CONTINUO
+        FONDO ATMOSFÉRICO Y CAPAS DE EFECTOS
         ========================================================= */
         .weather-background {
             position: absolute;
-            inset: -2%;
+            inset: -4%;
             z-index: 0;
             background-color: #05080c;
             background-image: url("img/cielo-despejado.jpg");
             background-position: center center;
             background-repeat: no-repeat;
             background-size: cover;
-            
             animation: atmosphericLoop 25s ease-in-out infinite alternate;
             transition: background-image 1.2s ease-in-out, filter 1.2s ease-in-out;
         }
@@ -60,30 +59,84 @@
             100% { transform: scale(1.03) translate(8px, 4px); }
         }
 
-        /* ESTADOS DE CLIMA */
+        /* ESTADOS BASE DE CLIMA */
         .hangar-footer.weather-clear .weather-background { background-image: url("img/cielo-despejado.jpg"); filter: brightness(1.05) saturate(1.05); }
         .hangar-footer.weather-cloudy .weather-background { background-image: url("img/cielo-nublado.jpg"); filter: brightness(0.85) saturate(0.85); }
         .hangar-footer.weather-rain .weather-background { background-image: url("img/cielo-lluvia.jpg"); filter: brightness(0.70) saturate(0.80); }
         .hangar-footer.weather-storm .weather-background { background-image: url("img/cielo-tormenta.jpg"); filter: brightness(0.55) saturate(0.75); }
         .hangar-footer.weather-sunrise .weather-background { background-image: url("img/cielo-amanecer.jpg"); filter: brightness(1.05) saturate(1.10); }
         .hangar-footer.weather-sunset .weather-background { background-image: url("img/cielo-atardecer.jpg"); filter: brightness(0.90) saturate(1.10); }
-        .hangar-footer.weather-night .weather-background { background-image: url("img/cielo-noche.jpg"); filter: brightness(0.48) saturate(0.75); }
+        
+        /* NOCHE UNIFICADA: Usa la imagen base con la luna, sobre la cual operan las capas */
+        .hangar-footer.weather-night .weather-background { 
+            background-image: url("img/cielo-noche.jpg") !important; 
+            filter: brightness(0.95) saturate(0.90); 
+        }
 
-        /* CAPA DE OSCURECIMIENTO / CONTRASTE */
-        .weather-overlay {
+        /* =========================================================
+        CAPAS SUPERPUESTAS DINÁMICAS (NUBES, LLUVIA, RELÁMPAGOS)
+        ========================================================= */
+        .fx-layer {
             position: absolute;
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.30) 48%, rgba(0, 0, 0, 0.72) 100%);
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        .weather-overlay::after {
-            content: "";
+        /* Capa de nubes oscuras para tapar parcialmente la luna en noche de lluvia/tormenta o nublar el día */
+        .fx-clouds {
+            background: radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.45) 0%, rgba(2, 6, 23, 0.88) 75%);
+            mix-blend-mode: multiply;
+        }
+
+        /* Capa de lluvia simulada con patrón de líneas */
+        .fx-rain {
+            background-image: linear-gradient(110deg, transparent 48%, rgba(255, 255, 255, 0.25) 50%, transparent 52%);
+            background-size: 30px 40px;
+            animation: rainFall 0.4s linear infinite;
+        }
+
+        @keyframes rainFall {
+            0% { background-position: 0 0; }
+            100% { background-position: -15px 40px; }
+        }
+
+        /* Capa de destellos de relámpagos ocasionales */
+        .fx-lightning {
+            background: rgba(255, 255, 255, 0);
+        }
+
+        /* Activación de capas según la clase del contenedor */
+        .hangar-footer.state-cloudy-night .fx-clouds,
+        .hangar-footer.state-rain-night .fx-clouds,
+        .hangar-footer.state-storm-night .fx-clouds {
+            opacity: 0.85; /* Tapa la luna con elegancia manteniendo atmósfera nocturna profunda */
+        }
+
+        .hangar-footer.state-rain-night .fx-rain,
+        .hangar-footer.state-storm-night .fx-rain {
+            opacity: 1;
+        }
+
+        .hangar-footer.state-storm-night .fx-lightning {
+            animation: flashLightning 6s infinite;
+        }
+
+        @keyframes flashLightning {
+            0%, 90%, 94%, 98% { opacity: 0; background: rgba(255, 255, 255, 0); }
+            91%, 95% { opacity: 1; background: rgba(226, 232, 240, 0.35); }
+            92%, 96% { opacity: 0.2; background: rgba(226, 232, 240, 0.1); }
+        }
+
+        /* OSCURECIMIENTO GENERAL Y CONTRASTE */
+        .weather-overlay {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.10), transparent 42%);
+            z-index: 2;
             pointer-events: none;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.30) 48%, rgba(0, 0, 0, 0.72) 100%);
         }
 
         /* =========================================================
@@ -91,7 +144,7 @@
         ========================================================= */
         .weather-content {
             position: relative;
-            z-index: 2;
+            z-index: 3;
             width: min(1100px, 92%);
             min-height: 430px;
             margin: 0 auto;
@@ -236,7 +289,7 @@
         /* REDES Y CONTACTO */
         .contact-section {
             position: relative;
-            z-index: 2;
+            z-index: 3;
             width: min(1100px, 92%);
             margin: 0 auto;
             padding: 28px 30px 38px;
@@ -326,7 +379,11 @@
 <body>
 
     <div id="footerRoot" class="hangar-footer weather-clear">
+        <!-- CAPAS DE FONDO Y EFECTOS -->
         <div class="weather-background"></div>
+        <div class="fx-layer fx-clouds"></div>
+        <div class="fx-layer fx-rain"></div>
+        <div class="fx-layer fx-lightning"></div>
         <div class="weather-overlay"></div>
 
         <div class="weather-content">
@@ -401,37 +458,36 @@
 
             const svgIcons = {
                 clear: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="14" fill="url(#sunGrad)"/><path d="M32 6V12M32 52V58M6 32H12M52 32H58M13.636 13.636L17.878 17.878M46.122 46.122L50.364 50.364M13.636 50.364L17.878 46.122M46.122 17.878L50.364 13.636" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/><defs><radialGradient id="sunGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="#FFF568"/><stop offset="60%" stop-color="#FF9900"/><stop offset="100%" stop-color="#FF5500"/></radialGradient></defs></svg>`,
+                moon: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M39.5 10C35.8 10 32.3 11.2 29.4 13.3C35.2 16.5 39 22.7 39 29.8C39 36.9 35.2 43.1 29.4 46.3C32.3 48.4 35.8 49.6 39.5 49.6C48.1 49.6 55 42.7 55 34.1C55 25.5 48.1 18.6 39.5 18.6V10Z" fill="url(#moonGrad)"/><defs><linearGradient id="moonGrad" x1="29.4" y1="10" x2="55" y2="49.6" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#F1F5F9"/><stop offset="100%" stop-color="#94A3B8"/></linearGradient></defs></svg>`,
                 cloudy: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M46 28H44.62C43.34 21.72 37.84 17 31.2 17C24.56 17 19.06 21.72 17.78 28H14C9.58 28 6 31.58 6 36C6 40.42 9.58 44 14 44H46C50.42 44 54 40.42 54 36C54 31.58 50.42 28 46 28Z" fill="url(#cloudGrad)"/><defs><linearGradient id="cloudGrad" x1="6" y1="17" x2="54" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#E0E6ED"/><stop offset="100%" stop-color="#9AA5B1"/></linearGradient></defs></svg>`,
                 rain: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M46 24H44.62C43.34 17.72 37.84 13 31.2 13C24.56 13 19.06 17.72 17.78 24H14C9.58 24 6 27.58 6 32C6 36.42 9.58 40 14 40H46C50.42 40 54 36.42 54 32C54 27.58 50.42 24 46 24Z" fill="url(#rainCloud)"/><path d="M20 48L17 56M32 48L29 56M44 48L41 56" stroke="#00B4D8" stroke-width="3" stroke-linecap="round"/><defs><linearGradient id="rainCloud" x1="6" y1="13" x2="54" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#94A3B8"/><stop offset="100%" stop-color="#475569"/></linearGradient></defs></svg>`,
                 storm: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M46 22H44.62C43.34 15.72 37.84 11 31.2 11C24.56 11 19.06 15.72 17.78 22H14C9.58 22 6 25.58 6 30C6 34.42 9.58 38 14 48H46C50.42 38 54 34.42 54 30C54 25.58 50.42 22 46 22Z" fill="#334155"/><path d="M34 40L24 50H32L30 60L42 46H34L34 40Z" fill="#FACC15"/></svg>`
             };
 
-            // Lista oficial de los 19 departamentos de Uruguay (con Montevideo al inicio como base central)
             const uruguayDepartments = [
                 { name: "Montevideo, Uruguay", lat: -34.9011, lon: -56.1645 },
+                { name: "Artigas, Uruguay", lat: -30.4000, lon: -56.4667 },
                 { name: "Canelones, Uruguay", lat: -34.5228, lon: -56.2808 },
-                { name: "Maldonado, Uruguay", lat: -34.9033, lon: -54.9536 },
-                { name: "Rocha, Uruguay", lat: -34.4833, lon: -54.3333 },
-                { name: "Treinta y Tres, Uruguay", lat: -33.2333, lon: -54.3833 },
                 { name: "Cerro Largo, Uruguay", lat: -32.3667, lon: -54.1833 },
-                { name: "Rivera, Uruguay", lat: -30.9053, lon: -55.5506 },
-                { name: "Artigas, Uruguay", lat: -30.4, lon: -56.4667 },
-                { name: "Salto, Uruguay", lat: -31.3833, lon: -57.9667 },
+                { name: "Colonia, Uruguay", lat: -34.4667, lon: -57.8500 },
+                { name: "Durazno, Uruguay", lat: -33.4167, lon: -55.5333 },
+                { name: "Flores, Uruguay", lat: -33.5500, lon: -56.7000 },
+                { name: "Florida, Uruguay", lat: -34.0984, lon: -56.2161 },
+                { name: "Lavalleja, Uruguay", lat: -34.3667, lon: -55.2333 },
+                { name: "Maldonado, Uruguay", lat: -34.9033, lon: -54.9536 },
                 { name: "Paysandú, Uruguay", lat: -32.3167, lon: -58.0833 },
                 { name: "Río Negro, Uruguay", lat: -32.7333, lon: -58.2833 },
-                { name: "Soriano, Uruguay", lat: -33.5, lon: -58.0333 },
-                { name: "Colonia, Uruguay", lat: -34.4667, lon: -57.85 },
+                { name: "Rivera, Uruguay", lat: -30.9053, lon: -55.5506 },
+                { name: "Rocha, Uruguay", lat: -34.4833, lon: -54.3333 },
+                { name: "Salto, Uruguay", lat: -31.3833, lon: -57.9667 },
                 { name: "San José, Uruguay", lat: -34.3375, lon: -56.7136 },
-                { name: "Flores, Uruguay", lat: -33.55, lon: -56.7 },
-                { name: "Florida, Uruguay", lat: -34.0984, lon: -56.2161 },
-                { name: "Durazno, Uruguay", lat: -33.4167, lon: -55.5333 },
+                { name: "Soriano, Uruguay", lat: -33.5000, lon: -58.0333 },
                 { name: "Tacuarembó, Uruguay", lat: -31.7333, lon: -55.9833 },
-                { name: "Lavalleja, Uruguay", lat: -34.3667, lon: -55.2333 }
+                { name: "Treinta y Tres, Uruguay", lat: -33.2333, lon: -54.3833 }
             ];
 
             let currentIndex = 0;
 
-            // Al hacer clic, rota al siguiente departamento de la lista
             toggleLocationBtn.addEventListener('click', () => {
                 currentIndex = (currentIndex + 1) % uruguayDepartments.length;
                 const dept = uruguayDepartments[currentIndex];
@@ -455,33 +511,36 @@
                         const code = data.current.weather_code;
                         const isDay = data.current.is_day;
 
-                        locationLabel.innerHTML = `📍 ${locationName}`;
+                        locationLabel.innerHTML = `<span>📍</span> ${locationName}`;
                         temperature.textContent = `${temp}°C`;
 
                         let condText = "Despejado";
                         let iconKey = "clear";
-                        let bgClass = isDay ? "weather-clear" : "weather-night";
+                        let footerClass = isDay ? "weather-clear" : "weather-night";
+
+                        if (!isDay) {
+                            iconKey = "moon";
+                        }
 
                         if (code >= 1 && code <= 3) {
-                            condText = "Nublado";
+                            condText = isDay ? "Nublado" : "Noche Nublada";
                             iconKey = "cloudy";
-                            bgClass = "weather-cloudy";
+                            footerClass = isDay ? "weather-cloudy" : "weather-night state-cloudy-night";
                         } else if (code >= 51 && code <= 67) {
-                            condText = "Lluvia";
+                            condText = isDay ? "Lluvia" : "Noche de Lluvia";
                             iconKey = "rain";
-                            bgClass = "weather-rain";
+                            footerClass = isDay ? "weather-rain" : "weather-night state-rain-night";
                         } else if (code >= 95) {
-                            condText = "Tormenta";
+                            condText = isDay ? "Tormenta" : "Tormenta Nocturna";
                             iconKey = "storm";
-                            bgClass = "weather-storm";
+                            footerClass = isDay ? "weather-storm" : "weather-night state-storm-night";
                         } else if (!isDay) {
                             condText = "Noche Despejada";
-                            bgClass = "weather-night";
                         }
 
                         weatherCondition.textContent = condText;
                         weatherIconContainer.innerHTML = svgIcons[iconKey] || svgIcons.clear;
-                        footerRoot.className = `hangar-footer ${bgClass}`;
+                        footerRoot.className = `hangar-footer ${footerClass}`;
                     }
                 } catch (err) {
                     console.error("Error cargando clima", err);
@@ -503,7 +562,6 @@
             updateClock();
             setInterval(updateClock, 1000);
 
-            // Carga inicial: Recupera el departamento guardado en el navegador o Montevideo por defecto
             try {
                 const saved = localStorage.getItem('hangar_dept_data');
                 if (saved) {
@@ -511,7 +569,7 @@
                     currentIndex = parsed.index;
                     fetchWeather(parsed.lat, parsed.lon, parsed.name);
                 } else {
-                    currentIndex = 0; // Montevideo, Uruguay
+                    currentIndex = 0;
                     fetchWeather(uruguayDepartments[0].lat, uruguayDepartments[0].lon, uruguayDepartments[0].name);
                 }
             } catch (err) {
@@ -521,3 +579,4 @@
     </script>
 </body>
 </html>
+                        
