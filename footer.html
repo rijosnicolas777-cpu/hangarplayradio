@@ -237,7 +237,7 @@
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 18px;
         }
 
@@ -246,18 +246,23 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            min-width: 42px;
-            min-height: 42px;
-            padding: 9px 13px;
+            padding: 10px 18px;
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 999px;
             background: rgba(0, 0, 0, 0.20);
             color: #ffffff;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             letter-spacing: 0.04em;
             backdrop-filter: blur(7px);
             text-decoration: none;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(0, 0, 0, 0.45);
+            border-color: rgba(255, 255, 255, 0.90);
+            transform: translateY(-2px);
         }
 
         .footer-brand {
@@ -304,9 +309,9 @@
 
         <div class="contact-section">
             <div class="social-links">
-                <a href="#" class="social-link">Sitio Web</a>
-                <a href="#" class="social-link">Reproductor</a>
-                <a href="#" class="social-link">Contacto</a>
+                <a href="#" class="social-link">📸 Instagram</a>
+                <a href="#" class="social-link">📘 Facebook</a>
+                <a href="#" class="social-link">💬 WhatsApp</a>
             </div>
             <div class="footer-brand">HANGAR PLAY RADIO</div>
             <div class="footer-slogan">LA ESTACIÓN OFICIAL DE LA AVIACIÓN Y LA MÚSICA</div>
