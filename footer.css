@@ -11,23 +11,23 @@ RESET
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  }
+}
 
 html,
 body {
-width: 100%;
-min-height: 100%;
+  width: 100%;
+  min-height: 100%;
 }
 
 body {
-margin: 0;
-background: #05080c;
-color: #ffffff;
-font-family:
-"Segoe UI",
-Arial,
-Helvetica,
-sans-serif;
+  margin: 0;
+  background: #05080c;
+  color: #ffffff;
+  font-family:
+    "Segoe UI",
+    Arial,
+    Helvetica,
+    sans-serif;
 }
 
 /* =========================================================
@@ -35,12 +35,12 @@ CONTENEDOR PRINCIPAL
 ========================================================= */
 
 .hangar-footer {
-position: relative;
-width: 100%;
-min-height: 680px;
-overflow: hidden;
-isolation: isolate;
-background: #05080c;
+  position: relative;
+  width: 100%;
+  min-height: 680px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #05080c;
 }
 
 /* =========================================================
@@ -48,143 +48,69 @@ FONDO ATMOSFÉRICO
 ========================================================= */
 
 .weather-background {
-position: absolute;
-inset: 0;
-z-index: 0;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 
-```
-background-color: #05080c;
-background-image: url("img/cielo-despejado.jpg");
-background-position: center center;
-background-repeat: no-repeat;
-background-size: cover;
+  background-color: #05080c;
+  background-image: url("img/cielo-despejado.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
-transform: scale(1.02);
+  transform: scale(1.02);
 
-transition:
+  transition:
     background-image 1.2s ease-in-out,
     filter 1.2s ease-in-out,
     opacity 1.2s ease-in-out,
     transform 1.2s ease-in-out;
-```
-
 }
 
 /* =========================================================
 FONDOS METEOROLÓGICOS
-Las imágenes existentes se conectan aquí.
 ========================================================= */
 
 /* DESPEJADO */
-
-.hangar-footer.weather-clear
-.weather-background {
-
-```
-background-image:
-    url("img/cielo-despejado.jpg");
-
-filter:
-    brightness(1.05)
-    saturate(1.05);
-```
-
+.hangar-footer.weather-clear .weather-background {
+  background-image: url("img/cielo-despejado.jpg");
+  filter: brightness(1.05) saturate(1.05);
 }
 
 /* NUBLADO */
-
-.hangar-footer.weather-cloudy
-.weather-background {
-
-```
-background-image:
-    url("img/cielo-nublado.jpg");
-
-filter:
-    brightness(0.85)
-    saturate(0.85);
-```
-
+.hangar-footer.weather-cloudy .weather-background {
+  background-image: url("img/cielo-nublado.jpg");
+  filter: brightness(0.85) saturate(0.85);
 }
 
 /* LLUVIA */
-
-.hangar-footer.weather-rain
-.weather-background {
-
-```
-background-image:
-    url("img/cielo-lluvia.jpg");
-
-filter:
-    brightness(0.70)
-    saturate(0.80);
-```
-
+.hangar-footer.weather-rain .weather-background {
+  background-image: url("img/cielo-lluvia.jpg");
+  filter: brightness(0.70) saturate(0.80);
 }
 
 /* TORMENTA */
-
-.hangar-footer.weather-storm
-.weather-background {
-
-```
-background-image:
-    url("img/cielo-tormenta.jpg");
-
-filter:
-    brightness(0.55)
-    saturate(0.75);
-```
-
+.hangar-footer.weather-storm .weather-background {
+  background-image: url("img/cielo-tormenta.jpg");
+  filter: brightness(0.55) saturate(0.75);
 }
 
 /* AMANECER */
-
-.hangar-footer.weather-sunrise
-.weather-background {
-
-```
-background-image:
-    url("img/cielo-amanecer.jpg");
-
-filter:
-    brightness(1.05)
-    saturate(1.10);
-```
-
+.hangar-footer.weather-sunrise .weather-background {
+  background-image: url("img/cielo-amanecer.jpg");
+  filter: brightness(1.05) saturate(1.10);
 }
 
 /* ATARDECER */
-
-.hangar-footer.weather-sunset
-.weather-background {
-
-```
-background-image:
-    url("img/cielo-atardecer.jpg");
-
-filter:
-    brightness(0.90)
-    saturate(1.10);
-```
-
+.hangar-footer.weather-sunset .weather-background {
+  background-image: url("img/cielo-atardecer.jpg");
+  filter: brightness(0.90) saturate(1.10);
 }
 
 /* NOCHE */
-
-.hangar-footer.weather-night
-.weather-background {
-
-```
-background-image:
-    url("img/cielo-noche.jpg");
-
-filter:
-    brightness(0.48)
-    saturate(0.75);
-```
-
+.hangar-footer.weather-night .weather-background {
+  background-image: url("img/cielo-noche.jpg");
+  filter: brightness(0.48) saturate(0.75);
 }
 
 /* =========================================================
@@ -192,22 +118,19 @@ CAPA DE CONTRASTE
 ========================================================= */
 
 .weather-overlay {
-position: absolute;
-inset: 0;
-z-index: 1;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 
-```
-pointer-events: none;
+  pointer-events: none;
 
-background:
+  background:
     linear-gradient(
         180deg,
         rgba(0, 0, 0, 0.12) 0%,
         rgba(0, 0, 0, 0.30) 48%,
         rgba(0, 0, 0, 0.72) 100%
     );
-```
-
 }
 
 /* =========================================================
@@ -215,22 +138,19 @@ BRILLO ATMOSFÉRICO
 ========================================================= */
 
 .weather-overlay::after {
-content: "";
+  content: "";
 
-```
-position: absolute;
-inset: 0;
+  position: absolute;
+  inset: 0;
 
-background:
+  background:
     radial-gradient(
         circle at 50% 25%,
         rgba(255, 255, 255, 0.10),
         transparent 42%
     );
 
-pointer-events: none;
-```
-
+  pointer-events: none;
 }
 
 /* =========================================================
@@ -238,24 +158,21 @@ CONTENIDO PRINCIPAL
 ========================================================= */
 
 .weather-content {
-position: relative;
-z-index: 2;
+  position: relative;
+  z-index: 2;
 
-```
-width: min(1100px, 92%);
-min-height: 430px;
+  width: min(1100px, 92%);
+  min-height: 430px;
 
-margin: 0 auto;
-padding: 70px 30px 50px;
+  margin: 0 auto;
+  padding: 70px 30px 50px;
 
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-text-align: center;
-```
-
+  text-align: center;
 }
 
 /* =========================================================
@@ -263,83 +180,64 @@ LOCALIDAD
 ========================================================= */
 
 .location-section {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 
-```
-margin-bottom: 38px;
-```
-
+  margin-bottom: 38px;
 }
 
 .location-label {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
 
-```
-font-size: 15px;
-font-weight: 600;
-letter-spacing: 0.14em;
-text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 
-text-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.65);
-```
-
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
 .location-icon {
-font-size: 22px;
-line-height: 1;
+  font-size: 22px;
+  line-height: 1;
 }
 
 .location-button {
-appearance: none;
+  appearance: none;
 
-```
-border: 1px solid rgba(255, 255, 255, 0.55);
-border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
 
-padding: 9px 18px;
+  padding: 9px 18px;
 
-background:
-    rgba(0, 0, 0, 0.24);
+  background: rgba(0, 0, 0, 0.24);
 
-color: #ffffff;
+  color: #ffffff;
 
-font-size: 12px;
-font-weight: 600;
-letter-spacing: 0.08em;
-text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 
-cursor: pointer;
+  cursor: pointer;
 
-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 
-transition:
+  transition:
     background 0.25s ease,
     border-color 0.25s ease,
     transform 0.25s ease;
-```
-
 }
 
 .location-button:hover {
-background:
-rgba(0, 0, 0, 0.45);
-
-```
-border-color:
-    rgba(255, 255, 255, 0.90);
-
-transform:
-    translateY(-2px);
-```
-
+  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 255, 255, 0.90);
+  transform: translateY(-2px);
 }
 
 /* =========================================================
@@ -347,62 +245,44 @@ INFORMACIÓN METEOROLÓGICA
 ========================================================= */
 
 .weather-section {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
 
-```
-margin-bottom: 40px;
-```
-
+  margin-bottom: 40px;
 }
 
 .weather-icon {
-font-size: clamp(48px, 7vw, 76px);
-line-height: 1;
+  font-size: clamp(48px, 7vw, 76px);
+  line-height: 1;
 
-```
-filter:
-    drop-shadow(
-        0 4px 14px
-        rgba(0, 0, 0, 0.45)
-    );
-```
-
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
 }
 
 .weather-data {
-display: flex;
-flex-direction: column;
-align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .weather-condition {
-font-size: 14px;
-font-weight: 700;
-letter-spacing: 0.16em;
-text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 
-```
-text-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.70);
-```
-
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.70);
 }
 
 .temperature {
-margin-top: 4px;
+  margin-top: 4px;
 
-```
-font-size: clamp(34px, 5vw, 56px);
-font-weight: 300;
-line-height: 1;
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 300;
+  line-height: 1;
 
-text-shadow:
-    0 3px 15px rgba(0, 0, 0, 0.70);
-```
-
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.70);
 }
 
 /* =========================================================
@@ -410,53 +290,42 @@ HORA LOCAL
 ========================================================= */
 
 .time-section {
-display: flex;
-flex-direction: column;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .time-label {
-margin-bottom: 8px;
+  margin-bottom: 8px;
 
-```
-font-size: 11px;
-font-weight: 700;
-letter-spacing: 0.22em;
-text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 
-opacity: 0.80;
-```
-
+  opacity: 0.80;
 }
 
 .local-time {
-font-size: clamp(36px, 6vw, 64px);
-font-weight: 300;
-line-height: 1;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 300;
+  line-height: 1;
 
-```
-letter-spacing: 0.05em;
+  letter-spacing: 0.05em;
 
-text-shadow:
-    0 3px 18px rgba(0, 0, 0, 0.75);
-```
-
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.75);
 }
 
 .local-date {
-margin-top: 10px;
+  margin-top: 10px;
 
-```
-font-size: 13px;
-letter-spacing: 0.10em;
-text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
 
-opacity: 0.88;
+  opacity: 0.88;
 
-text-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.65);
-```
-
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
 /* =========================================================
@@ -464,235 +333,172 @@ BUSCADOR DE LOCALIDAD
 ========================================================= */
 
 .location-search {
-position: absolute;
-inset: 0;
-z-index: 10;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
 
-```
-display: flex;
-align-items: center;
-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-padding: 30px;
+  padding: 30px;
 
-background:
-    rgba(0, 0, 0, 0.62);
+  background: rgba(0, 0, 0, 0.62);
 
-backdrop-filter:
-    blur(12px);
-```
-
+  backdrop-filter: blur(12px);
 }
 
 .location-search.hidden {
-display: none;
+  display: none;
 }
 
 .search-box {
-width: min(520px, 100%);
+  width: min(520px, 100%);
 
-```
-padding: 28px;
+  padding: 28px;
 
-border:
-    1px solid
-    rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
 
-border-radius: 18px;
+  background: rgba(10, 15, 22, 0.92);
 
-background:
-    rgba(10, 15, 22, 0.92);
-
-box-shadow:
-    0 25px 70px
-    rgba(0, 0, 0, 0.50);
-```
-
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.50);
 }
 
 .search-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-```
-margin-bottom: 24px;
-```
-
+  margin-bottom: 24px;
 }
 
 .search-header h2 {
-font-size: 22px;
-font-weight: 500;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .close-search {
-appearance: none;
+  appearance: none;
 
-```
-width: 38px;
-height: 38px;
+  width: 38px;
+  height: 38px;
 
-border: 0;
-border-radius: 50%;
+  border: 0;
+  border-radius: 50%;
 
-background:
-    rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08);
 
-color: #ffffff;
+  color: #ffffff;
 
-font-size: 24px;
-line-height: 1;
+  font-size: 24px;
+  line-height: 1;
 
-cursor: pointer;
+  cursor: pointer;
 
-transition:
-    background 0.25s ease;
-```
-
+  transition: background 0.25s ease;
 }
 
 .close-search:hover {
-background:
-rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .search-label {
-display: block;
+  display: block;
 
-```
-margin-bottom: 9px;
+  margin-bottom: 9px;
 
-font-size: 12px;
-letter-spacing: 0.08em;
-text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 
-opacity: 0.78;
-```
-
+  opacity: 0.78;
 }
 
 .search-input-wrapper {
-display: flex;
-align-items: center;
-gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-```
-padding: 0 14px;
+  padding: 0 14px;
 
-border:
-    1px solid
-    rgba(255, 255, 255, 0.20);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 10px;
 
-border-radius: 10px;
-
-background:
-    rgba(255, 255, 255, 0.06);
-```
-
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .search-icon {
-opacity: 0.75;
+  opacity: 0.75;
 }
 
 .search-input-wrapper input {
-width: 100%;
+  width: 100%;
 
-```
-padding: 14px 0;
+  padding: 14px 0;
 
-border: 0;
-outline: 0;
+  border: 0;
+  outline: 0;
 
-background: transparent;
+  background: transparent;
 
-color: #ffffff;
+  color: #ffffff;
 
-font-size: 15px;
-```
-
+  font-size: 15px;
 }
 
 .search-input-wrapper input::placeholder {
-color:
-rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .location-results {
-display: flex;
-flex-direction: column;
-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
-```
-max-height: 300px;
+  max-height: 300px;
 
-margin-top: 16px;
+  margin-top: 16px;
 
-overflow-y: auto;
-```
-
+  overflow-y: auto;
 }
 
 .location-result {
-width: 100%;
+  width: 100%;
 
-```
-padding: 12px 14px;
+  padding: 12px 14px;
 
-border:
-    1px solid
-    rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 9px;
 
-border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05);
 
-background:
-    rgba(255, 255, 255, 0.05);
+  color: #ffffff;
 
-color: #ffffff;
+  text-align: left;
 
-text-align: left;
+  cursor: pointer;
 
-cursor: pointer;
-
-transition:
+  transition:
     background 0.20s ease,
     border-color 0.20s ease;
-```
-
 }
 
 .location-result:hover {
-background:
-rgba(255, 255, 255, 0.12);
-
-```
-border-color:
-    rgba(255, 255, 255, 0.25);
-```
-
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .location-result strong {
-display: block;
-
-```
-font-size: 14px;
-```
-
+  display: block;
+  font-size: 14px;
 }
 
 .location-result span {
-display: block;
-
-```
-margin-top: 3px;
-
-font-size: 12px;
-
-opacity: 0.68;
-```
-
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  opacity: 0.68;
 }
 
 /* =========================================================
@@ -700,154 +506,108 @@ REDES Y CONTACTO
 ========================================================= */
 
 .contact-section {
-position: relative;
-z-index: 2;
+  position: relative;
+  z-index: 2;
 
-```
-width: min(1100px, 92%);
+  width: min(1100px, 92%);
 
-margin: 0 auto;
+  margin: 0 auto;
 
-padding:
-    28px
-    30px
-    38px;
+  padding: 28px 30px 38px;
 
-display: flex;
-flex-direction: column;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-text-align: center;
+  text-align: center;
 
-border-top:
-    1px solid
-    rgba(255, 255, 255, 0.20);
-```
-
+  border-top: 1px solid rgba(255, 255, 255, 0.20);
 }
 
 .social-links {
-display: flex;
-align-items: center;
-justify-content: center;
-flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 
-```
-gap: 12px;
+  gap: 12px;
 
-margin-bottom: 18px;
-```
-
+  margin-bottom: 18px;
 }
 
 .social-link {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
-```
-min-width: 42px;
-min-height: 42px;
+  min-width: 42px;
+  min-height: 42px;
 
-padding: 9px 13px;
+  padding: 9px 13px;
 
-border:
-    1px solid
-    rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
 
-border-radius: 999px;
+  background: rgba(0, 0, 0, 0.20);
 
-background:
-    rgba(0, 0, 0, 0.20);
+  color: #ffffff;
 
-color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
 
-font-size: 12px;
-font-weight: 600;
+  letter-spacing: 0.04em;
 
-letter-spacing: 0.04em;
+  user-select: none;
 
-user-select: none;
-
-backdrop-filter:
-    blur(7px);
-```
-
+  backdrop-filter: blur(7px);
 }
 
 .social-link-disabled {
-cursor: default;
-
-```
-opacity: 0.90;
-```
-
+  cursor: default;
+  opacity: 0.90;
 }
 
 .social-icon {
-display: inline-flex;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-```
-align-items: center;
-justify-content: center;
+  width: 22px;
+  height: 22px;
 
-width: 22px;
-height: 22px;
-
-font-size: 18px;
-font-weight: 700;
-```
-
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .social-name {
-font-size: 11px;
+  font-size: 11px;
 }
 
 .email-link {
-color: #ffffff;
-
-```
-font-size: 13px;
-
-text-decoration: none;
-
-opacity: 0.90;
-
-transition:
-    opacity 0.25s ease;
-```
-
+  color: #ffffff;
+  font-size: 13px;
+  text-decoration: none;
+  opacity: 0.90;
+  transition: opacity 0.25s ease;
 }
 
 .email-link:hover {
-opacity: 1;
+  opacity: 1;
 }
 
 .footer-brand {
-margin-top: 28px;
-
-```
-font-size: 17px;
-font-weight: 700;
-
-letter-spacing: 0.24em;
-```
-
+  margin-top: 28px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
 }
 
 .footer-slogan {
-margin-top: 8px;
-
-```
-font-size: 11px;
-
-letter-spacing: 0.18em;
-
-opacity: 0.72;
-```
-
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  opacity: 0.72;
 }
 
 /* =========================================================
@@ -855,36 +615,23 @@ RESPONSIVE — TABLET
 ========================================================= */
 
 @media (max-width: 768px) {
-
-```
-.hangar-footer {
+  .hangar-footer {
     min-height: 620px;
-}
+  }
 
-
-.weather-content {
+  .weather-content {
     width: 94%;
-    padding:
-        55px
-        20px
-        38px;
-}
+    padding: 55px 20px 38px;
+  }
 
-
-.weather-section {
+  .weather-section {
     gap: 18px;
-}
+  }
 
-
-.contact-section {
+  .contact-section {
     width: 94%;
-    padding:
-        24px
-        20px
-        32px;
-}
-```
-
+    padding: 24px 20px 32px;
+  }
 }
 
 /* =========================================================
@@ -892,100 +639,71 @@ RESPONSIVE — MÓVIL
 ========================================================= */
 
 @media (max-width: 520px) {
-
-```
-.hangar-footer {
+  .hangar-footer {
     min-height: 700px;
-}
+  }
 
-
-.weather-content {
+  .weather-content {
     min-height: 470px;
+    padding: 50px 16px 35px;
+  }
 
-    padding:
-        50px
-        16px
-        35px;
-}
-
-
-.location-label {
+  .location-label {
     font-size: 12px;
-
     letter-spacing: 0.10em;
-}
+  }
 
-
-.weather-section {
+  .weather-section {
     flex-direction: column;
-
     gap: 14px;
-
     margin-bottom: 34px;
-}
+  }
 
-
-.weather-data {
+  .weather-data {
     align-items: center;
-}
+  }
 
-
-.weather-condition {
+  .weather-condition {
     font-size: 12px;
-}
+  }
 
-
-.temperature {
+  .temperature {
     font-size: 44px;
-}
+  }
 
-
-.local-time {
+  .local-time {
     font-size: 46px;
-}
+  }
 
-
-.local-date {
+  .local-date {
     font-size: 11px;
-}
+  }
 
-
-.search-box {
+  .search-box {
     padding: 22px;
-}
+  }
 
-
-.social-links {
+  .social-links {
     gap: 8px;
-}
+  }
 
+  .social-link {
+    padding: 8px 10px;
+  }
 
-.social-link {
-    padding:
-        8px
-        10px;
-}
-
-
-.social-name {
+  .social-name {
     display: none;
-}
+  }
 
-
-.footer-brand {
+  .footer-brand {
     font-size: 15px;
-}
+  }
 
-
-.footer-slogan {
+  .footer-slogan {
     max-width: 280px;
-
     font-size: 9px;
-
     line-height: 1.6;
-}
-```
-
+  }
 }
 
 /* =========================================================
@@ -993,18 +711,12 @@ ACCESIBILIDAD — REDUCIR ANIMACIONES
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
-```
-.weather-background,
-.location-button,
-.close-search,
-.location-result,
-.email-link {
-
+  .weather-background,
+  .location-button,
+  .close-search,
+  .location-result,
+  .email-link {
     transition: none;
-
-}
-```
-
+  }
 }
 
