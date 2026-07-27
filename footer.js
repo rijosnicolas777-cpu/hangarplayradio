@@ -1,6 +1,6 @@
 /* =========================================================
 HANGAR PLAY RADIO — FOOTER / CLIMA Y HORA
-Archivo: footer.js (Corregido)
+Archivo: footer.js (Completo y Definitivo)
 ========================================================= */
 
 (function () {
@@ -116,7 +116,6 @@ Archivo: footer.js (Corregido)
         updateLocationName();
         setupLocationSearch();
 
-        // Inicializamos reloj y clima inmediatamente
         updateLocalClock();
         startClock();
         
@@ -205,7 +204,6 @@ Archivo: footer.js (Corregido)
 
             const data = await response.json();
 
-            // Si Open-Meteo retorna la zona horaria automática del punto, la actualizamos
             if (data.timezone) {
                 currentLocation.timezone = data.timezone;
             }
