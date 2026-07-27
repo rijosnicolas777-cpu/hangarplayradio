@@ -103,13 +103,14 @@
             text-align: center;
         }
 
-        /* LOCALIDAD */
+        /* LOCALIDAD Y BUSCADOR */
         .location-section {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 14px;
             margin-bottom: 38px;
+            position: relative;
         }
 
         .location-label {
@@ -122,6 +123,14 @@
             letter-spacing: 0.14em;
             text-transform: uppercase;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
+        }
+
+        .location-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .location-button {
@@ -146,7 +155,66 @@
             transform: translateY(-2px);
         }
 
-        /* INFORMACIÓN METEOROLÓGICA (ICONOS REALISTAS SVG) */
+        /* CAJA DE BÚSQUEDA FLOTANTE */
+        .search-container {
+            display: none;
+            position: absolute;
+            top: 100%;
+            margin-top: 10px;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            backdrop-filter: blur(12px);
+            z-index: 10;
+            width: 280px;
+        }
+
+        .search-container.active {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #38bdf8;
+        }
+
+        .search-results {
+            max-height: 150px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+
+        .search-result-item {
+            padding: 6px 10px;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: rgba(56, 189, 248, 0.3);
+        }
+
+        /* INFORMACIÓN METEOROLÓGICA */
         .weather-section {
             display: flex;
             align-items: center;
@@ -224,7 +292,7 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
         }
 
-        /* REDES Y CONTACTO (ICONOS ORIGINALES SVG) */
+        /* REDES Y CONTACTO */
         .contact-section {
             position: relative;
             z-index: 2;
@@ -277,8 +345,20 @@
             transform: translateY(-2px);
         }
 
+        .footer-email {
+            margin-bottom: 16px;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            opacity: 0.85;
+        }
+
+        .footer-email a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
         .footer-brand {
-            margin-top: 28px;
+            margin-top: 20px;
             font-size: 17px;
             font-weight: 700;
             letter-spacing: 0.24em;
@@ -301,12 +381,18 @@
         <div class="weather-content">
             <div class="location-section">
                 <div id="locationLabel" class="location-label"><span>📍</span> Florida, Uruguay</div>
-                <button id="changeLocationBtn" class="location-button">Cambiar Localidad</button>
+                <div class="location-controls">
+                    <button id="toggleSearchBtn" class="location-button">Cambiar Localidad</button>
+                </div>
+                
+                <div id="searchContainer" class="search-container">
+                    <input type="text" id="cityInput" class="search-input" placeholder="Escribe tu ciudad...">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
             </div>
 
             <div class="weather-section">
                 <div id="weatherIconContainer" class="weather-icon-container">
-                    <!-- Sol Fotorrealista por defecto -->
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="32" cy="32" r="14" fill="url(#sunGrad)" />
                         <path d="M32 6V12M32 52V58M6 32H12M52 32H58M13.636 13.636L17.878 17.878M46.122 46.122L50.364 50.364M13.636 50.364L17.878 46.122M46.122 17.878L50.364 13.636" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
@@ -321,34 +407,34 @@
                 </div>
                 <div class="weather-data">
                     <span id="weatherCondition" class="weather-condition">Despejado</span>
-                    <span id="temperature" class="temperature">22°C</span>
+                    <span id="temperature" class="temperature">--°C</span>
                 </div>
             </div>
 
             <div class="time-section">
                 <div class="time-label">Hora Local</div>
-                <div id="localTime" class="local-time">15:03</div>
-                <div id="localDate" class="local-date">Lunes, 27 de Julio de 2026</div>
+                <div id="localTime" class="local-time">--:--</div>
+                <div id="localDate" class="local-date">--</div>
             </div>
         </div>
 
         <div class="contact-section">
             <div class="social-links">
-                <!-- Instagram Original SVG -->
                 <a href="#" target="_blank" class="social-link">
                     <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     Instagram
                 </a>
-                <!-- Facebook Original SVG -->
                 <a href="#" target="_blank" class="social-link">
                     <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
                     Facebook
                 </a>
-                <!-- WhatsApp Original SVG -->
                 <a href="#" target="_blank" class="social-link">
                     <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                     WhatsApp
                 </a>
+            </div>
+            <div class="footer-email">
+                📧 <a href="mailto:contacto@hangarplayradio.com">contacto@hangarplayradio.com</a>
             </div>
             <div class="footer-brand">HANGAR PLAY RADIO</div>
             <div class="footer-slogan">SURCANDO EL CIELO DE LOS TIEMPOS</div>
@@ -359,45 +445,145 @@
         document.addEventListener('DOMContentLoaded', () => {
             const footerRoot = document.getElementById('footerRoot');
             const locationLabel = document.getElementById('locationLabel');
-            const changeLocationBtn = document.getElementById('changeLocationBtn');
+            const toggleSearchBtn = document.getElementById('toggleSearchBtn');
+            const searchContainer = document.getElementById('searchContainer');
+            const cityInput = document.getElementById('cityInput');
+            const searchResults = document.getElementById('searchResults');
             const weatherIconContainer = document.getElementById('weatherIconContainer');
             const weatherCondition = document.getElementById('weatherCondition');
             const temperature = document.getElementById('temperature');
             const localTime = document.getElementById('localTime');
             const localDate = document.getElementById('localDate');
 
-            // Iconos SVG realistas y detallados para cada clima
             const svgIcons = {
                 clear: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="14" fill="url(#sunGrad)"/><path d="M32 6V12M32 52V58M6 32H12M52 32H58M13.636 13.636L17.878 17.878M46.122 46.122L50.364 50.364M13.636 50.364L17.878 46.122M46.122 17.878L50.364 13.636" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/><defs><radialGradient id="sunGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="#FFF568"/><stop offset="60%" stop-color="#FF9900"/><stop offset="100%" stop-color="#FF5500"/></radialGradient></defs></svg>`,
-                
                 cloudy: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M46 28H44.62C43.34 21.72 37.84 17 31.2 17C24.56 17 19.06 21.72 17.78 28H14C9.58 28 6 31.58 6 36C6 40.42 9.58 44 14 44H46C50.42 44 54 40.42 54 36C54 31.58 50.42 28 46 28Z" fill="url(#cloudGrad)"/><defs><linearGradient id="cloudGrad" x1="6" y1="17" x2="54" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#E0E6ED"/><stop offset="100%" stop-color="#9AA5B1"/></linearGradient></defs></svg>`,
-                
                 rain: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M46 24H44.62C43.34 17.72 37.84 13 31.2 13C24.56 13 19.06 17.72 17.78 24H14C9.58 24 6 27.58 6 32C6 36.42 9.58 40 14 40H46C50.42 40 54 36.42 54 32C54 27.58 50.42 24 46 24Z" fill="url(#rainCloud)"/><path d="M20 48L17 56M32 48L29 56M44 48L41 56" stroke="#00B4D8" stroke-width="3" stroke-linecap="round"/><defs><linearGradient id="rainCloud" x1="6" y1="13" x2="54" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#94A3B8"/><stop offset="100%" stop-color="#475569"/></linearGradient></defs></svg>`,
-                
                 storm: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M46 22H44.62C43.34 15.72 37.84 11 31.2 11C24.56 11 19.06 15.72 17.78 22H14C9.58 22 6 25.58 6 30C6 34.42 9.58 38 14 48H46C50.42 38 54 34.42 54 30C54 25.58 50.42 22 46 22Z" fill="#334155"/><path d="M34 40L24 50H32L30 60L42 46H34L34 40Z" fill="#FACC15"/></svg>`
             };
 
-            const locations = [
-                { name: "Florida, Uruguay", temp: "22°C", condition: "Despejado", class: "weather-clear", iconKey: "clear" },
-                { name: "Montevideo, Uruguay", temp: "19°C", condition: "Nublado", class: "weather-cloudy", iconKey: "cloudy" },
-                { name: "Punta del Este, Uruguay", temp: "17°C", condition: "Lluvia", class: "weather-rain", iconKey: "rain" },
-                { name: "Buenos Aires, Argentina", temp: "24°C", condition: "Tormenta", class: "weather-storm", iconKey: "storm" }
+            // Coordenadas fijas iniciales para alternar entre Florida y Montevideo
+            const defaultLocations = [
+                { name: "Florida, Uruguay", lat: -34.0984, lon: -56.2161 },
+                { name: "Montevideo, Uruguay", lat: -34.9011, lon: -56.1645 }
             ];
+            let defaultIndex = 0;
 
-            let currentIndex = 0;
+            // Al hacer clic en "Cambiar Localidad", alterna directamente entre Florida y Montevideo
+            toggleSearchBtn.addEventListener('click', (e) => {
+                // Si el buscador estaba abierto, lo cerramos y viceversa, o alternamos las ciudades fijas principales
+                if (searchContainer.classList.contains('active')) {
+                    searchContainer.classList.remove('active');
+                } else {
+                    defaultIndex = (defaultIndex + 1) % defaultLocations.length;
+                    const loc = defaultLocations[defaultIndex];
+                    fetchWeather(loc.lat, loc.lon, loc.name);
+                    saveUserLocation(loc.lat, loc.lon, loc.name);
+                }
+            });
 
-            if (changeLocationBtn) {
-                changeLocationBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex + 1) % locations.length;
-                    const loc = locations[currentIndex];
+            // Mantener un atajo para buscar escribiendo si quieren otra ciudad
+            toggleSearchBtn.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                searchContainer.classList.toggle('active');
+                if(searchContainer.classList.contains('active')) {
+                    cityInput.focus();
+                }
+            });
 
-                    locationLabel.innerHTML = `<span>📍</span> ${loc.name}`;
-                    temperature.textContent = loc.temp;
-                    weatherCondition.textContent = loc.condition;
-                    weatherIconContainer.innerHTML = svgIcons[loc.iconKey];
+            document.addEventListener('click', (e) => {
+                if (!searchContainer.contains(e.target) && e.target !== toggleSearchBtn) {
+                    searchContainer.classList.remove('active');
+                }
+            });
 
-                    footerRoot.className = `hangar-footer ${loc.class}`;
-                });
+            let searchTimeout;
+            cityInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                const query = cityInput.value.trim();
+                if (query.length < 2) {
+                    searchResults.innerHTML = '';
+                    return;
+                }
+
+                searchTimeout = setTimeout(async () => {
+                    try {
+                        const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=es&format=json`);
+                        const data = await res.json();
+                        
+                        searchResults.innerHTML = '';
+                        if (data.results && data.results.length > 0) {
+                            data.results.forEach(loc => {
+                                const item = document.createElement('div');
+                                item.className = 'search-result-item';
+                                item.textContent = `${loc.name}, ${loc.admin1 || ''} (${loc.country || ''})`;
+                                item.addEventListener('click', () => {
+                                    const fullName = `${loc.name}, ${loc.country || ''}`;
+                                    fetchWeather(loc.latitude, loc.longitude, fullName);
+                                    saveUserLocation(loc.latitude, loc.longitude, fullName);
+                                    searchContainer.classList.remove('active');
+                                    cityInput.value = '';
+                                    searchResults.innerHTML = '';
+                                });
+                                searchResults.appendChild(item);
+                            });
+                        } else {
+                            searchResults.innerHTML = '<div style="padding:6px; font-size:12px; opacity:0.7;">No encontrado</div>';
+                        }
+                    } catch (err) {
+                        console.error("Error buscando localidad", err);
+                    }
+                }, 350);
+            });
+
+            // Guardar en el navegador del usuario (localStorage) para que quede registrado su elección
+            function saveUserLocation(lat, lon, name) {
+                try {
+                    localStorage.setItem('hangar_user_loc', JSON.stringify({ lat, lon, name }));
+                } catch (err) {}
+            }
+
+            async function fetchWeather(lat, lon, locationName) {
+                try {
+                    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,is_day&timezone=auto`);
+                    const data = await res.json();
+                    
+                    if (data && data.current) {
+                        const temp = Math.round(data.current.temperature_2m);
+                        const code = data.current.weather_code;
+                        const isDay = data.current.is_day;
+
+                        locationLabel.innerHTML = `<span>📍</span> ${locationName}`;
+                        temperature.textContent = `${temp}°C`;
+
+                        let condText = "Despejado";
+                        let iconKey = "clear";
+                        let bgClass = isDay ? "weather-clear" : "weather-night";
+
+                        if (code >= 1 && code <= 3) {
+                            condText = "Nublado";
+                            iconKey = "cloudy";
+                            bgClass = "weather-cloudy";
+                        } else if (code >= 51 && code <= 67) {
+                            condText = "Lluvia";
+                            iconKey = "rain";
+                            bgClass = "weather-rain";
+                        } else if (code >= 95) {
+                            condText = "Tormenta";
+                            iconKey = "storm";
+                            bgClass = "weather-storm";
+                        } else if (!isDay) {
+                            condText = "Noche Despejada";
+                            bgClass = "weather-night";
+                        }
+
+                        weatherCondition.textContent = condText;
+                        weatherIconContainer.innerHTML = svgIcons[iconKey] || svgIcons.clear;
+                        footerRoot.className = `hangar-footer ${bgClass}`;
+                    }
+                } catch (err) {
+                    console.error("Error cargando clima", err);
+                }
             }
 
             function updateClock() {
@@ -414,6 +600,19 @@
 
             updateClock();
             setInterval(updateClock, 1000);
+
+            // Carga inicial: Recupera la última ciudad que eligió el visitante, o por defecto Florida, Uruguay
+            try {
+                const saved = localStorage.getItem('hangar_user_loc');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    fetchWeather(parsed.lat, parsed.lon, parsed.name);
+                } else {
+                    fetchWeather(-34.0984, -56.2161, "Florida, Uruguay");
+                }
+            } catch (err) {
+                fetchWeather(-34.0984, -56.2161, "Florida, Uruguay");
+            }
         });
     </script>
 </body>
