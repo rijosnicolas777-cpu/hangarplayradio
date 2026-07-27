@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hangar Play Radio — Footer</title>
+    <title>Hangar Play Radio — Footer Clima</title>
     <style>
         /* =========================================================
-        RESET ABSOLUTO (Elimina márgenes y espacios en Google Sites)
+        RESET ABSOLUTO PARA GOOGLE SITES (Elimina bordes y scroll innecesario)
         ========================================================= */
         * {
             box-sizing: border-box;
@@ -16,7 +16,7 @@
 
         html, body {
             width: 100% !important;
-            min-height: 100% !important;
+            height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
             background-color: #05080c !important;
@@ -26,19 +26,19 @@
         }
 
         /* =========================================================
-        CONTENEDOR PRINCIPAL (Ocupa el 100% del ancho)
+        CONTENEDOR PRINCIPAL DEL FOOTER
         ========================================================= */
         .hangar-footer {
             position: relative;
             width: 100%;
-            min-height: 750px;
+            min-height: 680px;
             overflow: hidden;
             isolation: isolate;
             background: #05080c;
         }
 
         /* =========================================================
-        FONDO ATMOSFÉRICO CON LOOP CSS (Sin usar GIFs pesados)
+        FONDO ATMOSFÉRICO CON LOOP CONTINUO (Reemplaza al GIF)
         ========================================================= */
         .weather-background {
             position: absolute;
@@ -49,7 +49,10 @@
             background-position: center center;
             background-repeat: no-repeat;
             background-size: cover;
+            
+            /* Animación suave tipo video en bucle */
             animation: atmosphericLoop 25s ease-in-out infinite alternate;
+            
             transition: background-image 1.2s ease-in-out, filter 1.2s ease-in-out;
         }
 
@@ -59,51 +62,64 @@
             100% { transform: scale(1.03) translate(8px, 4px); }
         }
 
-        /* Estados de Clima */
-        .hangar-footer.weather-clear .weather-background { background-image: url("img/cielo-despejado.jpg"); filter: brightness(1.05); }
-        .hangar-footer.weather-cloudy .weather-background { background-image: url("img/cielo-nublado.jpg"); filter: brightness(0.85); }
-        .hangar-footer.weather-rain .weather-background { background-image: url("img/cielo-lluvia.jpg"); filter: brightness(0.70); }
-        .hangar-footer.weather-storm .weather-background { background-image: url("img/cielo-tormenta.jpg"); filter: brightness(0.55); }
-        .hangar-footer.weather-sunrise .weather-background { background-image: url("img/cielo-amanecer.jpg"); filter: brightness(1.05); }
-        .hangar-footer.weather-sunset .weather-background { background-image: url("img/cielo-atardecer.jpg"); filter: brightness(0.90); }
-        .hangar-footer.weather-night .weather-background { background-image: url("img/cielo-noche.jpg"); filter: brightness(0.48); }
+        /* ESTADOS DE CLIMA */
+        .hangar-footer.weather-clear .weather-background { background-image: url("img/cielo-despejado.jpg"); filter: brightness(1.05) saturate(1.05); }
+        .hangar-footer.weather-cloudy .weather-background { background-image: url("img/cielo-nublado.jpg"); filter: brightness(0.85) saturate(0.85); }
+        .hangar-footer.weather-rain .weather-background { background-image: url("img/cielo-lluvia.jpg"); filter: brightness(0.70) saturate(0.80); }
+        .hangar-footer.weather-storm .weather-background { background-image: url("img/cielo-tormenta.jpg"); filter: brightness(0.55) saturate(0.75); }
+        .hangar-footer.weather-sunrise .weather-background { background-image: url("img/cielo-amanecer.jpg"); filter: brightness(1.05) saturate(1.10); }
+        .hangar-footer.weather-sunset .weather-background { background-image: url("img/cielo-atardecer.jpg"); filter: brightness(0.90) saturate(1.10); }
+        .hangar-footer.weather-night .weather-background { background-image: url("img/cielo-noche.jpg"); filter: brightness(0.48) saturate(0.75); }
 
-        /* Capa oscura para contraste */
+        /* CAPA DE OSCURECIMIENTO / CONTRASTE */
         .weather-overlay {
             position: absolute;
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.40) 50%, rgba(0, 0, 0, 0.85) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.30) 48%, rgba(0, 0, 0, 0.72) 100%);
+        }
+
+        .weather-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.10), transparent 42%);
+            pointer-events: none;
         }
 
         /* =========================================================
-        CONTENIDO GENERAL
+        CONTENIDO GENERAL DEL FOOTER
         ========================================================= */
         .weather-content {
             position: relative;
             z-index: 2;
-            width: 100%;
-            max-width: 1100px;
+            width: min(1100px, 92%);
+            min-height: 430px;
             margin: 0 auto;
-            padding: 50px 20px 30px;
+            padding: 70px 30px 50px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
             text-align: center;
         }
 
-        /* Localidad */
+        /* LOCALIDAD */
         .location-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 24px;
+            gap: 14px;
+            margin-bottom: 38px;
         }
 
         .location-label {
-            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            font-size: 15px;
             font-weight: 600;
             letter-spacing: 0.14em;
             text-transform: uppercase;
@@ -114,151 +130,101 @@
             appearance: none;
             border: 1px solid rgba(255, 255, 255, 0.55);
             border-radius: 999px;
-            padding: 7px 16px;
+            padding: 9px 18px;
             background: rgba(0, 0, 0, 0.24);
             color: #ffffff;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
             backdrop-filter: blur(8px);
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
         }
 
-        /* Clima y Temperatura */
+        .location-button:hover {
+            background: rgba(0, 0, 0, 0.45);
+            border-color: rgba(255, 255, 255, 0.90);
+            transform: translateY(-2px);
+        }
+
+        /* INFORMACIÓN METEOROLÓGICA */
         .weather-section {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 25px;
+            gap: 24px;
+            margin-bottom: 40px;
         }
 
-        .weather-icon { font-size: 52px; line-height: 1; filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45)); }
-        .weather-data { display: flex; flex-direction: column; align-items: flex-start; }
-        .weather-condition { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
-        .temperature { font-size: 42px; font-weight: 300; line-height: 1; margin-top: 2px; }
-
-        /* =========================================================
-        PANEL DE VÚMETROS Y RADIO (Estilo Cabina de Avión)
-        ========================================================= */
-        .cockpit-audio-panel {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 900px;
-            margin: 15px auto 30px auto;
-            padding: 14px 20px;
-            background: rgba(10, 14, 20, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        .weather-icon {
+            font-size: clamp(48px, 7vw, 76px);
+            line-height: 1;
+            filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
         }
 
-        .vu-meter-container {
+        .weather-data {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            flex: 1;
+            align-items: flex-start;
         }
 
-        .vu-label {
-            font-size: 9px;
+        .weather-condition {
+            font-size: 14px;
             font-weight: 700;
-            letter-spacing: 0.15em;
-            color: #00e5ff;
-            margin-bottom: 6px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.70);
         }
 
-        .vu-gauge {
-            position: relative;
-            width: 140px;
-            height: 55px;
-            background: linear-gradient(180deg, #121820 0%, #070a0f 100%);
-            border: 2px solid #2a3545;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.8);
+        .temperature {
+            margin-top: 4px;
+            font-size: clamp(34px, 5vw, 56px);
+            font-weight: 300;
+            line-height: 1;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.70);
         }
 
-        .vu-scale {
-            position: absolute;
-            top: 6px;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            font-size: 8px;
-            color: rgba(255, 255, 255, 0.5);
-            font-family: monospace;
-            padding: 0 6px;
-        }
-
-        .vu-needle {
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            width: 2px;
-            height: 42px;
-            background: #ff3333;
-            transform-origin: bottom center;
-            transform: translateX(-50%) rotate(-40deg);
-            transition: transform 0.12s ease-out;
-            box-shadow: 0 0 6px rgba(255, 51, 51, 0.8);
-        }
-
-        .vu-needle::after {
-            content: "";
-            position: absolute;
-            bottom: -3px;
-            left: -3px;
-            width: 8px;
-            height: 8px;
-            background: #c0c0c0;
-            border-radius: 50%;
-        }
-
-        .radio-status-panel {
+        /* HORA LOCAL */
+        .time-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 0 15px;
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .status-freq {
-            font-size: 16px;
+        .time-label {
+            margin-bottom: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            opacity: 0.80;
+        }
+
+        .local-time {
+            font-size: clamp(36px, 6vw, 64px);
             font-weight: 300;
-            letter-spacing: 0.1em;
-            color: #ffffff;
+            line-height: 1;
+            letter-spacing: 0.05em;
+            text-shadow: 0 3px 18px rgba(0, 0, 0, 0.75);
         }
 
-        .status-text {
-            font-size: 8px;
-            letter-spacing: 0.2em;
-            color: #00ff66;
-            margin-top: 3px;
-            animation: pulseLive 2s infinite;
+        .local-date {
+            margin-top: 10px;
+            font-size: 13px;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            opacity: 0.88;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
         }
 
-        @keyframes pulseLive {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        /* =========================================================
-        REDES Y CONTACTO
-        ========================================================= */
+        /* REDES Y CONTACTO */
         .contact-section {
             position: relative;
             z-index: 2;
-            width: 100%;
-            max-width: 1100px;
+            width: min(1100px, 92%);
             margin: 0 auto;
-            padding: 20px 20px 30px;
+            padding: 28px 30px 38px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -271,128 +237,82 @@
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 14px;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
         .social-link {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 7px 12px;
+            gap: 8px;
+            min-width: 42px;
+            min-height: 42px;
+            padding: 9px 13px;
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 999px;
             background: rgba(0, 0, 0, 0.20);
             color: #ffffff;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
+            letter-spacing: 0.04em;
             backdrop-filter: blur(7px);
             text-decoration: none;
         }
 
         .footer-brand {
-            margin-top: 15px;
-            font-size: 16px;
+            margin-top: 28px;
+            font-size: 17px;
             font-weight: 700;
             letter-spacing: 0.24em;
         }
 
         .footer-slogan {
-            margin-top: 5px;
-            font-size: 10px;
+            margin-top: 8px;
+            font-size: 11px;
             letter-spacing: 0.18em;
             opacity: 0.72;
-        }
-
-        /* Responsive Móvil */
-        @media (max-width: 600px) {
-            .cockpit-audio-panel {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .radio-status-panel {
-                border: none;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                width: 100%;
-                padding: 8px 0;
-            }
         }
     </style>
 </head>
 <body>
 
-    <div class="hangar-footer weather-clear" id="footerContainer">
-        <!-- Fondo animado en loop (CSS) -->
+    <div class="hangar-footer weather-clear">
         <div class="weather-background"></div>
         <div class="weather-overlay"></div>
 
         <div class="weather-content">
-            <!-- Localidad -->
             <div class="location-section">
-                <div class="location-label" id="locationLabel">📍 Florida, Uruguay</div>
+                <div class="location-label"><span>📍</span> Florida, Uruguay</div>
+                <button class="location-button">Cambiar Localidad</button>
             </div>
 
-            <!-- Información del Clima -->
             <div class="weather-section">
-                <div class="weather-icon" id="weatherIcon">☀️</div>
+                <div class="weather-icon">☀️</div>
                 <div class="weather-data">
-                    <span class="weather-condition" id="weatherCondition">Despejado</span>
-                    <span class="temperature" id="temperature">22°C</span>
+                    <span class="weather-condition">Despejado</span>
+                    <span class="temperature">22°C</span>
                 </div>
             </div>
 
-            <!-- Vúmetros de Cabina (Reemplazan espacios vacíos con temática de radio) -->
-            <div class="cockpit-audio-panel">
-                <div class="vu-meter-container">
-                    <span class="vu-label">CH 1 — MASTER</span>
-                    <div class="vu-gauge">
-                        <div class="vu-scale"><span>-20</span><span>-10</span><span>0</span><span>+3</span></div>
-                        <div class="vu-needle" id="needle-left"></div>
-                    </div>
-                </div>
-
-                <div class="radio-status-panel">
-                    <span class="status-freq">107.9 MHz</span>
-                    <span class="status-text">EN VIVO</span>
-                </div>
-
-                <div class="vu-meter-container">
-                    <span class="vu-label">CH 2 — STEREO</span>
-                    <div class="vu-gauge">
-                        <div class="vu-scale"><span>-20</span><span>-10</span><span>0</span><span>+3</span></div>
-                        <div class="vu-needle" id="needle-right"></div>
-                    </div>
-                </div>
+            <div class="time-section">
+                <div class="time-label">Hora Local</div>
+                <div class="local-time">15:03</div>
+                <div class="local-date">Lunes, 27 de Julio de 2026</div>
             </div>
         </div>
 
-        <!-- Sección de Redes y Marca -->
         <div class="contact-section">
             <div class="social-links">
-                <a href="#" class="social-link">🌐 Sitio Web</a>
-                <a href="#" class="social-link">📻 Reproductor</a>
-                <a href="#" class="social-link">💬 Contacto</a>
+                <a href="#" class="social-link">Sitio Web</a>
+                <a href="#" class="social-link">Reproductor</a>
+                <a href="#" class="social-link">Contacto</a>
             </div>
             <div class="footer-brand">HANGAR PLAY RADIO</div>
             <div class="footer-slogan">LA ESTACIÓN OFICIAL DE LA AVIACIÓN Y LA MÚSICA</div>
         </div>
     </div>
 
-    <script>
-        /* Animación fluida de las agujas de los vúmetros simulando audio en vivo */
-        setInterval(() => {
-            const needleLeft = document.getElementById("needle-left");
-            const needleRight = document.getElementById("needle-right");
-            if (needleLeft && needleRight) {
-                const rLeft = -35 + Math.random() * 55;
-                const rRight = -35 + Math.random() * 55;
-                needleLeft.style.transform = `translateX(-50%) rotate(${rLeft}deg)`;
-                needleRight.style.transform = `translateX(-50%) rotate(${rRight}deg)`;
-            }
-        }, 150);
-    </script>
 </body>
 </html>
 
