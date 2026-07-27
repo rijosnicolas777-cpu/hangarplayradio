@@ -1,5 +1,5 @@
 /* =========================================================
-HANGAR PLAY RADIO — FOOTER / CIELO
+HANGAR PLAY RADIO — FOOTER / CIELO CON ANIMACIÓN LOOP
 Archivo: footer.css
 ========================================================= */
 
@@ -44,12 +44,12 @@ CONTENEDOR PRINCIPAL
 }
 
 /* =========================================================
-FONDO ATMOSFÉRICO
+FONDO ATMOSFÉRICO CON LOOP (ANIMACIÓN)
 ========================================================= */
 
 .weather-background {
   position: absolute;
-  inset: 0;
+  inset: -2%; /* Margen extra para permitir el movimiento fluido */
   z-index: 0;
 
   background-color: #05080c;
@@ -58,13 +58,26 @@ FONDO ATMOSFÉRICO
   background-repeat: no-repeat;
   background-size: cover;
 
-  transform: scale(1.02);
+  /* Animación tipo loop continuo (lento y elegante) */
+  animation: atmosphericLoop 25s ease-in-out infinite alternate;
 
   transition:
     background-image 1.2s ease-in-out,
     filter 1.2s ease-in-out,
-    opacity 1.2s ease-in-out,
-    transform 1.2s ease-in-out;
+    opacity 1.2s ease-in-out;
+}
+
+/* Definición del loop del cielo */
+@keyframes atmosphericLoop {
+  0% {
+    transform: scale(1.0) translate(0px, 0px);
+  }
+  50% {
+    transform: scale(1.06) translate(-10px, -5px);
+  }
+  100% {
+    transform: scale(1.03) translate(8px, 4px);
+  }
 }
 
 /* =========================================================
@@ -711,7 +724,10 @@ ACCESIBILIDAD — REDUCIR ANIMACIONES
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .weather-background,
+  .weather-background {
+    animation: none;
+  }
+
   .location-button,
   .close-search,
   .location-result,
@@ -719,4 +735,3 @@ ACCESIBILIDAD — REDUCIR ANIMACIONES
     transition: none;
   }
 }
-
