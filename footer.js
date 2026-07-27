@@ -1,823 +1,852 @@
 /* =========================================================
-   HANGAR PLAY RADIO
-   PIE DINÁMICO — FOOTER
-   JavaScript principal
-   ========================================================= */
+HANGAR PLAY RADIO — FOOTER / CLIMA Y HORA
+Archivo: footer.js
+========================================================= */
 
-
-/* ---------------------------------------------------------
-   1. CONFIGURACIÓN
-   --------------------------------------------------------- */
-
-const DEFAULT_LOCATION = {
-    name: "Montevideo",
-    country: "Uruguay",
-    latitude: -34.9011,
-    longitude: -56.1645,
-    timezone: "America/Montevideo"
-};
-
-const STORAGE_KEY = "hangarPlaySelectedLocation";
+/* =========================================================
+CONFIGURACIÓN
+========================================================= */
 
 const WEATHER_API_URL =
-    "https://api.open-meteo.com/v1/forecast";
+"https://api.open-meteo.com/v1/forecast";
 
 const GEOCODING_API_URL =
-    "https://geocoding-api.open-meteo.com/v1/search";
+"https://geocoding-api.open-meteo.com/v1/search";
 
+/* =========================================================
+ESTADO DE LA APLICACIÓN
+========================================================= */
 
-/* ---------------------------------------------------------
-   2. REFERENCIAS HTML
-   --------------------------------------------------------- */
+let currentLocation = {
+name: "Montevideo",
+country: "Uruguay",
+latitude: -34.9011,
+longitude: -56.1645,
+timezone: "America/Montevideo"
+};
 
-const footer = document.getElementById(
-    "hangar-footer"
-);
+let currentWeather = {
+temperature: null,
+weatherCode: null,
+isDay: true,
+sunrise: null,
+sunset: null
+};
+
+let clockInterval = null;
+let weatherInterval = null;
+
+/* =========================================================
+ELEMENTOS DEL DOM
+========================================================= */
+
+const footerElement =
+document.getElementById("hangar-footer");
+
+const weatherBackground =
+document.querySelector(".weather-background");
 
 const locationNameElement =
-    document.getElementById(
-        "location-name"
-    );
-
-const weatherIconElement =
-    document.getElementById(
-        "weather-icon"
-    );
-
-const weatherConditionElement =
-    document.getElementById(
-        "weather-condition"
-    );
-
-const temperatureElement =
-    document.getElementById(
-        "temperature"
-    );
-
-const localTimeElement =
-    document.getElementById(
-        "local-time"
-    );
-
-const localDateElement =
-    document.getElementById(
-        "local-date"
-    );
+document.getElementById("location-name");
 
 const changeLocationButton =
-    document.getElementById(
-        "change-location"
-    );
+document.getElementById("change-location");
 
 const locationSearch =
-    document.getElementById(
-        "location-search"
-    );
+document.getElementById("location-search");
 
 const closeSearchButton =
-    document.getElementById(
-        "close-search"
-    );
+document.getElementById("close-search");
 
 const locationInput =
-    document.getElementById(
-        "location-input"
-    );
+document.getElementById("location-input");
 
 const locationResults =
-    document.getElementById(
-        "location-results"
-    );
+document.getElementById("location-results");
 
+const weatherIcon =
+document.getElementById("weather-icon");
 
-/* ---------------------------------------------------------
-   3. ESTADO ACTUAL
-   --------------------------------------------------------- */
+const weatherCondition =
+document.getElementById("weather-condition");
 
-let currentLocation = null;
+const temperatureElement =
+document.getElementById("temperature");
 
-let currentTimezone =
-    DEFAULT_LOCATION.timezone;
+const localTimeElement =
+document.getElementById("local-time");
 
-let currentWeatherData = null;
+const localDateElement =
+document.getElementById("local-date");
 
-let searchTimeout = null;
+/* =========================================================
+FONDOS METEOROLÓGICOS
+========================================================= */
 
+const WEATHER_CLASSES = [
+"weather-clear",
+"weather-cloudy",
+"weather-rain",
+"weather-storm",
+"weather-sunrise",
+"weather-sunset",
+"weather-night"
+];
 
-/* ---------------------------------------------------------
-   4. INICIALIZACIÓN
-   --------------------------------------------------------- */
+/* =========================================================
+ICONOS METEOROLÓGICOS
+========================================================= */
+
+const WEATHER_ICONS = {
+
+```
+clear: "☀️",
+
+cloudy: "☁️",
+
+rain: "🌧️",
+
+storm: "⛈️",
+
+sunrise: "🌅",
+
+sunset: "🌇",
+
+night: "🌙"
+```
+
+};
+
+/* =========================================================
+DESCRIPCIONES METEOROLÓGICAS
+========================================================= */
+
+const WEATHER_LABELS = {
+
+```
+clear: "DESPEJADO",
+
+cloudy: "NUBLADO",
+
+rain: "LLUVIA",
+
+storm: "TORMENTA",
+
+sunrise: "AMANECER",
+
+sunset: "ATARDECER",
+
+night: "NOCHE"
+```
+
+};
+
+/* =========================================================
+INICIO
+========================================================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    initializeFooter
+"DOMContentLoaded",
+initializeFooter
 );
-
 
 async function initializeFooter() {
 
-    const savedLocation =
-        loadSavedLocation();
+```
+loadSavedLocation();
 
-    if (savedLocation) {
+updateLocationName();
 
-        currentLocation =
-            savedLocation;
+updateLocalClock();
 
-    } else {
+startClock();
 
-        currentLocation =
-            DEFAULT_LOCATION;
+await updateWeather();
 
-    }
+startWeatherUpdates();
 
-
-    updateLocationName();
-
-    updateLocalClock();
-
-    setInterval(
-        updateLocalClock,
-        1000
-    );
-
-    await loadWeather();
+setupLocationSearch();
+```
 
 }
 
-
-/* ---------------------------------------------------------
-   5. CARGAR LOCALIDAD GUARDADA
-   --------------------------------------------------------- */
+/* =========================================================
+LOCALIDAD GUARDADA
+========================================================= */
 
 function loadSavedLocation() {
 
-    try {
+```
+const savedLocation =
+    localStorage.getItem(
+        "hangarPlayLocation"
+    );
 
-        const saved =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
+if (!savedLocation) {
+    return;
+}
 
-        if (!saved) {
-            return null;
-        }
+try {
 
-        return JSON.parse(saved);
+    const parsedLocation =
+        JSON.parse(savedLocation);
 
-    } catch (error) {
+    if (
+        parsedLocation &&
+        Number.isFinite(
+            Number(parsedLocation.latitude)
+        ) &&
+        Number.isFinite(
+            Number(parsedLocation.longitude)
+        )
+    ) {
 
-        console.warn(
-            "No se pudo cargar la localidad guardada.",
-            error
-        );
+        currentLocation = {
 
-        return null;
+            name:
+                parsedLocation.name ||
+                "Montevideo",
+
+            country:
+                parsedLocation.country ||
+                "Uruguay",
+
+            latitude:
+                Number(
+                    parsedLocation.latitude
+                ),
+
+            longitude:
+                Number(
+                    parsedLocation.longitude
+                ),
+
+            timezone:
+                parsedLocation.timezone ||
+                "America/Montevideo"
+
+        };
+
     }
+
+} catch (error) {
+
+    console.warn(
+        "No se pudo cargar la localidad guardada.",
+        error
+    );
+
+}
+```
 
 }
 
+/* =========================================================
+GUARDAR LOCALIDAD
+========================================================= */
 
-/* ---------------------------------------------------------
-   6. GUARDAR LOCALIDAD
-   --------------------------------------------------------- */
+function saveLocation() {
 
-function saveLocation(location) {
+```
+localStorage.setItem(
 
-    try {
+    "hangarPlayLocation",
 
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(location)
-        );
+    JSON.stringify(
+        currentLocation
+    )
 
-    } catch (error) {
-
-        console.warn(
-            "No se pudo guardar la localidad.",
-            error
-        );
-
-    }
+);
+```
 
 }
 
-
-/* ---------------------------------------------------------
-   7. ACTUALIZAR NOMBRE DE LOCALIDAD
-   --------------------------------------------------------- */
+/* =========================================================
+ACTUALIZAR NOMBRE DE LOCALIDAD
+========================================================= */
 
 function updateLocationName() {
 
-    if (!currentLocation) {
-        return;
-    }
+```
+if (!locationNameElement) {
+    return;
+}
 
+locationNameElement.textContent =
 
-    const city =
-        currentLocation.name ||
-        "Montevideo";
-
-
-    const country =
-        currentLocation.country ||
-        "Uruguay";
-
-
-    locationNameElement.textContent =
-        `${city}, ${country}`.toUpperCase();
+    `${currentLocation.name}, ${currentLocation.country}`;
+```
 
 }
 
+/* =========================================================
+CLIMA
+========================================================= */
 
-/* ---------------------------------------------------------
-   8. CARGAR CLIMA
-   --------------------------------------------------------- */
+async function updateWeather() {
 
-async function loadWeather() {
+```
+try {
 
-    if (!currentLocation) {
-        return;
-    }
+    const url =
 
+        `${WEATHER_API_URL}` +
 
-    setLoadingState();
-
-
-    try {
-
-        const url =
-            new URL(
-                WEATHER_API_URL
-            );
-
-
-        url.searchParams.set(
-            "latitude",
+        `?latitude=${encodeURIComponent(
             currentLocation.latitude
-        );
+        )}` +
 
-
-        url.searchParams.set(
-            "longitude",
+        `&longitude=${encodeURIComponent(
             currentLocation.longitude
+        )}` +
+
+        `&current=temperature_2m,weather_code,is_day` +
+
+        `&daily=sunrise,sunset` +
+
+        `&timezone=auto` +
+
+        `&forecast_days=1`;
+
+
+    const response =
+        await fetch(url);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            `Error HTTP ${response.status}`
         );
 
-
-        url.searchParams.set(
-            "current",
-            [
-                "temperature_2m",
-                "weather_code",
-                "is_day"
-            ].join(",")
-        );
-
-
-        url.searchParams.set(
-            "timezone",
-            "auto"
-        );
-
-
-        url.searchParams.set(
-            "forecast_days",
-            "1"
-        );
-
-
-        const response =
-            await fetch(
-                url.toString()
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "No se pudo obtener el clima."
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        currentWeatherData =
-            data;
-
-
-        updateWeather(
-            data
-        );
-
-
-        currentTimezone =
-            data.timezone ||
-            currentLocation.timezone ||
-            DEFAULT_LOCATION.timezone;
-
-
-    } catch (error) {
-
-        console.error(
-            "Error al obtener el clima:",
-            error
-        );
-
-
-        showWeatherError();
-
-    }
-
-}
-
-
-/* ---------------------------------------------------------
-   9. ACTUALIZAR INFORMACIÓN DEL CLIMA
-   --------------------------------------------------------- */
-
-function updateWeather(data) {
-
-    if (
-        !data ||
-        !data.current
-    ) {
-
-        showWeatherError();
-
-        return;
-
     }
 
 
-    const current =
-        data.current;
+    const data =
+        await response.json();
 
 
-    const temperature =
-        Math.round(
-            current.temperature_2m
-        );
+    currentWeather = {
 
+        temperature:
+            data.current?.temperature_2m ??
+            null,
 
-    const weatherCode =
-        current.weather_code;
+        weatherCode:
+            data.current?.weather_code ??
+            null,
 
+        isDay:
+            Number(
+                data.current?.is_day
+            ) === 1,
 
-    const isDay =
-        Boolean(
-            current.is_day
-        );
+        sunrise:
+            data.daily?.sunrise?.[0] ??
+            null,
 
+        sunset:
+            data.daily?.sunset?.[0] ??
+            null
 
-    const weatherInfo =
-        getWeatherInfo(
-            weatherCode,
-            isDay
-        );
-
-
-    temperatureElement.textContent =
-        `${temperature} °C`;
-
-
-    weatherConditionElement.textContent =
-        weatherInfo.label;
-
-
-    weatherIconElement.textContent =
-        weatherInfo.icon;
-
-
-    updateWeatherBackground(
-        weatherInfo.type
-    );
-
-}
-
-
-/* ---------------------------------------------------------
-   10. CÓDIGOS METEOROLÓGICOS
-   --------------------------------------------------------- */
-
-function getWeatherInfo(
-    weatherCode,
-    isDay
-) {
-
-    /*
-       Códigos basados en
-       WMO Weather Interpretation Codes.
-    */
-
-
-    if (
-        weatherCode === 0
-    ) {
-
-        if (isDay) {
-
-            return {
-                label: "DESPEJADO",
-                icon: "☀️",
-                type: "clear"
-            };
-
-        }
-
-        return {
-            label: "CIELO DESPEJADO",
-            icon: "🌙",
-            type: "night"
-        };
-
-    }
-
-
-    if (
-        weatherCode === 1 ||
-        weatherCode === 2
-    ) {
-
-        if (isDay) {
-
-            return {
-                label: "PARCIALMENTE NUBLADO",
-                icon: "⛅",
-                type: "clear"
-            };
-
-        }
-
-        return {
-            label: "NOCHE PARCIALMENTE NUBLADA",
-            icon: "☾",
-            type: "night"
-        };
-
-    }
-
-
-    if (
-        weatherCode === 3
-    ) {
-
-        return {
-            label: "NUBLADO",
-            icon: "☁️",
-            type: "cloudy"
-        };
-
-    }
-
-
-    if (
-        weatherCode === 45 ||
-        weatherCode === 48
-    ) {
-
-        return {
-            label: "NIEBLA",
-            icon: "🌫️",
-            type: "cloudy"
-        };
-
-    }
-
-
-    if (
-        weatherCode >= 51 &&
-        weatherCode <= 57
-    ) {
-
-        return {
-            label: "LLOVIZNA",
-            icon: "🌦️",
-            type: "rain"
-        };
-
-    }
-
-
-    if (
-        weatherCode >= 61 &&
-        weatherCode <= 67
-    ) {
-
-        return {
-            label: "LLUVIA",
-            icon: "🌧️",
-            type: "rain"
-        };
-
-    }
-
-
-    if (
-        weatherCode >= 71 &&
-        weatherCode <= 77
-    ) {
-
-        return {
-            label: "NIEVE",
-            icon: "❄️",
-            type: "cloudy"
-        };
-
-    }
-
-
-    if (
-        weatherCode >= 80 &&
-        weatherCode <= 82
-    ) {
-
-        return {
-            label: "CHUBASCOS",
-            icon: "🌦️",
-            type: "rain"
-        };
-
-    }
-
-
-    if (
-        weatherCode >= 85 &&
-        weatherCode <= 86
-    ) {
-
-        return {
-            label: "CHUBASCOS DE NIEVE",
-            icon: "🌨️",
-            type: "cloudy"
-        };
-
-    }
-
-
-    if (
-        weatherCode >= 95
-    ) {
-
-        return {
-            label: "TORMENTA",
-            icon: "⛈️",
-            type: "storm"
-        };
-
-    }
-
-
-    return {
-        label: "CONDICIONES VARIABLES",
-        icon: "🌤️",
-        type: "clear"
     };
 
+
+    updateWeatherInterface();
+
+    updateWeatherBackground();
+
+
+} catch (error) {
+
+    console.error(
+        "No se pudo obtener el clima.",
+        error
+    );
+
+    if (temperatureElement) {
+
+        temperatureElement.textContent =
+            "-- °C";
+
+    }
+
+    if (weatherCondition) {
+
+        weatherCondition.textContent =
+            "CLIMA NO DISPONIBLE";
+
+    }
+
+    updateWeatherBackground();
+
+}
+```
+
+}
+
+/* =========================================================
+ACTUALIZAR INTERFAZ DEL CLIMA
+========================================================= */
+
+function updateWeatherInterface() {
+
+```
+const weatherState =
+    getWeatherState();
+
+
+if (weatherIcon) {
+
+    weatherIcon.textContent =
+        WEATHER_ICONS[
+            weatherState
+        ] ||
+        WEATHER_ICONS.clear;
+
 }
 
 
-/* ---------------------------------------------------------
-   11. CAMBIAR FONDO METEOROLÓGICO
-   --------------------------------------------------------- */
+if (weatherCondition) {
 
-function updateWeatherBackground(
-    weatherType
+    weatherCondition.textContent =
+        WEATHER_LABELS[
+            weatherState
+        ] ||
+        WEATHER_LABELS.clear;
+
+}
+
+
+if (temperatureElement) {
+
+    if (
+        typeof currentWeather.temperature ===
+        "number"
+    ) {
+
+        temperatureElement.textContent =
+
+            `${Math.round(
+                currentWeather.temperature
+            )} °C`;
+
+    } else {
+
+        temperatureElement.textContent =
+            "-- °C";
+
+    }
+
+}
+```
+
+}
+
+/* =========================================================
+DETERMINAR ESTADO METEOROLÓGICO
+========================================================= */
+
+function getWeatherState() {
+
+```
+const now =
+    new Date();
+
+
+const sunrise =
+    parseLocalDateTime(
+        currentWeather.sunrise
+    );
+
+
+const sunset =
+    parseLocalDateTime(
+        currentWeather.sunset
+    );
+
+
+/*
+   NOCHE:
+   Si Open-Meteo indica que es de noche,
+   usamos directamente el estado nocturno.
+*/
+
+if (
+    currentWeather.isDay === false
 ) {
 
-    const weatherClasses = [
-        "weather-clear",
-        "weather-cloudy",
-        "weather-rain",
-        "weather-storm",
-        "weather-sunset",
-        "weather-sunrise",
-        "weather-night"
-    ];
-
-
-    footer.classList.remove(
-        ...weatherClasses
-    );
-
-
-    footer.classList.add(
-        `weather-${weatherType}`
-    );
-
-
-    /*
-       En una próxima etapa,
-       aquí conectaremos los fondos
-       visuales originales de Hangar Play.
-    */
+    return "night";
 
 }
 
 
-/* ---------------------------------------------------------
-   12. ESTADO DE CARGA
-   --------------------------------------------------------- */
+/*
+   AMANECER:
+   Ventana aproximada de 60 minutos
+   alrededor del amanecer.
+*/
 
-function setLoadingState() {
+if (
+    sunrise &&
+    isWithinMinutes(
+        now,
+        sunrise,
+        60
+    )
+) {
 
-    temperatureElement.textContent =
-        "-- °C";
-
-
-    weatherConditionElement.textContent =
-        "CONSULTANDO EL CIELO";
-
-
-    weatherIconElement.textContent =
-        "✈️";
-
-}
-
-
-/* ---------------------------------------------------------
-   13. ERROR DEL CLIMA
-   --------------------------------------------------------- */
-
-function showWeatherError() {
-
-    temperatureElement.textContent =
-        "-- °C";
-
-
-    weatherConditionElement.textContent =
-        "DATOS NO DISPONIBLES";
-
-
-    weatherIconElement.textContent =
-        "☁️";
+    return "sunrise";
 
 }
 
 
-/* ---------------------------------------------------------
-   14. RELOJ LOCAL
-   --------------------------------------------------------- */
+/*
+   ATARDECER:
+   Ventana aproximada de 60 minutos
+   alrededor del atardecer.
+*/
+
+if (
+    sunset &&
+    isWithinMinutes(
+        now,
+        sunset,
+        60
+    )
+) {
+
+    return "sunset";
+
+}
+
+
+/*
+   ESTADO SEGÚN CÓDIGO METEOROLÓGICO
+*/
+
+return getWeatherStateFromCode(
+    currentWeather.weatherCode
+);
+```
+
+}
+
+/* =========================================================
+ESTADO SEGÚN CÓDIGO WMO
+========================================================= */
+
+function getWeatherStateFromCode(
+weatherCode
+) {
+
+```
+const code =
+    Number(weatherCode);
+
+
+if (
+    code === 0
+) {
+
+    return "clear";
+
+}
+
+
+if (
+    [
+        1,
+        2,
+        3,
+        45,
+        48
+    ].includes(code)
+) {
+
+    return "cloudy";
+
+}
+
+
+if (
+    [
+        51,
+        53,
+        55,
+        56,
+        57,
+        61,
+        63,
+        65,
+        66,
+        67,
+        80,
+        81,
+        82
+    ].includes(code)
+) {
+
+    return "rain";
+
+}
+
+
+if (
+    [
+        71,
+        73,
+        75,
+        77,
+        85,
+        86,
+        95,
+        96,
+        99
+    ].includes(code)
+) {
+
+    return "storm";
+
+}
+
+
+return "clear";
+```
+
+}
+
+/* =========================================================
+CAMBIAR FONDO METEOROLÓGICO
+========================================================= */
+
+function updateWeatherBackground() {
+
+```
+if (!footerElement) {
+    return;
+}
+
+
+WEATHER_CLASSES.forEach(
+    weatherClass => {
+
+        footerElement.classList.remove(
+            weatherClass
+        );
+
+    }
+);
+
+
+const weatherState =
+    getWeatherState();
+
+
+const newClass =
+    `weather-${weatherState}`;
+
+
+footerElement.classList.add(
+    newClass
+);
+```
+
+}
+
+/* =========================================================
+FECHA Y HORA LOCAL
+========================================================= */
 
 function updateLocalClock() {
 
-    if (!currentTimezone) {
-        return;
-    }
+```
+if (
+    !localTimeElement ||
+    !localDateElement
+) {
 
-
-    const now =
-        new Date();
-
-
-    try {
-
-        const time =
-            new Intl.DateTimeFormat(
-                "es-UY",
-                {
-                    timeZone:
-                        currentTimezone,
-
-                    hour:
-                        "2-digit",
-
-                    minute:
-                        "2-digit",
-
-                    second:
-                        "2-digit",
-
-                    hour12:
-                        false
-                }
-            ).format(now);
-
-
-        const date =
-            new Intl.DateTimeFormat(
-                "es-UY",
-                {
-                    timeZone:
-                        currentTimezone,
-
-                    weekday:
-                        "long",
-
-                    day:
-                        "2-digit",
-
-                    month:
-                        "long",
-
-                    year:
-                        "numeric"
-                }
-            ).format(now);
-
-
-        localTimeElement.textContent =
-            time;
-
-
-        localDateElement.textContent =
-            date;
-
-
-    } catch (error) {
-
-        console.warn(
-            "No se pudo actualizar la hora local.",
-            error
-        );
-
-    }
+    return;
 
 }
 
 
-/* ---------------------------------------------------------
-   15. ABRIR BUSCADOR
-   --------------------------------------------------------- */
+const now =
+    new Date();
+
+
+const timezone =
+    currentLocation.timezone ||
+    "America/Montevideo";
+
+
+const timeFormatter =
+    new Intl.DateTimeFormat(
+        "es-UY",
+        {
+
+            timeZone:
+                timezone,
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit",
+
+            second:
+                "2-digit",
+
+            hour12:
+                false
+
+        }
+    );
+
+
+const dateFormatter =
+    new Intl.DateTimeFormat(
+        "es-UY",
+        {
+
+            timeZone:
+                timezone,
+
+            weekday:
+                "long",
+
+            day:
+                "numeric",
+
+            month:
+                "long",
+
+            year:
+                "numeric"
+
+        }
+    );
+
+
+localTimeElement.textContent =
+    timeFormatter.format(now);
+
+
+localDateElement.textContent =
+    capitalizeFirstLetter(
+        dateFormatter.format(now)
+    );
+```
+
+}
+
+/* =========================================================
+INICIAR RELOJ
+========================================================= */
+
+function startClock() {
+
+```
+if (clockInterval) {
+
+    clearInterval(
+        clockInterval
+    );
+
+}
+
+
+clockInterval =
+    setInterval(
+
+        updateLocalClock,
+
+        1000
+
+    );
+```
+
+}
+
+/* =========================================================
+ACTUALIZACIONES DEL CLIMA
+========================================================= */
+
+function startWeatherUpdates() {
+
+```
+if (weatherInterval) {
+
+    clearInterval(
+        weatherInterval
+    );
+
+}
+
+
+/*
+   Actualiza el clima cada 10 minutos.
+*/
+
+weatherInterval =
+    setInterval(
+
+        updateWeather,
+
+        10 * 60 * 1000
+
+    );
+```
+
+}
+
+/* =========================================================
+BUSCADOR DE LOCALIDADES
+========================================================= */
+
+function setupLocationSearch() {
+
+```
+if (
+    !changeLocationButton ||
+    !closeSearchButton ||
+    !locationSearch ||
+    !locationInput ||
+    !locationResults
+) {
+
+    return;
+
+}
+
 
 changeLocationButton.addEventListener(
+
     "click",
+
     openLocationSearch
+
 );
 
-
-function openLocationSearch() {
-
-    locationSearch.classList.remove(
-        "hidden"
-    );
-
-
-    locationSearch.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-
-    locationInput.value =
-        "";
-
-
-    locationResults.innerHTML =
-        "";
-
-
-    setTimeout(
-        () => {
-            locationInput.focus();
-        },
-        100
-    );
-
-}
-
-
-/* ---------------------------------------------------------
-   16. CERRAR BUSCADOR
-   --------------------------------------------------------- */
 
 closeSearchButton.addEventListener(
+
     "click",
+
     closeLocationSearch
+
 );
 
 
-function closeLocationSearch() {
+locationSearch.addEventListener(
 
-    locationSearch.classList.add(
-        "hidden"
-    );
+    "click",
 
-
-    locationSearch.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-}
-
-
-/* ---------------------------------------------------------
-   17. CERRAR CON ESCAPE
-   --------------------------------------------------------- */
-
-document.addEventListener(
-    "keydown",
-    (event) => {
+    event => {
 
         if (
-            event.key === "Escape" &&
-            !locationSearch.classList.contains(
-                "hidden"
-            )
+            event.target ===
+            locationSearch
         ) {
 
             closeLocationSearch();
@@ -825,333 +854,544 @@ document.addEventListener(
         }
 
     }
+
 );
 
-
-/* ---------------------------------------------------------
-   18. BUSCADOR DE LOCALIDADES
-   --------------------------------------------------------- */
 
 locationInput.addEventListener(
+
     "input",
-    () => {
 
-        const query =
-            locationInput.value.trim();
+    debounce(
 
+        searchLocations,
 
-        clearTimeout(
-            searchTimeout
-        );
+        450
 
+    )
 
-        if (
-            query.length < 2
-        ) {
-
-            locationResults.innerHTML =
-                "";
-
-            return;
-
-        }
-
-
-        searchTimeout =
-            setTimeout(
-                () => {
-                    searchLocations(
-                        query
-                    );
-                },
-                450
-            );
-
-    }
 );
 
 
-/* ---------------------------------------------------------
-   19. CONSULTAR LOCALIDADES
-   --------------------------------------------------------- */
+locationInput.addEventListener(
 
-async function searchLocations(
-    query
-) {
+    "keydown",
 
-    locationResults.innerHTML =
-        `
-        <div class="location-result">
-            Buscando localidades...
-        </div>
-        `;
+    event => {
 
+        if (
+            event.key ===
+            "Escape"
+        ) {
 
-    try {
-
-        const url =
-            new URL(
-                GEOCODING_API_URL
-            );
-
-
-        url.searchParams.set(
-            "name",
-            query
-        );
-
-
-        url.searchParams.set(
-            "count",
-            "8"
-        );
-
-
-        url.searchParams.set(
-            "language",
-            "es"
-        );
-
-
-        url.searchParams.set(
-            "format",
-            "json"
-        );
-
-
-        const response =
-            await fetch(
-                url.toString()
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Error en la búsqueda."
-            );
+            closeLocationSearch();
 
         }
 
-
-        const data =
-            await response.json();
-
-
-        displayLocationResults(
-            data.results || []
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Error buscando localidades:",
-            error
-        );
-
-
-        locationResults.innerHTML =
-            `
-            <div class="location-result">
-                No se pudieron buscar localidades.
-            </div>
-            `;
-
     }
+
+);
+```
+
+}
+
+/* =========================================================
+ABRIR BUSCADOR
+========================================================= */
+
+function openLocationSearch() {
+
+```
+if (
+    !locationSearch ||
+    !locationInput
+) {
+
+    return;
 
 }
 
 
-/* ---------------------------------------------------------
-   20. MOSTRAR RESULTADOS
-   --------------------------------------------------------- */
+locationSearch.classList.remove(
+    "hidden"
+);
 
-function displayLocationResults(
-    results
+
+locationSearch.setAttribute(
+    "aria-hidden",
+    "false"
+);
+
+
+setTimeout(
+
+    () => {
+
+        locationInput.focus();
+
+    },
+
+    50
+
+);
+```
+
+}
+
+/* =========================================================
+CERRAR BUSCADOR
+========================================================= */
+
+function closeLocationSearch() {
+
+```
+if (
+    !locationSearch ||
+    !locationInput ||
+    !locationResults
 ) {
 
-    locationResults.innerHTML =
-        "";
+    return;
+
+}
 
 
-    if (
-        results.length === 0
-    ) {
+locationSearch.classList.add(
+    "hidden"
+);
+
+
+locationSearch.setAttribute(
+    "aria-hidden",
+    "true"
+);
+
+
+locationInput.value =
+    "";
+
+
+locationResults.innerHTML =
+    "";
+```
+
+}
+
+/* =========================================================
+BUSCAR LOCALIDADES
+========================================================= */
+
+async function searchLocations() {
+
+```
+if (!locationInput) {
+    return;
+}
+
+
+const query =
+    locationInput.value.trim();
+
+
+if (
+    query.length <
+    2
+) {
+
+    if (locationResults) {
 
         locationResults.innerHTML =
-            `
-            <div class="location-result">
-                No encontramos esa localidad.
-            </div>
-            `;
+            "";
 
-        return;
+    }
+
+    return;
+
+}
+
+
+if (locationResults) {
+
+    locationResults.innerHTML =
+        "<div class=\"search-status\">Buscando...</div>";
+
+}
+
+
+try {
+
+    const url =
+
+        `${GEOCODING_API_URL}` +
+
+        `?name=${encodeURIComponent(
+            query
+        )}` +
+
+        `&count=8` +
+
+        `&language=es` +
+
+        `&format=json`;
+
+
+    const response =
+        await fetch(url);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            `Error HTTP ${response.status}`
+        );
 
     }
 
 
-    results.forEach(
-        (result) => {
+    const data =
+        await response.json();
 
-            const button =
-                document.createElement(
-                    "button"
+
+    renderLocationResults(
+        data.results ||
+        []
+    );
+
+
+} catch (error) {
+
+    console.error(
+        "Error buscando localidades.",
+        error
+    );
+
+
+    if (locationResults) {
+
+        locationResults.innerHTML =
+
+            "<div class=\"search-status\">" +
+
+            "No se pudieron encontrar localidades." +
+
+            "</div>";
+
+    }
+
+}
+```
+
+}
+
+/* =========================================================
+MOSTRAR RESULTADOS
+========================================================= */
+
+function renderLocationResults(
+locations
+) {
+
+```
+if (!locationResults) {
+    return;
+}
+
+
+locationResults.innerHTML =
+    "";
+
+
+if (
+    !locations ||
+    locations.length === 0
+) {
+
+    locationResults.innerHTML =
+
+        "<div class=\"search-status\">" +
+
+        "No se encontraron localidades." +
+
+        "</div>";
+
+    return;
+
+}
+
+
+locations.forEach(
+    location => {
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.type =
+            "button";
+
+
+        button.className =
+            "location-result";
+
+
+        const locationName =
+            document.createElement(
+                "strong"
+            );
+
+
+        locationName.textContent =
+            location.name ||
+            "Localidad";
+
+
+        const locationDetails =
+            document.createElement(
+                "span"
+            );
+
+
+        const details = [
+
+            location.admin1,
+
+            location.country
+
+        ].filter(Boolean);
+
+
+        locationDetails.textContent =
+            details.join(
+                ", "
+            );
+
+
+        button.appendChild(
+            locationName
+        );
+
+
+        button.appendChild(
+            locationDetails
+        );
+
+
+        button.addEventListener(
+
+            "click",
+
+            () => {
+
+                selectLocation(
+                    location
                 );
 
+            }
 
-            button.type =
-                "button";
-
-
-            button.className =
-                "location-result";
-
-
-            const country =
-                result.country ||
-                "";
-
-
-            const admin1 =
-                result.admin1 ||
-                "";
-
-
-            button.innerHTML =
-                `
-                <strong>
-                    ${escapeHTML(
-                        result.name
-                    )}
-                </strong>
-
-                <span>
-                    ${escapeHTML(
-                        admin1
-                    )}
-
-                    ${
-                        admin1 &&
-                        country
-                            ? ", "
-                            : ""
-                    }
-
-                    ${escapeHTML(
-                        country
-                    )}
-                </span>
-                `;
-
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    selectLocation(
-                        result
-                    );
-
-                }
-            );
-
-
-            locationResults.appendChild(
-                button
-            );
-
-        }
-    );
-
-}
-
-
-/* ---------------------------------------------------------
-   21. SELECCIONAR LOCALIDAD
-   --------------------------------------------------------- */
-
-async function selectLocation(
-    result
-) {
-
-    currentLocation = {
-
-        name:
-            result.name,
-
-        country:
-            result.country ||
-            "",
-
-        latitude:
-            result.latitude,
-
-        longitude:
-            result.longitude,
-
-        timezone:
-            result.timezone ||
-            DEFAULT_LOCATION.timezone
-
-    };
-
-
-    saveLocation(
-        currentLocation
-    );
-
-
-    updateLocationName();
-
-
-    closeLocationSearch();
-
-
-    currentTimezone =
-        currentLocation.timezone;
-
-
-    await loadWeather();
-
-}
-
-
-/* ---------------------------------------------------------
-   22. SEGURIDAD — ESCAPAR HTML
-   --------------------------------------------------------- */
-
-function escapeHTML(
-    value
-) {
-
-    return String(
-        value
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
         );
 
+
+        locationResults.appendChild(
+            button
+        );
+
+    }
+);
+```
+
+}
+
+/* =========================================================
+SELECCIONAR LOCALIDAD
+========================================================= */
+
+async function selectLocation(
+location
+) {
+
+```
+currentLocation = {
+
+    name:
+        location.name ||
+        "Localidad",
+
+    country:
+        location.country ||
+        "",
+
+    latitude:
+        Number(
+            location.latitude
+        ),
+
+    longitude:
+        Number(
+            location.longitude
+        ),
+
+    timezone:
+        location.timezone ||
+        "auto"
+
+};
+
+
+saveLocation();
+
+updateLocationName();
+
+closeLocationSearch();
+
+updateLocalClock();
+
+await updateWeather();
+```
+
+}
+
+/* =========================================================
+PARSEAR FECHA LOCAL
+========================================================= */
+
+function parseLocalDateTime(
+value
+) {
+
+```
+if (!value) {
+    return null;
 }
 
 
-/* ---------------------------------------------------------
-   23. FIN DEL SCRIPT
-   --------------------------------------------------------- */
+const parsed =
+    new Date(value);
+
+
+if (
+    Number.isNaN(
+        parsed.getTime()
+    )
+) {
+
+    return null;
+
+}
+
+
+return parsed;
+```
+
+}
+
+/* =========================================================
+COMPROBAR VENTANA DE TIEMPO
+========================================================= */
+
+function isWithinMinutes(
+currentTime,
+targetTime,
+minutes
+) {
+
+```
+if (
+    !currentTime ||
+    !targetTime
+) {
+
+    return false;
+
+}
+
+
+const difference =
+    Math.abs(
+
+        currentTime.getTime() -
+        targetTime.getTime()
+
+    );
+
+
+return (
+
+    difference <=
+    minutes *
+    60 *
+    1000
+
+);
+```
+
+}
+
+/* =========================================================
+CAPITALIZAR TEXTO
+========================================================= */
+
+function capitalizeFirstLetter(
+text
+) {
+
+```
+if (!text) {
+    return "";
+}
+
+
+return (
+
+    text.charAt(0).toUpperCase() +
+
+    text.slice(1)
+
+);
+```
+
+}
+
+/* =========================================================
+DEBOUNCE
+========================================================= */
+
+function debounce(
+callback,
+delay
+) {
+
+```
+let timeout;
+
+
+return function (...args) {
+
+    clearTimeout(
+        timeout
+    );
+
+
+    timeout =
+
+        setTimeout(
+
+            () => {
+
+                callback.apply(
+                    this,
+                    args
+                );
+
+            },
+
+            delay
+
+        );
+
+};
+```
+
+}
+
