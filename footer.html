@@ -103,7 +103,7 @@
             text-align: center;
         }
 
-        /* LOCALIDAD Y BUSCADOR */
+        /* LOCALIDAD Y BOTÓN */
         .location-section {
             display: flex;
             flex-direction: column;
@@ -153,65 +153,6 @@
             background: rgba(0, 0, 0, 0.45);
             border-color: rgba(255, 255, 255, 0.90);
             transform: translateY(-2px);
-        }
-
-        /* CAJA DE BÚSQUEDA FLOTANTE */
-        .search-container {
-            display: none;
-            position: absolute;
-            top: 100%;
-            margin-top: 10px;
-            background: rgba(15, 23, 42, 0.92);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            backdrop-filter: blur(12px);
-            z-index: 10;
-            width: 280px;
-        }
-
-        .search-container.active {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 8px 12px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #fff;
-            font-size: 13px;
-            outline: none;
-        }
-
-        .search-input:focus {
-            border-color: #38bdf8;
-        }
-
-        .search-results {
-            max-height: 150px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            text-align: left;
-        }
-
-        .search-result-item {
-            padding: 6px 10px;
-            font-size: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .search-result-item:hover {
-            background: rgba(56, 189, 248, 0.3);
         }
 
         /* INFORMACIÓN METEOROLÓGICA */
@@ -350,6 +291,16 @@
             font-size: 13px;
             letter-spacing: 0.08em;
             opacity: 0.85;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .footer-email svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
         }
 
         .footer-email a {
@@ -380,14 +331,9 @@
 
         <div class="weather-content">
             <div class="location-section">
-                <div id="locationLabel" class="location-label"><span>📍</span> Florida, Uruguay</div>
+                <div id="locationLabel" class="location-label"><span>📍</span> Montevideo, Uruguay</div>
                 <div class="location-controls">
-                    <button id="toggleSearchBtn" class="location-button">Cambiar Localidad</button>
-                </div>
-                
-                <div id="searchContainer" class="search-container">
-                    <input type="text" id="cityInput" class="search-input" placeholder="Escribe tu ciudad...">
-                    <div id="searchResults" class="search-results"></div>
+                    <button id="toggleLocationBtn" class="location-button">Cambiar Localidad</button>
                 </div>
             </div>
 
@@ -434,7 +380,8 @@
                 </a>
             </div>
             <div class="footer-email">
-                📧 <a href="mailto:contacto@hangarplayradio.com">contacto@hangarplayradio.com</a>
+                <svg viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"/></svg>
+                <a href="mailto:hangarplayradio@gmail.com">hangarplayradio@gmail.com</a>
             </div>
             <div class="footer-brand">HANGAR PLAY RADIO</div>
             <div class="footer-slogan">SURCANDO EL CIELO DE LOS TIEMPOS</div>
@@ -445,10 +392,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const footerRoot = document.getElementById('footerRoot');
             const locationLabel = document.getElementById('locationLabel');
-            const toggleSearchBtn = document.getElementById('toggleSearchBtn');
-            const searchContainer = document.getElementById('searchContainer');
-            const cityInput = document.getElementById('cityInput');
-            const searchResults = document.getElementById('searchResults');
+            const toggleLocationBtn = document.getElementById('toggleLocationBtn');
             const weatherIconContainer = document.getElementById('weatherIconContainer');
             const weatherCondition = document.getElementById('weatherCondition');
             const temperature = document.getElementById('temperature');
@@ -462,84 +406,42 @@
                 storm: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M46 22H44.62C43.34 15.72 37.84 11 31.2 11C24.56 11 19.06 15.72 17.78 22H14C9.58 22 6 25.58 6 30C6 34.42 9.58 38 14 48H46C50.42 38 54 34.42 54 30C54 25.58 50.42 22 46 22Z" fill="#334155"/><path d="M34 40L24 50H32L30 60L42 46H34L34 40Z" fill="#FACC15"/></svg>`
             };
 
-            // Coordenadas fijas iniciales para alternar entre Florida y Montevideo
-            const defaultLocations = [
+            // Lista oficial de los 19 departamentos de Uruguay (con Montevideo al inicio como base central)
+            const uruguayDepartments = [
+                { name: "Montevideo, Uruguay", lat: -34.9011, lon: -56.1645 },
+                { name: "Canelones, Uruguay", lat: -34.5228, lon: -56.2808 },
+                { name: "Maldonado, Uruguay", lat: -34.9033, lon: -54.9536 },
+                { name: "Rocha, Uruguay", lat: -34.4833, lon: -54.3333 },
+                { name: "Treinta y Tres, Uruguay", lat: -33.2333, lon: -54.3833 },
+                { name: "Cerro Largo, Uruguay", lat: -32.3667, lon: -54.1833 },
+                { name: "Rivera, Uruguay", lat: -30.9053, lon: -55.5506 },
+                { name: "Artigas, Uruguay", lat: -30.4, lon: -56.4667 },
+                { name: "Salto, Uruguay", lat: -31.3833, lon: -57.9667 },
+                { name: "Paysandú, Uruguay", lat: -32.3167, lon: -58.0833 },
+                { name: "Río Negro, Uruguay", lat: -32.7333, lon: -58.2833 },
+                { name: "Soriano, Uruguay", lat: -33.5, lon: -58.0333 },
+                { name: "Colonia, Uruguay", lat: -34.4667, lon: -57.85 },
+                { name: "San José, Uruguay", lat: -34.3375, lon: -56.7136 },
+                { name: "Flores, Uruguay", lat: -33.55, lon: -56.7 },
                 { name: "Florida, Uruguay", lat: -34.0984, lon: -56.2161 },
-                { name: "Montevideo, Uruguay", lat: -34.9011, lon: -56.1645 }
+                { name: "Durazno, Uruguay", lat: -33.4167, lon: -55.5333 },
+                { name: "Tacuarembó, Uruguay", lat: -31.7333, lon: -55.9833 },
+                { name: "Lavalleja, Uruguay", lat: -34.3667, lon: -55.2333 }
             ];
-            let defaultIndex = 0;
 
-            // Al hacer clic en "Cambiar Localidad", alterna directamente entre Florida y Montevideo
-            toggleSearchBtn.addEventListener('click', (e) => {
-                // Si el buscador estaba abierto, lo cerramos y viceversa, o alternamos las ciudades fijas principales
-                if (searchContainer.classList.contains('active')) {
-                    searchContainer.classList.remove('active');
-                } else {
-                    defaultIndex = (defaultIndex + 1) % defaultLocations.length;
-                    const loc = defaultLocations[defaultIndex];
-                    fetchWeather(loc.lat, loc.lon, loc.name);
-                    saveUserLocation(loc.lat, loc.lon, loc.name);
-                }
+            let currentIndex = 0;
+
+            // Al hacer clic, rota al siguiente departamento de la lista
+            toggleLocationBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % uruguayDepartments.length;
+                const dept = uruguayDepartments[currentIndex];
+                fetchWeather(dept.lat, dept.lon, dept.name);
+                saveUserLocation(currentIndex, dept.lat, dept.lon, dept.name);
             });
 
-            // Mantener un atajo para buscar escribiendo si quieren otra ciudad
-            toggleSearchBtn.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-                searchContainer.classList.toggle('active');
-                if(searchContainer.classList.contains('active')) {
-                    cityInput.focus();
-                }
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!searchContainer.contains(e.target) && e.target !== toggleSearchBtn) {
-                    searchContainer.classList.remove('active');
-                }
-            });
-
-            let searchTimeout;
-            cityInput.addEventListener('input', () => {
-                clearTimeout(searchTimeout);
-                const query = cityInput.value.trim();
-                if (query.length < 2) {
-                    searchResults.innerHTML = '';
-                    return;
-                }
-
-                searchTimeout = setTimeout(async () => {
-                    try {
-                        const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=es&format=json`);
-                        const data = await res.json();
-                        
-                        searchResults.innerHTML = '';
-                        if (data.results && data.results.length > 0) {
-                            data.results.forEach(loc => {
-                                const item = document.createElement('div');
-                                item.className = 'search-result-item';
-                                item.textContent = `${loc.name}, ${loc.admin1 || ''} (${loc.country || ''})`;
-                                item.addEventListener('click', () => {
-                                    const fullName = `${loc.name}, ${loc.country || ''}`;
-                                    fetchWeather(loc.latitude, loc.longitude, fullName);
-                                    saveUserLocation(loc.latitude, loc.longitude, fullName);
-                                    searchContainer.classList.remove('active');
-                                    cityInput.value = '';
-                                    searchResults.innerHTML = '';
-                                });
-                                searchResults.appendChild(item);
-                            });
-                        } else {
-                            searchResults.innerHTML = '<div style="padding:6px; font-size:12px; opacity:0.7;">No encontrado</div>';
-                        }
-                    } catch (err) {
-                        console.error("Error buscando localidad", err);
-                    }
-                }, 350);
-            });
-
-            // Guardar en el navegador del usuario (localStorage) para que quede registrado su elección
-            function saveUserLocation(lat, lon, name) {
+            function saveUserLocation(index, lat, lon, name) {
                 try {
-                    localStorage.setItem('hangar_user_loc', JSON.stringify({ lat, lon, name }));
+                    localStorage.setItem('hangar_dept_data', JSON.stringify({ index, lat, lon, name }));
                 } catch (err) {}
             }
 
@@ -553,7 +455,7 @@
                         const code = data.current.weather_code;
                         const isDay = data.current.is_day;
 
-                        locationLabel.innerHTML = `<span>📍</span> ${locationName}`;
+                        locationLabel.innerHTML = `📍 ${locationName}`;
                         temperature.textContent = `${temp}°C`;
 
                         let condText = "Despejado";
@@ -601,20 +503,21 @@
             updateClock();
             setInterval(updateClock, 1000);
 
-            // Carga inicial: Recupera la última ciudad que eligió el visitante, o por defecto Florida, Uruguay
+            // Carga inicial: Recupera el departamento guardado en el navegador o Montevideo por defecto
             try {
-                const saved = localStorage.getItem('hangar_user_loc');
+                const saved = localStorage.getItem('hangar_dept_data');
                 if (saved) {
                     const parsed = JSON.parse(saved);
+                    currentIndex = parsed.index;
                     fetchWeather(parsed.lat, parsed.lon, parsed.name);
                 } else {
-                    fetchWeather(-34.0984, -56.2161, "Florida, Uruguay");
+                    currentIndex = 0; // Montevideo, Uruguay
+                    fetchWeather(uruguayDepartments[0].lat, uruguayDepartments[0].lon, uruguayDepartments[0].name);
                 }
             } catch (err) {
-                fetchWeather(-34.0984, -56.2161, "Florida, Uruguay");
+                fetchWeather(uruguayDepartments[0].lat, uruguayDepartments[0].lon, uruguayDepartments[0].name);
             }
         });
     </script>
 </body>
 </html>
-
